@@ -87,7 +87,8 @@ import {
   IconUsers,
   IconVideo,
   IconCrown,
-  IconX
+  IconX,
+  IconBrandGoogle
 } from '@tabler/icons-react';
 
 export type Icon = React.ComponentType<IconProps>;
@@ -141,6 +142,7 @@ export const Icons = {
   github: IconBrandGithub,
   twitter: IconBrandTwitter,
   logo: IconCommand,
+  google: IconBrandGoogle,
 
   // Communication
   chat: IconMessage,

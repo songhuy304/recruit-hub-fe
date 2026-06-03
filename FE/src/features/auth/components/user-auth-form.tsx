@@ -1,72 +1,95 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useAppForm } from '@/components/ui/tanstack-form';
-import { useTransition } from 'react';
-import { toast } from 'sonner';
-import * as z from 'zod';
-import GithubSignInButton from './github-auth-button';
+"use client";
 
-const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' })
-});
+import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
+import GoogleSignInButton from "@/features/auth/components/google-auth-button";
+import { signUpFormSchema, SignUpFormValues } from "@/features/auth/shemas";
+import Link from "next/link";
+import { toast } from "sonner";
+import GithubSignInButton from "./github-auth-button";
 
 export default function UserAuthForm() {
-  const [loading, startTransition] = useTransition();
-
   const form = useAppForm({
     defaultValues: {
-      email: 'demo@gmail.com'
-    },
+      userName: "",
+      email: "",
+      fullName: "",
+      password: "",
+    } as SignUpFormValues,
     validators: {
-      onSubmit: formSchema
+      onSubmit: signUpFormSchema,
     },
     onSubmit: () => {
-      startTransition(() => {
-        toast.success('Signed In Successfully!');
-      });
-    }
+      toast.success("Account created successfully!");
+    },
   });
 
+  const { FormTextField } = useFormFields<SignUpFormValues>();
+
   return (
-    <>
+    <div className="w-full space-y-4">
       <form.AppForm>
-        <form.Form className='w-full space-y-2'>
-          <form.AppField
-            name='email'
-            children={(field) => (
-              <field.FieldSet>
-                <field.Field>
-                  <field.FieldLabel htmlFor={field.name}>Email</field.FieldLabel>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder='Enter your email...'
-                    disabled={loading}
-                    aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
-                  />
-                </field.Field>
-                <field.FieldError />
-              </field.FieldSet>
-            )}
+        <form.Form className="w-full space-y-2 p-0">
+          <FormTextField
+            name="userName"
+            label="Username"
+            required
+            placeholder="johndoe"
+            autoComplete="username"
           />
-          <Button disabled={loading} className='mt-2 ml-auto w-full' type='submit'>
-            Continue With Email
-          </Button>
+          <FormTextField
+            name="fullName"
+            label="Full name"
+            required
+            placeholder="John Doe"
+            autoComplete="name"
+          />
+          <FormTextField
+            name="email"
+            label="Email"
+            required
+            type="email"
+            placeholder="john@example.com"
+            autoComplete="email"
+          />
+          <FormTextField
+            name="password"
+            label="Password"
+            required
+            type="password"
+            placeholder="Min 8 characters"
+            autoComplete="new-password"
+          />
+          <form.SubmitButton className="mt-2 w-full">
+            Create account
+          </form.SubmitButton>
         </form.Form>
       </form.AppForm>
-      <div className='relative'>
-        <div className='absolute inset-0 flex items-center'>
-          <span className='w-full border-t' />
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
         </div>
-        <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-background text-muted-foreground px-2'>Or continue with</span>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background text-muted-foreground px-2">
+            Or continue with
+          </span>
         </div>
       </div>
-      <GithubSignInButton />
-    </>
+
+      <div className="flex flex-col gap-2">
+        <GoogleSignInButton
+          onClick={() => {
+            toast.info("Google sign up is not configured yet.");
+          }}
+        />
+        <GithubSignInButton />
+        <p className="text-sm text-center">
+          Already have an account?{" "}
+          <Link className={"text-primary underline"} href="/auth/sign-in">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }

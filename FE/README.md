@@ -89,6 +89,7 @@ You can use this Next.js + Shadcn UI dashboard starter to build:
 - Client project admin panels
 
 - Boilerplate for new Next.js admin UI projects
+
 ## Feature based organization
 
 ```plaintext
@@ -198,38 +199,3 @@ docker run -d -p 3000:3000 \
   --name shadcn-dashboard \
   shadcn-dashboard
 ```
-
-### ⭐ Support
-
-If you find this template helpful, please consider giving it a star ⭐
-You can also buy me a coffee if you'd like!
-
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat-square&logo=buymeacoffee)](https://buymeacoffee.com/kir4n)
-
-Cheers! 🥂
-
-<!--
-
-SEO keywords:
-
-open source admin dashboard, nextjs admin dashboard, nextjs dashboard template,
-
-shadcn ui dashboard, admin dashboard starter, next.js 16, typescript dashboard,
-
-dashboard ui template, nextjs shadcn admin panel, react admin dashboard,
-
-tailwind css admin dashboard
-
--->
-
----
-
-## Star History
-
-<a href="https://www.star-history.com/#Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left" />
- </picture>
-</a>

@@ -17,17 +17,21 @@
  * circular dependencies.
  */
 
-import { createFormHookContexts, revalidateLogic, useStore } from '@tanstack/react-form';
-import type { AnyFieldApi, DeepKeys } from '@tanstack/form-core';
-import type { VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+import {
+  createFormHookContexts,
+  revalidateLogic,
+  useStore,
+} from "@tanstack/react-form";
+import type { AnyFieldApi, DeepKeys } from "@tanstack/form-core";
+import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
 import {
   Field as DefaultField,
   FieldError as DefaultFieldError,
   FieldSet as DefaultFieldSet,
-  fieldVariants
-} from '@/components/ui/field';
-import { cn } from '@/lib/utils';
+  fieldVariants,
+} from "@/components/ui/field";
+import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
 // 1. Contexts
@@ -37,14 +41,16 @@ const {
   fieldContext,
   formContext,
   useFieldContext: _useFieldContext,
-  useFormContext
+  useFormContext,
 } = createFormHookContexts();
 
 type FormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
+);
 
 // ---------------------------------------------------------------------------
 // 2. Enhanced useFieldContext
@@ -55,7 +61,7 @@ const useFieldContext = () => {
   const fieldCtx = _useFieldContext();
 
   if (!fieldCtx) {
-    throw new Error('useFieldContext should be used within <AppField>');
+    throw new Error("useFieldContext should be used within <AppField>");
   }
 
   const { name, store, ...rest } = fieldCtx;
@@ -69,7 +75,7 @@ const useFieldContext = () => {
     formMessageId: `${id}-form-item-message`,
     errors,
     store,
-    ...rest
+    ...rest,
   };
 };
 
@@ -77,12 +83,16 @@ const useFieldContext = () => {
 // 3. Structural field components
 // ---------------------------------------------------------------------------
 
-function FieldSet({ className, children, ...props }: React.ComponentProps<'fieldset'>) {
+function FieldSet({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"fieldset">) {
   const id = React.useId();
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <DefaultFieldSet className={cn('grid gap-1', className)} {...props}>
+      <DefaultFieldSet className={cn("grid gap-2", className)} {...props}>
         {children}
       </DefaultFieldSet>
     </FormItemContext.Provider>
@@ -92,8 +102,9 @@ function FieldSet({ className, children, ...props }: React.ComponentProps<'field
 function Field({
   children,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) {
-  const { errors, formItemId, formDescriptionId, formMessageId, store } = useFieldContext();
+}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+  const { errors, formItemId, formDescriptionId, formMessageId, store } =
+    useFieldContext();
   const form = useFormContext();
   const isTouched = useStore(store, (state) => state.meta.isTouched);
   // Show errors after user interaction OR after first submit attempt
@@ -105,7 +116,9 @@ function Field({
       data-invalid={hasVisibleErrors}
       id={formItemId}
       aria-describedby={
-        !hasVisibleErrors ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
+        !hasVisibleErrors
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={hasVisibleErrors}
       {...props}
@@ -115,7 +128,7 @@ function Field({
   );
 }
 
-function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
+function FieldError({ className, ...props }: React.ComponentProps<"p">) {
   const { errors, formMessageId, store } = useFieldContext();
   const form = useFormContext();
   const isTouched = useStore(store, (state) => state.meta.isTouched);
@@ -123,9 +136,9 @@ function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
   if (!errors.length || (!isTouched && !hasSubmitted)) return null;
   return (
     <DefaultFieldError
-      data-slot='form-message'
+      data-slot="form-message"
       id={formMessageId}
-      className={cn('text-destructive text-sm', className)}
+      className={cn("text-destructive text-sm", className)}
       {...props}
       errors={errors}
     />
@@ -146,7 +159,7 @@ function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
  * </form.AppForm>
  * ```
  */
-function FormErrors({ className, ...props }: React.ComponentProps<'div'>) {
+function FormErrors({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
   return (
     <form.Subscribe selector={(state) => state.errors}>
@@ -154,14 +167,14 @@ function FormErrors({ className, ...props }: React.ComponentProps<'div'>) {
         if (!errors.length) return null;
         return (
           <div
-            role='alert'
+            role="alert"
             className={cn(
-              'bg-destructive/10 text-destructive rounded-md border p-3 text-sm',
+              "bg-destructive/10 text-destructive rounded-md border p-3 text-sm",
               className
             )}
             {...props}
           >
-            <ul className='list-disc space-y-1 pl-4'>
+            <ul className="list-disc space-y-1 pl-4">
               {errors.map((error, i) => (
                 <li key={i}>{String(error)}</li>
               ))}
@@ -188,10 +201,10 @@ function scrollToFirstError() {
   requestAnimationFrame(() => {
     const firstError = document.querySelector('[data-invalid="true"]');
     if (firstError) {
-      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstError.scrollIntoView({ behavior: "smooth", block: "center" });
       // Focus the first focusable element within the error field
       const focusable = firstError.querySelector<HTMLElement>(
-        'input, textarea, select, button, [tabindex]'
+        "input, textarea, select, button, [tabindex]"
       );
       focusable?.focus({ preventScroll: true });
     }
@@ -263,7 +276,7 @@ interface FieldConfig {
   /** Side-effect listeners (onChange, onBlur, onMount, onSubmit). */
   listeners?: FieldListenerConfig;
   /** Set to 'array' for array fields (enables pushValue, removeValue, etc.). */
-  mode?: 'value' | 'array';
+  mode?: "value" | "array";
   /** Default value for this field (useful for dynamically added fields). */
   defaultValue?: unknown;
 }
@@ -283,12 +296,14 @@ type FormFieldSlot = React.ComponentType<{
   validators?: FieldValidatorConfig;
   asyncDebounceMs?: number;
   listeners?: FieldListenerConfig;
-  mode?: 'value' | 'array';
+  mode?: "value" | "array";
   defaultValue?: unknown;
   children: (fieldApi: AnyFieldApi) => React.ReactNode;
 }>;
 
-function createFormField<P extends object>(FieldComponent: React.ComponentType<P>) {
+function createFormField<P extends object>(
+  FieldComponent: React.ComponentType<P>
+) {
   function ComposedFormField({
     name,
     validators,
@@ -298,7 +313,15 @@ function createFormField<P extends object>(FieldComponent: React.ComponentType<P
     defaultValue,
     ...props
   }: { name: string } & FieldConfig &
-    Omit<P, 'name' | 'validators' | 'asyncDebounceMs' | 'listeners' | 'mode' | 'defaultValue'>) {
+    Omit<
+      P,
+      | "name"
+      | "validators"
+      | "asyncDebounceMs"
+      | "listeners"
+      | "mode"
+      | "defaultValue"
+    >) {
     const form = useFormContext();
     const FieldSlot = form.Field as unknown as FormFieldSlot;
     return (
@@ -318,7 +341,9 @@ function createFormField<P extends object>(FieldComponent: React.ComponentType<P
       </FieldSlot>
     );
   }
-  ComposedFormField.displayName = `FormField(${FieldComponent.displayName || FieldComponent.name})`;
+  ComposedFormField.displayName = `FormField(${
+    FieldComponent.displayName || FieldComponent.name
+  })`;
   return ComposedFormField;
 }
 
@@ -336,12 +361,13 @@ function createFormField<P extends object>(FieldComponent: React.ComponentType<P
  * Narrows a composed field component's `name` prop to `DeepKeys<TValues>`.
  * Used internally by useFormFields and typedField.
  */
-type WithTypedName<C, TValues> =
-  C extends React.ComponentType<infer P>
-    ? P extends { name: string }
-      ? React.ComponentType<Omit<P, 'name'> & { name: DeepKeys<TValues> & string }>
-      : C
-    : C;
+type WithTypedName<C, TValues> = C extends React.ComponentType<infer P>
+  ? P extends { name: string }
+    ? React.ComponentType<
+        Omit<P, "name"> & { name: DeepKeys<TValues> & string }
+      >
+    : C
+  : C;
 
 /**
  * Narrows any single composed field component's `name` prop to type-safe field paths.
@@ -366,7 +392,12 @@ function typedField<TValues extends Record<string, unknown>>() {
 // 7. Exports
 // ---------------------------------------------------------------------------
 
-export type { FieldConfig, FieldValidatorConfig, FieldListenerConfig, WithTypedName };
+export type {
+  FieldConfig,
+  FieldValidatorConfig,
+  FieldListenerConfig,
+  WithTypedName,
+};
 
 export {
   fieldContext,
@@ -380,5 +411,5 @@ export {
   FieldSet as FormFieldSet,
   Field as FormField,
   FieldError as FormFieldError,
-  FormErrors
+  FormErrors,
 };
