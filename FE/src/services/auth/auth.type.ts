@@ -15,6 +15,15 @@ export interface ISignUpRequest {
   password: string;
 }
 
+export interface IForgotPasswordRequest {
+  email: string;
+}
+
+export interface IResetPasswordRequest {
+  password: string;
+  token: string;
+}
+
 export interface IVerifyTokenRequest {
   token: string;
 }

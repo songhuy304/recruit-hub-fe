@@ -1,10 +1,9 @@
 "use client";
 
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
-import { SignInFormValues } from "../shemas";
-import { Typography } from "@/components/ui/typography";
 import { AUTH_PATHS } from "@/config/paths.config";
 import Link from "next/link";
+import { signInFormSchema, SignInFormValues } from "../shemas";
 
 interface SignInFormProps {
   onSubmit: (values: SignInFormValues) => void;
@@ -17,6 +16,10 @@ export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
       identifier: "",
       password: "",
     } satisfies SignInFormValues,
+
+    validators: {
+      onSubmit: signInFormSchema,
+    },
     onSubmit: ({ value }) => {
       onSubmit(value);
     },
