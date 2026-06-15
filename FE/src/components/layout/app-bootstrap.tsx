@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetMe } from "@/features/auth/hooks";
 import { LoadingPage } from "../loading-page";
-import { useAppSelector } from "@/hooks/useRedux";
-import { selectAccessToken } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { tokenStorage } from "@/lib/auth";
+import { selectAccessToken, setTokens, setUser } from "@/store";
 import { useRouter } from "next/navigation";
 import { AUTH_PATHS } from "@/config/paths.config";
 
@@ -13,23 +14,44 @@ export default function AppBootstrap({
 }: {
   children: React.ReactNode;
 }) {
+  const dispatch = useAppDispatch();
   const selectToken = useAppSelector(selectAccessToken);
   const router = useRouter();
-  const { isLoading } = useGetMe();
+  const { isLoading, error, data } = useGetMe();
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    if (!selectToken) {
+    const accessToken = tokenStorage.getAccess();
+    const refreshToken = tokenStorage.getRefresh();
+
+    if (accessToken && refreshToken) {
+      dispatch(setTokens({ accessToken, refreshToken }));
+    }
+
+    setIsHydrated(true);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isHydrated || isLoading) return;
+
+    if (!selectToken || error) {
       router.replace(
         `${AUTH_PATHS.SIGN_IN}?redirect=${window.location.pathname}`,
       );
+      return;
     }
-  }, [selectToken, router]);
 
-  if (!selectToken) {
-    return <LoadingPage />;
-  }
+    setIsAuthorized(true);
+  }, [isHydrated, isLoading, selectToken, error, router]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data?.data));
+    }
+  }, [isAuthorized, dispatch, data]);
+
+  if (!isHydrated || isLoading || !isAuthorized) {
     return <LoadingPage />;
   }
 

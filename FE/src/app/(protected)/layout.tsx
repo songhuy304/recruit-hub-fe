@@ -8,16 +8,12 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import { createMetadata } from "@/lib/metadata";
 
-export const metadata = createMetadata(
-  "Sign Up",
-  "Sign Up page for authentication.",
-  {
-    robots: {
-      index: false,
-      follow: false,
-    },
+export const metadata = createMetadata("", "", {
+  robots: {
+    index: false,
+    follow: false,
   },
-);
+});
 
 export default async function Layout({
   children,

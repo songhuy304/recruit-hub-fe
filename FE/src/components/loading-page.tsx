@@ -1,3 +1,4 @@
+"use client";
 import { MorphingInfinity } from "./ui/morphing-infinity";
 
 const LoadingPage = () => {

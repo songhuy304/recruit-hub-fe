@@ -3,9 +3,6 @@ import { ITokenResponse } from "@/services/auth/auth.type";
 import { tokenStorage } from "@/lib/auth";
 import { RootState } from "..";
 
-const accessToken = tokenStorage.getAccess();
-const refreshToken = tokenStorage.getRefresh();
-
 interface AuthState {
   accessToken?: string | null;
   refreshToken?: string | null;
@@ -15,8 +12,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  accessToken: accessToken ?? null,
-  refreshToken: refreshToken ?? null,
+  accessToken: null,
+  refreshToken: null,
   user: null,
   isAuthenticated: false,
   isLoading: false,
@@ -39,6 +36,11 @@ export const authSlice = createSlice({
       tokenStorage.clearTokens();
     },
 
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
+
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
@@ -58,5 +60,9 @@ export const selectAccessToken = (state: RootState) => {
   return state.auth.accessToken;
 };
 
-export const { setTokens, logout, setLoading } = authSlice.actions;
+export const selectUser = (state: RootState) => {
+  return state.auth.user;
+};
+
+export const { setTokens, logout, setLoading, setUser } = authSlice.actions;
 export default authSlice.reducer;

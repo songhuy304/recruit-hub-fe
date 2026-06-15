@@ -1,5 +1,6 @@
 import { API_URL } from "@/config/app.config";
 import { tokenStorage } from "@/lib/auth";
+import { logout, store } from "@/store";
 import { ApiError } from "@/types/api.type";
 import axios from "axios";
 
@@ -27,7 +28,7 @@ apiClient.interceptors.response.use(
         requestUrl.includes(path),
       );
 
-      tokenStorage.clearTokens();
+      store.dispatch(logout());
 
       if (!isAuthRequest) {
         window.location.href = "/auth/sign-in";

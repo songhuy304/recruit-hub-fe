@@ -11,6 +11,7 @@ const useGetMe = () => {
     queryKey: QUERY_KEY.AUTH.ME,
     queryFn: () => userService.getMe(),
     enabled: !!token,
+    retry: 1,
   });
 };
 

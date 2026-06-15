@@ -11,8 +11,10 @@ import GithubSignInButton from "./github-auth-button";
 import { Typography } from "@/components/ui/typography";
 import Link from "next/link";
 import { AUTH_PATHS } from "@/config/paths.config";
+import { useQueryState } from "nuqs";
 
 export default function SignInViewPage() {
+  const [redirectUrl] = useQueryState("redirect");
   const router = useRouter();
   const dispatch = useDispatch();
   const { mutate: signIn, isPending } = useSignIn();
@@ -22,7 +24,7 @@ export default function SignInViewPage() {
     signIn(values, {
       onSuccess: (data) => {
         dispatch(setTokens(data.data));
-        router.push("/");
+        router.push(redirectUrl || "/");
       },
       onError: (error) => {
         toast.error(error.message);
