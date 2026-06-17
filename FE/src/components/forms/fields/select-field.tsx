@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useStore } from '@tanstack/react-form';
+import { useStore } from "@tanstack/react-form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { FieldDescription, FieldLabel } from '@/components/ui/field';
+  SelectValue,
+} from "@/components/ui/select";
+import { FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   useFieldContext,
   FormFieldSet,
   FormField,
   FormFieldError,
-  createFormField
-} from '@/components/ui/form-context';
+  createFormField,
+} from "@/components/ui/form-context";
 
 type Option = { value: string; label: string };
 
@@ -32,7 +32,7 @@ export function SelectField({
   description,
   required,
   options,
-  placeholder = 'Select an option'
+  placeholder = "Select an option",
 }: SelectFieldProps) {
   const field = useFieldContext();
   const isTouched = useStore(field.store, (s) => s.meta.isTouched);
@@ -44,7 +44,7 @@ export function SelectField({
       <FormField>
         <FieldLabel htmlFor={field.name}>
           {label}
-          {required && ' *'}
+          {required && <span className="text-red-500"> *</span>}
         </FieldLabel>
         <Select
           value={value}

@@ -47,7 +47,8 @@ function CreateTeamForm({
     },
   });
 
-  const { FormTextField } = useFormFields<CreateTeamFormValues>();
+  const { FormTextField, FormFileUploadField } =
+    useFormFields<CreateTeamFormValues>();
 
   return (
     <form.AppForm>
@@ -58,7 +59,7 @@ function CreateTeamForm({
           </CardHeader>
 
           <CardContent className="flex flex-col gap-6">
-            <form.AppField name="logo">
+            {/* <form.AppField name="logo">
               {(field) => {
                 const logo = (field.state.value as File[] | undefined)?.[0];
                 const preview = logo ? URL.createObjectURL(logo) : null;
@@ -120,15 +121,27 @@ function CreateTeamForm({
                   </div>
                 );
               }}
-            </form.AppField>
+            </form.AppField> */}
 
-            <FormTextField name="name" label="Name" placeholder="Team name" />
+            <FormFileUploadField
+              name="logo"
+              label="Logo"
+              className="m-h-24"
+              description="Recommended size 1:1, up to 10MB."
+              maxSize={10 * 1024 * 1024}
+              maxFiles={1}
+              required
+            />
 
+            <FormTextField
+              name="name"
+              label="Name"
+              placeholder="Enter your team name"
+            />
             <FormTextField
               name="slug"
               label="Slug"
-              placeholder="my-team"
-              className="bg-muted/40 border-transparent"
+              placeholder="Enter team slug"
             />
           </CardContent>
 

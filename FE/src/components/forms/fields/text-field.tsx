@@ -13,8 +13,10 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { InputPassword } from "@/components/ui/input-password";
 
-interface TextFieldProps
-  extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
+interface TextFieldProps extends Omit<
+  React.ComponentProps<"input">,
+  "value" | "onChange" | "onBlur"
+> {
   label: string;
   description?: string;
   required?: boolean;
@@ -43,7 +45,7 @@ export function TextField({
       <FormField>
         <FieldLabel htmlFor={field.name}>
           {label}
-          {required && " *"}
+          {required && <span className="text-red-500"> *</span>}
         </FieldLabel>
         <div className="relative">
           <Component
