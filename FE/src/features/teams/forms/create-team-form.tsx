@@ -13,10 +13,11 @@ import {
   createTeamSchema,
   type CreateTeamFormValues,
 } from "../schemas/team.schema";
+import { generateSlug } from "@/lib/utils";
 
 interface CreateTeamFormProps {
   onCancel: () => void;
-  onSubmit?: (values: CreateTeamFormValues) => void;
+  onSubmit: (values: CreateTeamFormValues, form: any) => void;
   isPending?: boolean;
 }
 
@@ -29,13 +30,13 @@ function CreateTeamForm({
     defaultValues: {
       name: "",
       slug: "",
-      logoUrl: [] as File[],
+      logoUrl: "",
     } as CreateTeamFormValues,
     validators: {
       onSubmit: createTeamSchema,
     },
     onSubmit: ({ value }) => {
-      onSubmit?.(value);
+      onSubmit(value, form);
     },
   });
 
@@ -64,11 +65,20 @@ function CreateTeamForm({
               name="name"
               label="Name"
               placeholder="Enter your team name"
+              listeners={{
+                onChange: ({ value }) => {
+                  form.setFieldValue(
+                    "slug",
+                    generateSlug((value as string) ?? "")
+                  );
+                },
+              }}
             />
             <FormTextField
               name="slug"
               label="Slug"
               placeholder="Enter team slug"
+              disabled
             />
           </CardContent>
 

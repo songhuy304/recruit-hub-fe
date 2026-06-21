@@ -4,7 +4,7 @@ import { UploadFileRequest, UploadFileResponse } from "@/types/file.type";
 import { useMutation } from "@tanstack/react-query";
 
 export const uploadFile = async (
-  data: UploadFileRequest,
+  data: UploadFileRequest
 ): Promise<IResponse<UploadFileResponse>> => {
   const formData = new FormData();
 
@@ -14,17 +14,11 @@ export const uploadFile = async (
     formData.append("folderPath", data.folderPath);
   }
 
-  const res = await apiClient.post<IResponse<UploadFileResponse>>(
-    "/upload/file",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+  return apiClient.post("/upload/file", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
     },
-  );
-
-  return res.data;
+  });
 };
 
 export const useUploadFile = () => {

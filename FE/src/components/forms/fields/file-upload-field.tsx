@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { useStore } from "@tanstack/react-form";
 
 import { FileUploader } from "@/components/file-uploader";
@@ -39,6 +44,12 @@ export function FileUploadField({
   const value = useStore(field.store, (s) => s.value) as string | undefined;
   const { mutateAsync: uploadFile, isPending } = useUploadFile();
   const [files, setFiles] = useState<File[]>([]);
+
+  useEffect(() => {
+    if (!value) {
+      setFiles([]);
+    }
+  }, [value]);
 
   const handleValueChange: Dispatch<SetStateAction<File[]>> = (nextValue) => {
     setFiles((prev) => {

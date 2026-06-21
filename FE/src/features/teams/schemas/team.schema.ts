@@ -6,7 +6,7 @@ export const createTeamSchema = z.object({
     .string()
     .min(1, "Slug is required")
     .regex(/^[a-z0-9-]+$/, "Use lowercase letters, numbers, and hyphens only"),
-  logoUrl: z.array(z.instanceof(File)).optional(),
+  logoUrl: z.string().optional(),
 });
 
 export const joinTeamSchema = z.object({

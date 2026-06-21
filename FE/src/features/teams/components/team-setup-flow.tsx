@@ -15,7 +15,7 @@ import { useCreateTeam } from "../hooks";
 
 function TeamSetupFlow() {
   const router = useRouter();
-  const { mutate: createTeam, isPending: isCreateTeamPending } =
+  const { mutateAsync: createTeam, isPending: isCreateTeamPending } =
     useCreateTeam();
   const [view, setView] = useState<TeamSetupView>("choose");
   const [isPending, setIsPending] = useState(false);
@@ -24,16 +24,18 @@ function TeamSetupFlow() {
     router.push("/dashboard/overview");
   };
 
-  const handleCreateTeam = async (values: CreateTeamFormValues) => {
+  const handleCreateTeam = async (values: CreateTeamFormValues, form: any) => {
     try {
-      createTeam({
-        logoUrl: "",
+      await createTeam({
+        logoUrl: values.logoUrl || null,
         name: values.name,
         slug: values.slug,
       });
+      form.reset();
       toast.success(`Team "${values.name}" created`);
     } catch {
       toast.error("Failed to create team");
+      throw new Error("Failed to create team");
     }
   };
 
