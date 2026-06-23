@@ -41,6 +41,7 @@
   },
 
   "error": {
+    "internal-sever": "Lỗi hệ thống",
     "user": {
       "forbidden": "Bạn không có quyền thực hiện hành động này.",
       "not-found": "Không tìm thấy người dùng.",
@@ -109,5 +110,27 @@
       "label": "Mã mời",
       "placeholder": "Nhập mã mời"
     }
+  },
+  "Invite": {
+    "title": "Invite new members",
+    "sidebar-title": "Invite your team",
+    "sidebar-description": "Add teammates to collaborate, share ideas, and get things done together.",
+    "form-title": "Invite team members",
+    "form-description": "Invite your team members to collaborate",
+    "email-label": "Email addresses",
+    "email-placeholder": "example@email.com, example2@email.com",
+    "email-helper": "You can paste multiple email addresses separated by line breaks",
+    "role-helper-member": "Members can view and collaborate on projects.",
+    "role-helper-admin": "Admins can manage members, settings, and invitations.",
+    "placeholder": "example@email.com, example2@email.com",
+    "role": "Role",
+    "admin": "Admin",
+    "member": "Member",
+    "skip": "Skip for now",
+    "send": "Send invites",
+    "emails-required": "Emails are required",
+    "invalid-emails": "Invalid email format in list",
+    "success": "Invitations sent successfully!",
+    "error": "Failed to send invitations!"
   }
 }

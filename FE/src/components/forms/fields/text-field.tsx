@@ -17,7 +17,7 @@ interface TextFieldProps extends Omit<
   React.ComponentProps<"input">,
   "value" | "onChange" | "onBlur"
 > {
-  label: string;
+  label: React.ReactNode;
   description?: string;
   required?: boolean;
   type?: "text" | "email" | "password" | "tel" | "url" | "number";

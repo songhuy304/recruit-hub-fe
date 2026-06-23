@@ -87,7 +87,6 @@ export default function ProductForm({
               label='Product Image'
               description='Upload a product image'
               maxSize={5 * 1024 * 1024}
-              maxFiles={4}
             />
 
             <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>

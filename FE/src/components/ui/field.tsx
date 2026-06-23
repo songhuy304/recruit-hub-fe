@@ -109,8 +109,9 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
 
 function FieldLabel({
   className,
+  icons,
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: React.ComponentProps<typeof Label> & { icons?: React.ReactNode }) {
   return (
     <Label
       data-slot="field-label"
@@ -124,6 +125,23 @@ function FieldLabel({
     />
   );
 }
+
+
+export function FieldLabelWithIcon({
+  icon: Icon,
+  label,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+}) {
+  return (
+    <>
+      <Icon className="size-4 shrink-0" />
+      {label}
+    </>
+  );
+}
+
 
 function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (

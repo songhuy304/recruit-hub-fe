@@ -789,7 +789,6 @@ export default function DemoForm() {
                 label='Profile Picture'
                 description='Drag & drop or click to upload (max 5MB)'
                 maxSize={5000000}
-                maxFiles={1}
               />
 
               {/* ─── SUBMIT ─── */}

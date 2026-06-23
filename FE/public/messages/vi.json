@@ -41,6 +41,7 @@
   },
 
   "error": {
+    "internal-sever": "Internal sever",
     "user": {
       "forbidden": "Bạn không có quyền thực hiện hành động này.",
       "not-found": "Không tìm thấy người dùng.",
@@ -55,7 +56,7 @@
       "unauthorized": "Không được ủy quyền."
     },
     "team": {
-      "exceed-limit": "Đã vượt quá giới hạn thành viên nhóm.",
+      "exceed-limit": "Đã vượt quá giới hạn team.",
       "not-found": "Không tìm thấy nhóm.",
       "invalid-invite-code": "Mã mời không hợp lệ.",
       "request-exists": "Yêu cầu đã tồn tại.",
@@ -109,5 +110,27 @@
       "label": "Mã mời",
       "placeholder": "Nhập mã mời"
     }
+  },
+  "Invite": {
+    "title": "Mời thành viên mới",
+    "sidebar-title": "Mời nhóm của bạn",
+    "sidebar-description": "Thêm đồng đội để cùng cộng tác, chia sẻ ý tưởng và hoàn thành công việc.",
+    "form-title": "Mời thành viên nhóm",
+    "form-description": "Mời thành viên nhóm của bạn cùng cộng tác",
+    "email-label": "Địa chỉ email",
+    "email-placeholder": "Nhập địa chỉ email, mỗi dòng một email",
+    "email-helper": "Bạn có thể dán nhiều địa chỉ email, mỗi email trên một dòng",
+    "role-helper-member": "Thành viên có thể xem và cộng tác trên các dự án.",
+    "role-helper-admin": "Quản trị viên có thể quản lý thành viên, cài đặt và lời mời.",
+    "placeholder": "example@email.com, example2@email.com",
+    "role": "Vai trò",
+    "admin": "Quản trị viên",
+    "member": "Thành viên",
+    "skip": "Bỏ qua",
+    "send": "Gửi lời mời",
+    "emails-required": "Vui lòng nhập danh sách email",
+    "invalid-emails": "Danh sách chứa địa chỉ email không hợp lệ",
+    "success": "Đã gửi lời mời thành công!",
+    "error": "Gửi lời mời thất bại!"
   }
 }

@@ -11,6 +11,7 @@ const PATH = {
   DELETE: (teamId: number) => `/teams/${teamId}`,
   LEAVE: (teamId: number) => `/teams/leave/${teamId}`,
   JOIN: (inviteCode: string) => `/teams/join/${inviteCode}`,
+  INVITE: (teamId: number) => `/teams/${teamId}/invitations`,
 };
 
 export const teamService = {
@@ -26,4 +27,8 @@ export const teamService = {
     apiClient.post(PATH.LEAVE(teamId)),
   joinTeam: (inviteCode: string): Promise<IResponse<void>> =>
     apiClient.post(PATH.JOIN(inviteCode)),
+  inviteMembers: (
+    teamId: number,
+    payload: { emails: string[]; role: string },
+  ): Promise<IResponse<void>> => apiClient.post(PATH.INVITE(teamId), payload),
 };

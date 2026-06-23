@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Icons } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ interface TeamMainPanelProps {
 }
 
 function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
+  const [activeTab, setActiveTab] = useState("overview");
   const isCurrentTeamId = user?.currentTeamId === selectedTeam?.id;
   const isPersonalAccount = selectedTeam?.type === ETEAM_TYPE.PERSONAL;
   const router = useRouter();
@@ -83,7 +85,8 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
         </div>
       ) : (
         <TabsUnderline
-          defaultValue="overview"
+          value={activeTab}
+          onValueChange={setActiveTab}
           className="gap-6"
           items={[
             {
@@ -102,7 +105,12 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
               value: "invites",
               label: "Invites",
               icon: Icons.mail,
-              content: <TeamDetailInvite />,
+              content: (
+                <TeamDetailInvite
+                  teamId={selectedTeam?.id}
+                  onSkip={() => setActiveTab("overview")}
+                />
+              ),
             },
             {
               value: "settings",

@@ -15,7 +15,7 @@ interface TextareaFieldProps extends Omit<
   React.ComponentProps<"textarea">,
   "value" | "onChange" | "onBlur"
 > {
-  label: string;
+  label: React.ReactNode;
   description?: string;
   required?: boolean;
   maxLength?: number;

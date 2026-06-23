@@ -38,7 +38,7 @@ apiClient.interceptors.response.use(
     return Promise.reject<ApiError>(
       err.response?.data ?? {
         statusCode: 500,
-        message: "internal server error",
+        message: "error.internal-sever",
       },
     );
   },

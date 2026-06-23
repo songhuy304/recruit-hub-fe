@@ -71,6 +71,7 @@ import {
   IconSend,
   IconSettings,
   IconShare,
+  IconShield,
   IconSlash,
   IconSparkles,
   IconStack2,
@@ -198,6 +199,7 @@ export const Icons = {
   sparkles: IconSparkles,
   badgeCheck: IconRosetteDiscountCheck,
   lock: IconLock,
+  shield: IconShield,
 
   // Data / Charts
   trendingDown: IconTrendingDown,

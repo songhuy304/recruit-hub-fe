@@ -78,7 +78,7 @@ function TabsUnderline({
       value={activeTab}
       onValueChange={handleTabChange}
       orientation="horizontal"
-      className={cn(className)}
+      className={cn("h-full", className)}
     >
       <TabsList
         className={cn(
@@ -145,7 +145,7 @@ function TabsUnderline({
 
       <div
         className={cn(
-          "relative w-full min-h-0 overflow-hidden",
+          "relative w-full min-h-0 overflow-hidden h-full",
           contentClassName
         )}
       >
@@ -158,6 +158,7 @@ function TabsUnderline({
               initial="enter"
               animate="center"
               exit="exit"
+              className="h-full"
               transition={{
                 type: "spring",
                 stiffness: 340,

@@ -20,7 +20,7 @@ import {
 type Option = { value: string; label: string };
 
 interface SelectFieldProps {
-  label: string;
+  label: React.ReactNode;
   description?: string;
   required?: boolean;
   options: Option[];

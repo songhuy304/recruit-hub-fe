@@ -1,30 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { Icons } from "@/components/icons";
-import { TeamAvatar } from "@/components/team-avatar";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { FieldLabel } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
 import { Typography } from "@/components/ui/typography";
-import { useUploadFile } from "@/hooks/use-upload-file";
-import { cn } from "@/lib/utils";
+import { useUser } from "@/hooks/useUser";
 
 import { useDeleteTeam, useLeaveTeam } from "../../hooks";
 import {
@@ -33,199 +27,19 @@ import {
 } from "../../schemas/team.schema";
 import type { ITeam } from "../../types";
 
+import { DangerActionRow } from "./danger-action-row";
+import { SettingsCard } from "../settings-card";
+
 interface TeamDetailSettingProps {
   team: ITeam;
 }
 
-interface SettingsCardProps {
-  title: string;
-  description: string;
-  variant?: "default" | "danger";
-  children: React.ReactNode;
-}
-
-interface TeamAvatarUploadProps {
-  value?: string;
-  teamName: string;
-  onChange: (url: string) => void;
-}
-
-const MAX_AVATAR_SIZE = 2 * 1024 * 1024;
-
-function SettingsCard({
-  title,
-  description,
-  variant = "default",
-  children,
-}: SettingsCardProps) {
-  return (
-    <Card
-      className={cn(
-        "gap-0 py-0",
-        variant === "danger" && "border-destructive/40",
-      )}
-    >
-      <CardContent className="flex flex-col gap-8 p-6 lg:flex-row lg:gap-12">
-        <div className="shrink-0 lg:w-56 xl:w-64">
-          <Typography
-            as="h4"
-            variant="label-lg"
-            className={cn(variant === "danger" && "text-destructive")}
-          >
-            {title}
-          </Typography>
-          <Typography
-            as="p"
-            variant="paragraph-sm"
-            className="text-muted-foreground mt-1.5"
-          >
-            {description}
-          </Typography>
-        </div>
-        <div className="min-w-0 flex-1">{children}</div>
-      </CardContent>
-    </Card>
-  );
-}
-
-function TeamAvatarUpload({
-  value,
-  teamName,
-  onChange,
-}: TeamAvatarUploadProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { mutateAsync: uploadFile, isPending } = useUploadFile();
-
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-
-    if (!file) return;
-
-    if (file.size > MAX_AVATAR_SIZE) {
-      toast.error("Image must be 2MB or smaller");
-      return;
-    }
-
-    try {
-      const response = await uploadFile({
-        file,
-        folderPath: "teams",
-      });
-      onChange(response.data.url);
-    } catch {
-      toast.error("Failed to upload avatar");
-    }
-  };
-
-  return (
-    <div className="flex flex-col gap-2">
-      <FieldLabel>Team Avatar</FieldLabel>
-      <div className="flex items-start gap-4">
-        <TeamAvatar
-          src={value || ""}
-          fallback={teamName}
-          className="size-16 rounded-xl"
-        />
-        <div className="flex flex-col gap-1.5">
-          <Button
-            type="button"
-            variant="outline"
-            className="gap-2"
-            onClick={() => inputRef.current?.click()}
-            isLoading={isPending}
-          >
-            <Icons.upload className="size-4" />
-            Change Avatar
-          </Button>
-          <Typography
-            as="p"
-            variant="paragraph-xs"
-            className="text-muted-foreground"
-          >
-            JPG, PNG or GIF. Max size 2MB.
-          </Typography>
-        </div>
-      </div>
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/jpeg,image/png,image/gif"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-    </div>
-  );
-}
-
-function DangerActionRow({
-  icon: Icon,
-  title,
-  description,
-  actionLabel,
-  confirmTitle,
-  confirmDescription,
-  onConfirm,
-  isPending = false,
-}: DangerActionRowProps) {
-  return (
-    <div className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex gap-4">
-        <div className="bg-destructive/15 flex size-10 shrink-0 items-center justify-center rounded-lg">
-          <Icon className="text-destructive size-5" />
-        </div>
-        <div className="min-w-0">
-          <Typography as="p" variant="label-sm">
-            {title}
-          </Typography>
-          <Typography
-            as="p"
-            variant="paragraph-sm"
-            className="text-muted-foreground mt-1"
-          >
-            {description}
-          </Typography>
-        </div>
-      </div>
-
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button
-            variant="outline"
-            className="border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive shrink-0"
-          >
-            {actionLabel}
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{confirmTitle}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {confirmDescription}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-destructive text-white hover:bg-destructive/90"
-              disabled={isPending}
-              onClick={onConfirm}
-            >
-              {isPending ? "Processing..." : actionLabel}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
-  );
-}
-
 function TeamDetailSetting({ team }: TeamDetailSettingProps) {
   const router = useRouter();
+  const { user } = useUser();
   const { mutate: deleteTeam, isPending: isDeleting } = useDeleteTeam();
   const { mutate: leaveTeam, isPending: isLeaving } = useLeaveTeam();
+  const [isActiveTeamWarningOpen, setIsActiveTeamWarningOpen] = useState(false);
 
   const form = useAppForm({
     defaultValues: {
@@ -241,7 +55,7 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
     },
   });
 
-  const { FormTextField } = useFormFields<CreateTeamFormValues>();
+  const { FormTextField, FormFileUploadField } = useFormFields<CreateTeamFormValues>();
 
   useEffect(() => {
     form.reset({
@@ -251,7 +65,16 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
     });
   }, [form, team.id, team.logoUrl, team.name, team.slug]);
 
+  const checkActiveTeam = () => {
+    if (user?.currentTeamId === team.id) {
+      setIsActiveTeamWarningOpen(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleDeleteTeam = () => {
+    if (!checkActiveTeam()) return;
     deleteTeam(team.id, {
       onSuccess: () => {
         toast.success("Team deleted successfully");
@@ -264,6 +87,7 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
   };
 
   const handleLeaveTeam = () => {
+    if (!checkActiveTeam()) return;
     leaveTeam(team.id, {
       onSuccess: () => {
         toast.success("You have left the team");
@@ -305,15 +129,13 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
               </Typography>
             </div>
 
-            <form.AppField name="logoUrl">
-              {(field) => (
-                <TeamAvatarUpload
-                  value={field.state.value}
-                  teamName={form.getFieldValue("name") || team.name}
-                  onChange={field.handleChange}
-                />
-              )}
-            </form.AppField>
+            <FormFileUploadField
+              name="logoUrl"
+              label="Logo"
+              className="m-h-24"
+              description="Recommended size 1:1, up to 10MB."
+              maxSize={10 * 1024 * 1024}
+            />
 
             <div className="flex justify-end pt-2">
               <Button type="submit">Save Changes</Button>
@@ -334,9 +156,10 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
             description="Remove yourself from this workspace. You will lose access to all projects and team resources."
             actionLabel="Leave Team"
             confirmTitle="Leave this team?"
-            confirmDescription="You will lose access to all projects and resources in this team. You can rejoin later with an invite code."
+            confirmDescription="You'll lose access to this team's projects and resources. If you're the owner, leaving will permanently delete the team."
             onConfirm={handleLeaveTeam}
             isPending={isLeaving}
+            onBeforeOpen={checkActiveTeam}
           />
 
           <Separator />
@@ -350,9 +173,31 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
             confirmDescription="This will permanently delete the team and all associated data. This action cannot be undone."
             onConfirm={handleDeleteTeam}
             isPending={isDeleting}
+            onBeforeOpen={checkActiveTeam}
           />
         </div>
       </SettingsCard>
+
+      <AlertDialog open={isActiveTeamWarningOpen} onOpenChange={setIsActiveTeamWarningOpen}>
+        <AlertDialogContent className="max-w-[400px]">
+          <AlertDialogHeader className="flex flex-col items-center text-center">
+            <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full text-amber-600 dark:text-amber-500 mb-2">
+              <Icons.warning className="size-6" />
+            </div>
+            <AlertDialogTitle className="text-xl font-bold">Không thể tiếp tục</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground text-sm text-center">
+              Vui lòng chuyển sang một team khác trước khi tiếp tục.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:justify-center">
+            <AlertDialogAction
+              onClick={() => setIsActiveTeamWarningOpen(false)}
+            >
+              Hủy bỏ
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

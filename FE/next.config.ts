@@ -20,6 +20,10 @@ const baseConfig: NextConfig = {
         protocol: "https",
         hostname: "clerk.com",
       },
+      {
+        protocol: "https",
+        hostname: "*.storage.supabase.co",
+      },
     ],
   },
   transpilePackages: ["geist"],

@@ -26,7 +26,6 @@ interface FileUploadFieldProps {
   description?: string;
   required?: boolean;
   maxSize?: number;
-  maxFiles?: number;
   className?: string;
   folderPath?: string;
 }
@@ -36,7 +35,6 @@ export function FileUploadField({
   description,
   required,
   maxSize,
-  maxFiles = 1,
   className,
   folderPath,
 }: FileUploadFieldProps) {
@@ -56,12 +54,17 @@ export function FileUploadField({
       const next =
         typeof nextValue === "function" ? nextValue(prev) : nextValue;
 
-      if (!next.length && !value) {
+      if (!next.length) {
         field.handleChange("");
       }
 
       return next;
     });
+  };
+
+  const handlePreviewRemove = () => {
+    setFiles([]);
+    field.handleChange("");
   };
 
   const handleUpload = async (uploadFiles: File[]) => {
@@ -77,6 +80,7 @@ export function FileUploadField({
       });
 
       field.handleChange(res.data.url);
+      setFiles([]);
     } catch (error) {
       console.error(error);
 
@@ -98,8 +102,9 @@ export function FileUploadField({
             value={files}
             onValueChange={handleValueChange}
             onUpload={handleUpload}
+            previewUrl={value}
+            onPreviewRemove={handlePreviewRemove}
             maxSize={maxSize}
-            maxFiles={maxFiles}
             className={className}
             disabled={isPending}
           />

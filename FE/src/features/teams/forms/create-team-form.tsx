@@ -1,21 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
-import { TeamSetupCard } from "../components/team-setup-card";
+import { Typography } from "@/components/ui/typography";
+import { generateSlug } from "@/lib/utils";
 import {
   createTeamSchema,
   type CreateTeamFormValues,
 } from "../schemas/team.schema";
-import { generateSlug } from "@/lib/utils";
-import { Heading } from "@/components/ui/heading";
-import { Typography } from "@/components/ui/typography";
 
 interface CreateTeamFormProps {
   onCancel: () => void;
@@ -60,7 +52,6 @@ function CreateTeamForm({
             className="m-h-24"
             description="Recommended size 1:1, up to 10MB."
             maxSize={10 * 1024 * 1024}
-            maxFiles={1}
           />
 
           <FormTextField
