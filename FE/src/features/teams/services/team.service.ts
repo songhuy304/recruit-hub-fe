@@ -8,6 +8,9 @@ const PATH = {
   LIST: "/teams",
   CREATE: "/teams/create-team",
   SWITCH: (teamId: number) => `/teams/switch/${teamId}`,
+  DELETE: (teamId: number) => `/teams/${teamId}`,
+  LEAVE: (teamId: number) => `/teams/leave/${teamId}`,
+  JOIN: (inviteCode: string) => `/teams/join/${inviteCode}`,
 };
 
 export const teamService = {
@@ -17,4 +20,10 @@ export const teamService = {
     apiClient.post(PATH.CREATE, teamData),
   switchTeam: (teamId: number): Promise<IResponse<ITokenResponse>> =>
     apiClient.post(PATH.SWITCH(teamId)),
+  deleteTeam: (teamId: number): Promise<IResponse<void>> =>
+    apiClient.delete(PATH.DELETE(teamId)),
+  leaveTeam: (teamId: number): Promise<IResponse<void>> =>
+    apiClient.post(PATH.LEAVE(teamId)),
+  joinTeam: (inviteCode: string): Promise<IResponse<void>> =>
+    apiClient.post(PATH.JOIN(inviteCode)),
 };

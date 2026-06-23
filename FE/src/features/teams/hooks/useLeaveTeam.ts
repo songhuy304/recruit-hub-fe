@@ -1,29 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { teamService } from "../services";
 import { QUERY_KEY } from "@/config/query-keys";
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
 
-const useSwitchTeam = () => {
-  const t = useTranslations();
+const useLeaveTeam = () => {
   const queryClient = useQueryClient();
 
-  const switchTeamMutation = useMutation({
-    mutationFn: (teamId: number) => teamService.switchTeam(teamId),
+  const leaveTeamMutation = useMutation({
+    mutationFn: (teamId: number) => teamService.leaveTeam(teamId),
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER.ROOT] }),
         queryClient.invalidateQueries({ queryKey: [QUERY_KEY.TEAM.ROOT] }),
       ]);
     },
-    onError: (error) => {
-      toast.error(t(error.message));
-    },
   });
 
-  const data = switchTeamMutation.data;
-
-  return { ...switchTeamMutation, data };
+  return { ...leaveTeamMutation };
 };
 
-export { useSwitchTeam };
+export { useLeaveTeam };

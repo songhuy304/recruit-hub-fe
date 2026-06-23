@@ -9,7 +9,7 @@ import { ETEAM_TYPE, type ITeam } from "../types";
 import { TeamDetailInvite } from "./team-detail-invite";
 import { TeamDetailMember } from "./team-detail-member";
 import { TeamDetailOverview } from "./team-detail-overview";
-import { TeamDetailSetting } from "./team-detail-setting";
+import { TeamDetailSetting } from "./team-detail-setting/team-detail-setting";
 import { useSwitchTeam } from "../hooks";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useRedux";
@@ -51,6 +51,11 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
             </Typography>
             {isCurrentTeamId && <Badge variant="success">Active</Badge>}
           </div>
+          <Badge variant="secondary">
+            <Typography as="p" variant="paragraph-xs" copy>
+              #{selectedTeam?.inviteCode}
+            </Typography>
+          </Badge>
         </div>
         {!isCurrentTeamId && (
           <Button
@@ -103,7 +108,7 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
               value: "settings",
               label: "Settings",
               icon: Icons.settings,
-              content: <TeamDetailSetting />,
+              content: <TeamDetailSetting team={selectedTeam!} />,
             },
           ]}
         />

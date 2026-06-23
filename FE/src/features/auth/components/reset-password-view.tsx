@@ -8,8 +8,10 @@ import { IResetPasswordRequest } from "@/services/auth/auth.type";
 import { useQueryState } from "nuqs";
 import { AUTH_PATHS } from "@/config/paths.config";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const ResetPasswordViewPage = () => {
+  const t = useTranslations();
   const [token] = useQueryState("token");
   const route = useRouter();
   const { mutate: resetPassword, isPending } = useResetPassword();
@@ -26,7 +28,7 @@ const ResetPasswordViewPage = () => {
         route.replace(AUTH_PATHS.SIGN_IN);
       },
       onError(error) {
-        toast.error(error.message);
+        toast.error(t(error.message));
       },
     });
   };

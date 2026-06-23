@@ -8,12 +8,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useVerifyToken } from "../hooks/useVerifyToken";
+import { useTranslations } from "next-intl";
 
 interface IVerifyTokenViewProps {
   token: string;
 }
 
 const VerifyTokenView = ({ token }: IVerifyTokenViewProps) => {
+  const t = useTranslations();
   const { mutate, isPending } = useVerifyToken();
   const dispatch = useAppDispatch();
   const route = useRouter();
@@ -34,7 +36,7 @@ const VerifyTokenView = ({ token }: IVerifyTokenViewProps) => {
             route.push("/");
           },
           onError(error) {
-            toast.error(error.message || "Failed to verify token");
+            toast.error(t(error.message) || "Failed to verify token");
             route.push(AUTH_PATHS.SIGN_IN);
           },
         },

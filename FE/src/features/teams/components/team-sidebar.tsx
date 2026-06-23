@@ -12,7 +12,6 @@ import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
 interface TeamSidebarProps {
   onSelectView: (view: "create" | "join") => void;
-  onPersonalAccount: () => void;
   teams: ITeam[];
   isLoading: boolean;
   selectedTeam: ITeam | null;
@@ -39,7 +38,7 @@ function TeamSidebarItem({
       onClick={() => onSelect(team)}
       className={cn(
         "h-auto w-full justify-start gap-3 rounded-lg px-3 py-2.5 transition-all duration-300 relative",
-        isSelected && "bg-accent"
+        isSelected && "bg-accent",
       )}
     >
       <TeamAvatar

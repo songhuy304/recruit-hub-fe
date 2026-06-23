@@ -17,10 +17,12 @@ import { TeamSidebar } from "./team-sidebar";
 import { ITeam } from "../types";
 import PageSkeleton from "@/components/page-skeleton";
 import { useUser } from "@/hooks/useUser";
+import { useTranslations } from "next-intl";
 
 type TeamSetupView = "overview" | "create" | "join";
 
 function TeamSetupFlow() {
+  const t = useTranslations();
   const router = useRouter();
   const { user } = useUser();
   const { data: teams = [], isLoading, isPending, isFetching } = useGetTeams();
@@ -30,13 +32,9 @@ function TeamSetupFlow() {
 
   useEffect(() => {
     setSelectedTeam(
-      teams.find((team) => team.id === user?.currentTeamId) ?? null
+      teams.find((team) => team.id === user?.currentTeamId) ?? null,
     );
   }, [teams, user?.currentTeamId]);
-
-  const handlePersonalAccount = () => {
-    router.push("/dashboard/overview");
-  };
 
   const handleCreateTeam = async (values: CreateTeamFormValues, form: any) => {
     createTeam(
@@ -50,9 +48,9 @@ function TeamSetupFlow() {
           form.reset();
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to create team");
+          toast.error(t(error.message));
         },
-      }
+      },
     );
   };
 
@@ -86,18 +84,17 @@ function TeamSetupFlow() {
 
   const mainContent = viewConfig[view];
 
-  const loading = isLoading || isPending || isFetching;
+  const loading = isLoading || isPending;
 
   if (loading) {
     return <PageSkeleton />;
   }
 
   return (
-    <Card className="gap-0 py-0 md:min-h-[700px]">
+    <Card className="gap-0 py-0 md:min-h-175">
       <div className="flex flex-col divide-y lg:flex-row lg:divide-x lg:divide-y-0 h-full">
         <TeamSidebar
           onSelectView={setView}
-          onPersonalAccount={handlePersonalAccount}
           selectedTeam={selectedTeam}
           setSelectedTeam={(value) => {
             setSelectedTeam(value);

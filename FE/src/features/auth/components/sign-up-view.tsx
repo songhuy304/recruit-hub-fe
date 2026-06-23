@@ -6,19 +6,21 @@ import { useSignup } from "../hooks";
 import { SignUpFormValues } from "../shemas";
 import { useRouter } from "next/navigation";
 import { AUTH_PATHS } from "@/config/paths.config";
+import { useTranslations } from "next-intl";
 
 export default function SignUpViewPage() {
+  const t = useTranslations();
   const router = useRouter();
   const { mutate: signupMutation, isPending } = useSignup();
 
   const handleSignUp = (values: SignUpFormValues) => {
     signupMutation(values, {
       onSuccess: () => {
-        toast.success("Account created successfully!");
+        toast.success(t("SignUp.sign-up-success"));
         router.push(AUTH_PATHS.SIGN_IN);
       },
-      onError: () => {
-        toast.error("Failed to create account");
+      onError: (error) => {
+        toast.error(t(error.message));
       },
     });
   };

@@ -1,12 +1,12 @@
 "use client";
 
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
-import { toast } from "sonner";
+import { AUTH_PATHS } from "@/config/paths.config";
 import GoogleSignInButton from "@/features/auth/components/google-auth-button";
 import { signUpFormSchema, SignUpFormValues } from "@/features/auth/shemas";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import GithubSignInButton from "../components/github-auth-button";
-import { AUTH_PATHS } from "@/config/paths.config";
 import { useLoginSocial } from "../hooks/useLoginSocial";
 
 interface SignUpFormProps {
@@ -15,6 +15,7 @@ interface SignUpFormProps {
 }
 
 export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
+  const t = useTranslations();
   const { loginWithGoogle, loginWithGithub } = useLoginSocial();
 
   const form = useAppForm({
@@ -25,7 +26,7 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
       password: "",
     } as SignUpFormValues,
     validators: {
-      onSubmit: signUpFormSchema,
+      onSubmit: signUpFormSchema(t),
     },
     onSubmit: ({ value }) => {
       onSubmit(value);
@@ -40,36 +41,36 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
         <form.Form className="w-full space-y-2 p-0">
           <FormTextField
             name="userName"
-            label="Username"
+            label={t("field.username.label")}
             required
-            placeholder="Enter your username"
+            placeholder={t("field.username.placeholder")}
             autoComplete="username"
           />
           <FormTextField
             name="fullName"
-            label="Full name"
+            label={t("field.full-name.label")}
             required
-            placeholder="Enter your full name"
+            placeholder={t("field.full-name.placeholder")}
             autoComplete="name"
           />
           <FormTextField
             name="email"
-            label="Email"
+            label={t("field.email.label")}
             required
             type="email"
-            placeholder="Enter your email"
+            placeholder={t("field.email.placeholder")}
             autoComplete="email"
           />
           <FormTextField
             name="password"
-            label="Password"
+            label={t("field.password.label")}
             required
             type="password"
-            placeholder="Enter your password"
+            placeholder={t("field.password.placeholder")}
             autoComplete="new-password"
           />
           <form.SubmitButton className="mt-2 w-full" isLoading={isPending}>
-            Create account
+            {t("Common.sign-up")}
           </form.SubmitButton>
         </form.Form>
       </form.AppForm>
@@ -80,7 +81,7 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background text-muted-foreground px-2">
-            Or continue with
+            {t("Common.or-continue-with")}
           </span>
         </div>
       </div>
@@ -97,12 +98,12 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
           }}
         />
         <p className="text-sm text-center">
-          Already have an account?{" "}
+          {t("Common.already-have-account")}{" "}
           <Link
             className={"text-primary underline font-medium"}
             href={AUTH_PATHS.SIGN_IN}
           >
-            Sign in
+            {t("Common.login")}
           </Link>
         </p>
       </div>

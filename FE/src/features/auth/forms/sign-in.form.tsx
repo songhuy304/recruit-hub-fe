@@ -3,7 +3,8 @@
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
 import { AUTH_PATHS } from "@/config/paths.config";
 import Link from "next/link";
-import { signInFormSchema, SignInFormValues } from "../shemas";
+import { SignInFormValues, signInSchema } from "../shemas";
+import { useTranslations } from "next-intl";
 
 interface SignInFormProps {
   onSubmit: (values: SignInFormValues) => void;
@@ -11,6 +12,7 @@ interface SignInFormProps {
 }
 
 export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
+  const t = useTranslations();
   const form = useAppForm({
     defaultValues: {
       identifier: "",
@@ -18,7 +20,7 @@ export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
     } satisfies SignInFormValues,
 
     validators: {
-      onSubmit: signInFormSchema,
+      onSubmit: signInSchema(t),
     },
     onSubmit: ({ value }) => {
       onSubmit(value);
@@ -32,18 +34,18 @@ export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
       <form.Form className="w-full space-y-2 p-0">
         <FormTextField
           name="identifier"
-          label="Email or Username"
+          label={t("field.email-or-username.label")}
           required
-          placeholder="Enter your email or username"
+          placeholder={t("field.email-or-username.placeholder")}
           autoComplete="username"
         />
 
         <FormTextField
           name="password"
-          label="Password"
+          label={t("field.password.label")}
           required
           type="password"
-          placeholder="Enter your password"
+          placeholder={t("field.password.placeholder")}
           autoComplete="current-password"
         />
 
@@ -51,11 +53,11 @@ export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
           href={AUTH_PATHS.FORGOT_PASSWORD}
           className="text-primary underline font-medium text-sm text-right float-end"
         >
-          Forgot password?
+          {t("SignIn.forgot-password")}
         </Link>
 
         <form.SubmitButton className="mt-2 w-full" isLoading={isPending}>
-          Sign in
+          {t("Common.login")}
         </form.SubmitButton>
       </form.Form>
     </form.AppForm>

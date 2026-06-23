@@ -3,8 +3,10 @@
 import { toast } from "sonner";
 import ForgotPasswordForm from "../forms/forgor-password-form";
 import { useForgotPassword } from "../hooks";
+import { useTranslations } from "next-intl";
 
 const ForgotPasswordViewPage = () => {
+  const t = useTranslations();
   const { mutate: forgotPassword, isPending } = useForgotPassword();
 
   const handleSubmit = (values: { email: string }) => {
@@ -13,7 +15,7 @@ const ForgotPasswordViewPage = () => {
         toast.success("Please check your email for the password reset link.");
       },
       onError(error) {
-        toast.error(error.message);
+        toast.error(t(error.message));
       },
     });
   };

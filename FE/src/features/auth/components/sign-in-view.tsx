@@ -12,8 +12,10 @@ import { Typography } from "@/components/ui/typography";
 import Link from "next/link";
 import { AUTH_PATHS } from "@/config/paths.config";
 import { useQueryState } from "nuqs";
+import { useTranslations } from "next-intl";
 
 export default function SignInViewPage() {
+  const t = useTranslations();
   const [redirectUrl] = useQueryState("redirect");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -23,19 +25,20 @@ export default function SignInViewPage() {
   const handleSignIn = (values: SignInFormValues) => {
     signIn(values, {
       onSuccess: (data) => {
+        toast.success(t("SignIn.sign-in-success"));
         dispatch(setTokens(data.data));
         router.push(redirectUrl || "/");
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(t(error.message));
       },
     });
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-2xl font-bold mb-1">Sign in to your account</h2>
+      <h2 className="text-2xl font-bold mb-1">{t("SignIn.title")}</h2>
       <p className="text-muted-foreground text-sm text-center mb-8">
-        Welcome back! Please enter your details to continue.
+        {t("SignIn.description")}
       </p>
       <div className="w-full space-y-4">
         <SignInForm onSubmit={handleSignIn} isPending={isPending} />
@@ -46,7 +49,7 @@ export default function SignInViewPage() {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background text-muted-foreground px-2">
-              Or continue with
+              {t("Common.or-continue-with")}
             </span>
           </div>
         </div>
@@ -63,12 +66,12 @@ export default function SignInViewPage() {
             }}
           />
           <Typography variant="paragraph-sm" className="text-center">
-            Create an account?{" "}
+            {t("SignIn.no-account")}{" "}
             <Link
               className={"text-primary underline font-medium"}
               href={AUTH_PATHS.SIGN_UP}
             >
-              Sign up
+              {t("Common.sign-up")}
             </Link>
           </Typography>
         </div>

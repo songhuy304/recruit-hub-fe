@@ -1,33 +1,113 @@
 {
   "Dashboard": {
-    "title": "Dashboard",
-    "description": "Welcome to your dashboard! Here you can manage your teams, view your profile, and access all the features of RecruitHub."
+    "title": "Bảng điều khiển",
+    "description": "Chào mừng bạn đến với bảng điều khiển! Tại đây bạn có thể quản lý nhóm của mình, xem hồ sơ và truy cập tất cả các tính năng của RecruitHub."
+  },
+
+  "Common": {
+    "loading": "Đang tải...",
+    "no-data": "Không có dữ liệu.",
+    "back": "Quay lại",
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "confirm": "Xác nhận",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "update": "Cập nhật",
+    "create": "Tạo",
+    "ok": "Đồng ý",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "sign-up": "Đăng ký",
+    "or-continue-with": "Hoặc tiếp tục với",
+    "already-have-account": "Đã có tài khoản?"
+  },
+
+  "SignUp": {
+    "title": "Đăng ký",
+    "description": "Tạo tài khoản RecruitHub để bắt đầu quản lý nhóm và ứng viên của bạn.",
+    "already-have-account": "Đã có tài khoản?",
+    "sign-up-success": "Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản của bạn."
+  },
+
+  "SignIn": {
+    "title": "Đăng nhập",
+    "description": "Chào mừng trở lại! Vui lòng đăng nhập vào tài khoản RecruitHub của bạn.",
+    "forgot-password": "Quên mật khẩu?",
+    "no-account": "Chưa có tài khoản?",
+    "sign-in-success": "Đăng nhập thành công! Chào mừng trở lại."
   },
 
   "error": {
     "user": {
-      "forbidden": "You do not have permission to perform this action.",
-      "not-found": "User not found.",
-      "invalid-credentials": "Invalid email or password.",
-      "already-exists": "User already exists.",
-      "already-in-team": "User is already in the team."
+      "forbidden": "Bạn không có quyền thực hiện hành động này.",
+      "not-found": "Không tìm thấy người dùng.",
+      "invalid-credentials": "Email hoặc mật khẩu không hợp lệ.",
+      "already-exists": "Người dùng đã tồn tại.",
+      "already-in-team": "Người dùng đã có trong nhóm."
     },
     "auth": {
-      "token-invalid": "Invalid token.",
-      "token-expired": "Token has expired.",
-      "token-missing": "Authentication token is missing.",
-      "unauthorized": "Unauthorized."
+      "token-invalid": "Token không hợp lệ.",
+      "token-expired": "Token đã hết hạn.",
+      "token-missing": "Thiếu token xác thực.",
+      "unauthorized": "Không được ủy quyền."
     },
     "team": {
-      "exceed-limit": "Team member limit exceeded.",
-      "not-found": "Team not found.",
-      "invalid-invite-code": "Invalid invite code.",
-      "request-exists": "Request already exists.",
-      "request-not-found": "Request not found.",
-      "user-already-in-team": "User is already in the team.",
-      "request-already-processed": "Request has already been processed.",
-      "not-in-team": "User is not in the team.",
-      "same-team": "You are already using this team."
+      "exceed-limit": "Đã vượt quá giới hạn thành viên nhóm.",
+      "not-found": "Không tìm thấy nhóm.",
+      "invalid-invite-code": "Mã mời không hợp lệ.",
+      "request-exists": "Yêu cầu đã tồn tại.",
+      "request-not-found": "Không tìm thấy yêu cầu.",
+      "user-already-in-team": "Người dùng đã có trong nhóm.",
+      "request-already-processed": "Yêu cầu đã được xử lý.",
+      "not-in-team": "Người dùng không có trong nhóm.",
+      "same-team": "Bạn đang sử dụng nhóm này."
+    }
+  },
+  "validation": {
+    "required": "{field} là bắt buộc.",
+    "invalid-email": "Địa chỉ email không hợp lệ.",
+    "min-length": "{field} phải có ít nhất {minLength} ký tự.",
+    "max-length": "{field} không được vượt quá {maxLength} ký tự.",
+    "password-format": "Mật khẩu phải có 8-72 ký tự và bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+    "password-mismatch": "Mật khẩu không khớp.",
+    "username-format": "Tên người dùng chỉ chứa chữ cái, số và dấu gạch dưới."
+  },
+
+  "field": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Nhập email của bạn"
+    },
+    "email-or-username": {
+      "label": "Email hoặc Tên người dùng",
+      "placeholder": "Nhập email hoặc tên người dùng"
+    },
+    "username": {
+      "label": "Tên người dùng",
+      "placeholder": "Nhập tên người dùng"
+    },
+    "password": {
+      "label": "Mật khẩu",
+      "placeholder": "Nhập mật khẩu"
+    },
+    "confirm-password": {
+      "label": "Xác nhận mật khẩu",
+      "placeholder": "Xác nhận mật khẩu"
+    },
+    "full-name": {
+      "label": "Họ và tên",
+      "placeholder": "Nhập họ và tên của bạn"
+    },
+    "team-name": {
+      "label": "Tên nhóm",
+      "placeholder": "Nhập tên nhóm"
+    },
+    "invite-code": {
+      "label": "Mã mời",
+      "placeholder": "Nhập mã mời"
     }
   }
 }

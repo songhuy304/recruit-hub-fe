@@ -55,7 +55,7 @@ export default function AppSidebar() {
   }, [isOpen]);
 
   return (
-    <Sidebar variant="floating" collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader className="group-data-[collapsible=icon]:pt-4">
         <OrgSwitcher />
       </SidebarHeader>

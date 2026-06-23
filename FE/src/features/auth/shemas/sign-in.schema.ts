@@ -1,8 +1,21 @@
+import { TFunction } from "@/i18n/config";
 import { z } from "zod";
 
-export const signInFormSchema = z.object({
-  identifier: z.string().min(1, "Email or username is required"),
-  password: z.string().min(1, "Password is required"),
-});
+export const signInSchema = (t: TFunction) =>
+  z.object({
+    identifier: z.string().min(
+      1,
+      t("validation.required", {
+        field: t("field.email-or-username.label"),
+      }),
+    ),
 
-export type SignInFormValues = z.infer<typeof signInFormSchema>;
+    password: z.string().min(
+      1,
+      t("validation.required", {
+        field: t("field.password.label"),
+      }),
+    ),
+  });
+
+export type SignInFormValues = z.infer<ReturnType<typeof signInSchema>>;

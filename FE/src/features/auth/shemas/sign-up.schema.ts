@@ -1,34 +1,58 @@
 import { PASSWORD_REGEX } from "@/constants";
+import { TFunction } from "@/i18n/config";
 import z from "zod";
 
-export const signUpFormSchema = z.object({
-  userName: z
-    .string()
-    .min(6, "Username must be at least 6 characters")
-    .max(30, "Username must be at most 30 characters")
-    .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username only contains letters, numbers and underscores",
-    ),
+export const signUpFormSchema = (t: TFunction) =>
+  z.object({
+    userName: z
+      .string()
+      .min(
+        6,
+        t("validation.min-length", {
+          field: t("field.username.label"),
+          minLength: 6,
+        }),
+      )
+      .max(
+        30,
+        t("validation.max-length", {
+          field: t("field.username.label"),
+          maxLength: 30,
+        }),
+      )
+      .regex(/^[a-zA-Z0-9_]+$/, t("validation.username-format")),
 
-  email: z.email("Enter a valid email address"),
+    email: z.email(t("validation.invalid-email")),
 
-  fullName: z
-    .string()
-    .min(6, "Full name must be at least 6 characters")
-    .max(100, "Full name must be at most 100 characters"),
+    fullName: z
+      .string()
+      .min(
+        6,
+        t("validation.min-length", {
+          field: t("field.name.label"),
+          minLength: 6,
+        }),
+      )
+      .max(
+        100,
+        t("validation.max-length", {
+          field: t("field.name.label"),
+          maxLength: 100,
+        }),
+      ),
 
-  password: z
-    .string()
-    .regex(
-      PASSWORD_REGEX,
-      "Password must be 8-72 characters and contain uppercase, lowercase, number and special character",
-    ),
+    password: z.string().regex(PASSWORD_REGEX, t("validation.password-format")),
 
-  companyName: z
-    .string()
-    .max(100, "Company name must be at most 100 characters")
-    .optional(),
-});
+    companyName: z
+      .string()
+      .max(
+        100,
+        t("validation.max-length", {
+          field: "Company Name",
+          maxLength: 100,
+        }),
+      )
+      .optional(),
+  });
 
-export type SignUpFormValues = z.infer<typeof signUpFormSchema>;
+export type SignUpFormValues = z.infer<ReturnType<typeof signUpFormSchema>>;
