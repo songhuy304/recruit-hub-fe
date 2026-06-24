@@ -1,6 +1,6 @@
 import { IResponse } from "@/types/api.type";
 import { apiClient } from "@/lib/axios";
-import { ICreateTeamPayload, ITeam } from "../types";
+import { ICreateTeamPayload, ITeam, ITeamStatistics } from "../types";
 import { ITokenResponse } from "@/services/auth/auth.type";
 
 const PATH = {
@@ -12,6 +12,7 @@ const PATH = {
   LEAVE: (teamId: number) => `/teams/leave/${teamId}`,
   JOIN: (inviteCode: string) => `/teams/join/${inviteCode}`,
   INVITE: (teamId: number) => `/teams/${teamId}/invitations`,
+  GET_STATISTICS: (teamId: number) => `/teams/${teamId}/statistics`,
 };
 
 export const teamService = {
@@ -31,4 +32,6 @@ export const teamService = {
     teamId: number,
     payload: { emails: string[]; role: string },
   ): Promise<IResponse<void>> => apiClient.post(PATH.INVITE(teamId), payload),
+  getStatistics: (teamId: number): Promise<IResponse<ITeamStatistics>> =>
+    apiClient.get(PATH.GET_STATISTICS(teamId)),
 };

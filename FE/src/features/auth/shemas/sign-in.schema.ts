@@ -6,7 +6,7 @@ export const signInSchema = (t: TFunction) =>
     identifier: z.string().min(
       1,
       t("validation.required", {
-        field: t("field.email-or-username.label"),
+        field: t("field.email.label"),
       }),
     ),
 

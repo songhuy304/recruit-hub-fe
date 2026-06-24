@@ -34,9 +34,9 @@ export default function SignInForm({ onSubmit, isPending }: SignInFormProps) {
       <form.Form className="w-full space-y-2 p-0">
         <FormTextField
           name="identifier"
-          label={t("field.email-or-username.label")}
+          label={t("field.email.label")}
           required
-          placeholder={t("field.email-or-username.placeholder")}
+          placeholder={t("field.email.placeholder")}
           autoComplete="username"
         />
 

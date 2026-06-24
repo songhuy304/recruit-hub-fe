@@ -17,3 +17,9 @@ export interface ICreateTeamPayload {
   slug: string;
   logoUrl: string | null;
 }
+
+export interface ITeamStatistics {
+  members: 0;
+  invites: 0;
+  joinRequests: 0;
+}

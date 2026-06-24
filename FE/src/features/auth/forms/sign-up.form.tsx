@@ -20,7 +20,6 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
 
   const form = useAppForm({
     defaultValues: {
-      userName: "",
       email: "",
       fullName: "",
       password: "",
@@ -39,13 +38,7 @@ export default function SignUpForm({ onSubmit, isPending }: SignUpFormProps) {
     <div className="w-full space-y-4">
       <form.AppForm>
         <form.Form className="w-full space-y-2 p-0">
-          <FormTextField
-            name="userName"
-            label={t("field.username.label")}
-            required
-            placeholder={t("field.username.placeholder")}
-            autoComplete="username"
-          />
+
           <FormTextField
             name="fullName"
             label={t("field.full-name.label")}

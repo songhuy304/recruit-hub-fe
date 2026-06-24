@@ -27,9 +27,9 @@ export default function SignUpViewPage() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-2xl font-bold mb-1">Create an account</h2>
+      <h2 className="text-2xl font-bold mb-1">{t("SignUp.title")}</h2>
       <p className="text-muted-foreground text-sm text-center mb-8">
-        Join us and start managing your tasks and projects.
+        {t("SignUp.description")}
       </p>
       <SignUpForm onSubmit={handleSignUp} isPending={isPending} />
     </div>
