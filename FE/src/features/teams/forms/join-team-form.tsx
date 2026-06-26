@@ -1,20 +1,14 @@
 "use client";
 
-import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
 import { Button } from "@/components/ui/button";
-import {
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
+import { Typography } from "@/components/ui/typography";
 import {
   joinTeamSchema,
   type JoinTeamFormValues,
 } from "../schemas/team.schema";
-import { TeamSetupCard } from "../components/team-setup-card";
-import { Typography } from "@/components/ui/typography";
+import { useTranslations } from "next-intl";
+import { Icons } from "@/components/icons";
 
 interface JoinTeamFormProps {
   onCancel: () => void;
@@ -27,12 +21,13 @@ function JoinTeamForm({
   onSubmit,
   isPending = false,
 }: JoinTeamFormProps) {
+  const t = useTranslations();
   const form = useAppForm({
     defaultValues: {
       inviteCode: "",
     } as JoinTeamFormValues,
     validators: {
-      onSubmit: joinTeamSchema,
+      onSubmit: joinTeamSchema(t),
     },
     onSubmit: ({ value }) => {
       onSubmit?.(value);
@@ -43,9 +38,9 @@ function JoinTeamForm({
 
   return (
     <div>
-      <Typography variant="h4">Join team</Typography>
-      <Typography color="muted" variant="paragraph-sm" copy>
-        Enter the invite code shared by your team admin.
+      <Typography variant="h4">{t("Teams.JoinTeam.title")}</Typography>
+      <Typography color="muted" variant="paragraph-sm">
+        {t("Teams.JoinTeam.description")}
       </Typography>
 
       <div className="p-0 mt-4 max-w-lg">
@@ -53,17 +48,17 @@ function JoinTeamForm({
           <form.Form className="">
             <FormTextField
               name="inviteCode"
-              label="Invite code"
-              placeholder="Enter invite code"
+              label={t("field.invite-code.label")}
+              placeholder={t("field.invite-code.placeholder")}
             />
           </form.Form>
         </form.AppForm>
         <div className="justify-end gap-4 flex items-center mt-4">
           <Button type="button" variant="secondary" onClick={onCancel}>
-            Cancel
+            {t("Common.cancel")}
           </Button>
           <Button type="submit" isLoading={isPending}>
-            Join team
+            {t("Common.submit")}
           </Button>
         </div>
       </div>

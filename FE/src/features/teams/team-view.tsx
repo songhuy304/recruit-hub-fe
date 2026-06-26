@@ -5,7 +5,7 @@ import { teamInfoContent } from "@/config/infoconfig";
 function TeamViewPage() {
   return (
     <PageContainer
-      pageTitle="Teams"
+      pageTitle="Manage Teams"
       pageDescription="Manage your teams and team settings."
       infoContent={teamInfoContent}
     >

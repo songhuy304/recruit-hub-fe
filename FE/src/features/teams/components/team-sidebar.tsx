@@ -16,7 +16,6 @@ interface TeamSidebarProps {
   isLoading: boolean;
   selectedTeam: ITeam | null;
   setSelectedTeam: (team: ITeam | null) => void;
-
   user: User | null;
 }
 
@@ -47,21 +46,33 @@ function TeamSidebarItem({
         size="sm"
       />
 
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-          <Typography as="span" variant="label-sm" className="truncate">
+      <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-1 flex-col items-start">
+          <Typography
+            as="span"
+            variant="label-sm"
+            truncate
+            className="block w-full"
+          >
             {team.name}
           </Typography>
+
           <Typography
             as="span"
             variant="paragraph-xs"
-            className="text-muted-foreground"
+            truncate
+            color="muted"
+            className="block w-full"
           >
             {team.slug}
           </Typography>
         </div>
 
-        {isCurrent && <Badge variant="success">Active</Badge>}
+        {isCurrent && (
+          <Badge variant="success" className="text-xs">
+            Current
+          </Badge>
+        )}
       </div>
 
       <div
@@ -90,6 +101,7 @@ function TeamSidebar({
     setSelectedTeam(team);
   };
 
+
   return (
     <aside className="flex w-full shrink-0 flex-col lg:w-80 h-full relative overflow-hidden">
       <LoadingOverlay loading={isLoading} />
@@ -100,7 +112,7 @@ function TeamSidebar({
             variant="subheading-2xs"
             className="text-muted-foreground"
           >
-            YOUR TEAMS
+            YOUR TEAMS ({teams.length - 1}/5)
           </Typography>
 
           <Button

@@ -92,7 +92,8 @@ import {
   IconCrown,
   IconX,
   IconBrandGoogle,
-  IconUserPlus
+  IconUserPlus,
+  IconEye
 } from "@tabler/icons-react";
 
 export type Icon = React.ComponentType<IconProps>;
@@ -207,6 +208,7 @@ export const Icons = {
   trendingDown: IconTrendingDown,
   trendingUp: IconTrendingUp,
   eyeOff: IconEyeOff,
+  eye: IconEye,
   adjustments: IconAdjustmentsHorizontal,
 
   // Text formatting

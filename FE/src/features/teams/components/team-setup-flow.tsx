@@ -1,33 +1,33 @@
 "use client";
 
+import PageSkeleton from "@/components/page-skeleton";
 import { Card } from "@/components/ui/card";
+import { useUser } from "@/hooks/useUser";
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { CreateTeamForm } from "../forms/create-team-form";
 import { JoinTeamForm } from "../forms/join-team-form";
-import { useCreateTeam, useGetTeams } from "../hooks";
+import { useCreateTeam, useGetTeams, useJoinTeam } from "../hooks";
 import type {
   CreateTeamFormValues,
   JoinTeamFormValues,
 } from "../schemas/team.schema";
+import { ITeam } from "../types";
 import { TeamMainPanel } from "./team-main-panel";
 import { TeamSidebar } from "./team-sidebar";
-import { ITeam } from "../types";
-import PageSkeleton from "@/components/page-skeleton";
-import { useUser } from "@/hooks/useUser";
-import { useTranslations } from "next-intl";
 
 type TeamSetupView = "overview" | "create" | "join";
 
 function TeamSetupFlow() {
   const t = useTranslations();
-  const router = useRouter();
   const { user } = useUser();
-  const { data: teams = [], isLoading, isPending, isFetching } = useGetTeams();
+  const { data: teams = [], isLoading, isPending } = useGetTeams();
   const [selectedTeam, setSelectedTeam] = useState<ITeam | null>(null);
   const { mutate: createTeam, isPending: isCreatePending } = useCreateTeam();
+  const { mutate: joinTeam, isPending: isJoinPending } = useJoinTeam();
   const [view, setView] = useState<TeamSetupView>("overview");
 
   useEffect(() => {
@@ -55,13 +55,13 @@ function TeamSetupFlow() {
   };
 
   const handleJoinTeam = async (values: JoinTeamFormValues) => {
-    try {
-      // TODO: connect to team join API
-      toast.success(`Joined team with code ${values.inviteCode}`);
-      setView("overview");
-    } catch {
-      toast.error("Failed to join team");
-    }
+    const replace = values.inviteCode.replace(/#/g, "");
+    joinTeam(replace, {
+      onSuccess: () => {
+        toast.success(t("Teams.join-team-success"));
+        setView("overview");
+      }
+    })
   };
 
   const viewConfig: Record<TeamSetupView, React.ReactNode> = {
@@ -76,7 +76,7 @@ function TeamSetupFlow() {
       <JoinTeamForm
         onCancel={() => setView("overview")}
         onSubmit={handleJoinTeam}
-        isPending={isPending}
+        isPending={isJoinPending}
       />
     ),
     overview: <TeamMainPanel user={user} selectedTeam={selectedTeam} />,

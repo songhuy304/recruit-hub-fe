@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@tanstack/react-form";
-import { Input } from "@/components/ui/input";
+import { Input, InputCustomProps } from "@/components/ui/input";
 import { FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   useFieldContext,
@@ -13,7 +13,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { InputPassword } from "@/components/ui/input-password";
 
-interface TextFieldProps extends Omit<
+interface TextFieldProps extends InputCustomProps, Omit<
   React.ComponentProps<"input">,
   "value" | "onChange" | "onBlur"
 > {
@@ -29,6 +29,8 @@ export function TextField({
   required,
   type = "text",
   className,
+  leftIcon,
+  rightIcon,
   ...inputProps
 }: TextFieldProps) {
   const field = useFieldContext();
@@ -63,6 +65,8 @@ export function TextField({
             }}
             aria-invalid={isTouched && !isValid}
             className={className}
+            leftIcon={leftIcon}
+            rightIcon={rightIcon}
             {...inputProps}
           />
           {isValidating && (

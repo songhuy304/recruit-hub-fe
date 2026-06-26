@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
 import { Typography } from "@/components/ui/typography";
 import { generateSlug } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import {
   createTeamSchema,
   type CreateTeamFormValues,
@@ -20,6 +21,7 @@ function CreateTeamForm({
   onSubmit,
   isPending = false,
 }: CreateTeamFormProps) {
+  const t = useTranslations();
   const form = useAppForm({
     defaultValues: {
       name: "",
@@ -27,7 +29,7 @@ function CreateTeamForm({
       logoUrl: "",
     } as CreateTeamFormValues,
     validators: {
-      onSubmit: createTeamSchema,
+      onSubmit: createTeamSchema(t),
     },
     onSubmit: ({ value }) => {
       onSubmit(value, form);
@@ -40,10 +42,14 @@ function CreateTeamForm({
   return (
     <form.AppForm>
       <form.Form className="p-0 max-w-lg">
-        <Typography variant={"h4"}>Create your team</Typography>
-        <Typography variant={"paragraph-sm"}>
-          set up your team and start collaborating
-        </Typography>
+        <div className="flex gap-5 items-center mb-4">
+          <div>
+            <Typography variant={"h4"}>{t("Teams.CreateTeam.title")}</Typography>
+            <Typography variant={"paragraph-sm"}>
+              {t("Teams.CreateTeam.description")}
+            </Typography>
+          </div>
+        </div>
 
         <div className="flex flex-col gap-4 mt-4">
           <FormFileUploadField
@@ -84,8 +90,9 @@ function CreateTeamForm({
           </Button>
         </div>
       </form.Form>
-    </form.AppForm>
+    </form.AppForm >
   );
 }
 
 export { CreateTeamForm };
+

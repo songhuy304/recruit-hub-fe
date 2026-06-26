@@ -8,7 +8,7 @@
     "loading": "Đang tải...",
     "no-data": "Không có dữ liệu.",
     "back": "Quay lại",
-    "submit": "Gửi",
+    "submit": "Xác nhận",
     "cancel": "Hủy",
     "close": "Đóng",
     "confirm": "Xác nhận",
@@ -39,9 +39,21 @@
     "no-account": "Chưa có tài khoản?",
     "sign-in-success": "Đăng nhập thành công! Chào mừng trở lại."
   },
+  "Teams": {
+    "join-team-success": "Đã gửi yêu cầu tham gia team. Vui lòng chờ chủ team phê duyệt.",
+    "create-team-success": "Tạo nhóm thành công!",
+    "JoinTeam": {
+      "title": "Tham gia nhóm",
+      "description": "Nhập mã mời để tham gia nhóm của bạn."
+    },
+    "CreateTeam": {
+      "title": "Tạo nhóm",
+      "description": "Tạo nhóm mới để bắt đầu quản lý ứng viên và cộng tác với đồng đội."
+    }
+  },
 
   "error": {
-    "internal-sever": "Internal sever",
+    "internal-sever": "Lỗi hệ thống",
     "user": {
       "forbidden": "Bạn không có quyền thực hiện hành động này.",
       "not-found": "Không tìm thấy người dùng.",
@@ -56,7 +68,7 @@
       "unauthorized": "Không được ủy quyền."
     },
     "team": {
-      "exceed-limit": "Đã vượt quá giới hạn team.",
+      "exceed-limit": "Đã vượt quá giới hạn thành viên nhóm.",
       "not-found": "Không tìm thấy nhóm.",
       "invalid-invite-code": "Mã mời không hợp lệ.",
       "request-exists": "Yêu cầu đã tồn tại.",
@@ -74,9 +86,10 @@
     "max-length": "{field} không được vượt quá {maxLength} ký tự.",
     "password-format": "Mật khẩu phải có 8-72 ký tự và bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
     "password-mismatch": "Mật khẩu không khớp.",
-    "username-format": "Tên người dùng chỉ chứa chữ cái, số và dấu gạch dưới."
+    "username-format": "Tên người dùng chỉ chứa chữ cái, số và dấu gạch dưới.",
+    "invalid-slug": "Slug chỉ được chứa chữ cái thường, số và dấu gạch ngang.",
+    "invalid-emails": "Một hoặc nhiều địa chỉ email không hợp lệ."
   },
-
   "field": {
     "email": {
       "label": "Email",
@@ -106,20 +119,28 @@
       "label": "Tên nhóm",
       "placeholder": "Nhập tên nhóm"
     },
+    "slug": {
+      "label": "Slug",
+      "placeholder": "Nhập slug cho nhóm"
+    },
     "invite-code": {
       "label": "Mã mời",
       "placeholder": "Nhập mã mời"
+    },
+    "emails": {
+      "label": "Danh sách email",
+      "placeholder": "Nhập email, cách nhau bằng dấu phẩy hoặc xuống dòng"
     }
   },
   "Invite": {
     "title": "Mời thành viên mới",
-    "sidebar-title": "Mời nhóm của bạn",
-    "sidebar-description": "Thêm đồng đội để cùng cộng tác, chia sẻ ý tưởng và hoàn thành công việc.",
-    "form-title": "Mời thành viên nhóm",
-    "form-description": "Mời thành viên nhóm của bạn cùng cộng tác",
+    "sidebar-title": "Mời thành viên vào nhóm",
+    "sidebar-description": "Thêm đồng đội để cộng tác, chia sẻ ý tưởng và cùng nhau hoàn thành công việc.",
+    "form-title": "Mời thành viên vào nhóm",
+    "form-description": "Mời thành viên trong nhóm của bạn để cùng cộng tác",
     "email-label": "Địa chỉ email",
-    "email-placeholder": "Nhập địa chỉ email, mỗi dòng một email",
-    "email-helper": "Bạn có thể dán nhiều địa chỉ email, mỗi email trên một dòng",
+    "email-placeholder": "example@email.com, example2@email.com",
+    "email-helper": "Bạn có thể dán nhiều địa chỉ email, cách nhau bằng dấu xuống dòng",
     "role-helper-member": "Thành viên có thể xem và cộng tác trên các dự án.",
     "role-helper-admin": "Quản trị viên có thể quản lý thành viên, cài đặt và lời mời.",
     "placeholder": "example@email.com, example2@email.com",
@@ -128,9 +149,9 @@
     "member": "Thành viên",
     "skip": "Bỏ qua",
     "send": "Gửi lời mời",
-    "emails-required": "Vui lòng nhập danh sách email",
-    "invalid-emails": "Danh sách chứa địa chỉ email không hợp lệ",
-    "success": "Đã gửi lời mời thành công!",
+    "emails-required": "Vui lòng nhập địa chỉ email",
+    "invalid-emails": "Định dạng email không hợp lệ trong danh sách",
+    "success": "Gửi lời mời thành công!",
     "error": "Gửi lời mời thất bại!"
   }
 }

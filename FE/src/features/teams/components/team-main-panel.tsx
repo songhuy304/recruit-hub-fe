@@ -69,7 +69,7 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
             <Typography as="h3" variant="h4" className="font-semibold">
               {selectedTeam?.name}
             </Typography>
-            {isCurrentTeamId && <Badge variant="success">Active</Badge>}
+            {isCurrentTeamId && <Badge variant="success">Current</Badge>}
           </div>
           <Badge variant="secondary">
             <Typography as="p" variant="paragraph-xs" copy>
