@@ -1,30 +1,34 @@
 "use client";
 
-import { useState } from "react";
 import { Icons } from "@/components/icons";
+import { TeamAvatar } from "@/components/team-avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TabsUnderline } from "@/components/ui/tabs-underline";
 import { Typography } from "@/components/ui/typography";
-import { ETEAM_TYPE, type ITeam } from "../types";
-import { TeamDetailInvite } from "./team-detail-invite";
-import { TeamDetailMember } from "./team-detail-member";
-import { TeamDetailOverview } from "./team-detail-overview";
-import { TeamDetailSetting } from "./team-detail-setting/team-detail-setting";
-import { useGetTeamStatistics, useSwitchTeam } from "../hooks";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { setTokens } from "@/store";
-import { TeamAvatar } from "@/components/team-avatar";
-import { Spinner } from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
+import { parseAsStringEnum, useQueryStates } from "nuqs";
+import { useState } from "react";
+import { useGetTeamStatistics, useSwitchTeam } from "../hooks";
+import { ETEAM_TYPE, type ITeam } from "../types";
+import { TeamDetailInvite } from "./team-detail-invite";
+import { TeamDetailMember } from "./team-detail-member/team-detail-member";
+import { TeamDetailOverview } from "./team-detail-overview";
+import { TeamDetailSetting } from "./team-detail-setting/team-detail-setting";
 
 interface TeamMainPanelProps {
   selectedTeam: ITeam | null;
   user: User | null;
 }
 
+export type TeamMainPanelTab = 'overview' | 'members' | 'joins' | 'invites' | 'settings';
+
 function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [params, setParams] = useQueryStates({
+    tab: parseAsStringEnum<TeamMainPanelTab>(['overview', 'members', 'joins', 'invites', 'settings']).withDefault('overview'),
+  });
   const isCurrentTeamId = user?.currentTeamId === selectedTeam?.id;
   const isPersonalAccount = selectedTeam?.type === ETEAM_TYPE.PERSONAL;
   const router = useRouter();
@@ -36,6 +40,13 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
       enabled: !!selectedTeam?.id && selectedTeam?.type !== ETEAM_TYPE.PERSONAL,
     }
   );
+
+
+  const onSetTab = (tab: TeamMainPanelTab) => {
+    void setParams({
+      tab: tab as TeamMainPanelTab | undefined,
+    });
+  };
 
   const handleSwitchTeam = (teamId: number) => {
     switchTeam(teamId, {
@@ -103,8 +114,8 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
         </div>
       ) : (
         <TabsUnderline
-          value={activeTab}
-          onValueChange={setActiveTab}
+          value={params.tab || 'overview'}
+          onValueChange={(value) => onSetTab(value as TeamMainPanelTab)}
           className="gap-6"
           items={[
             {
@@ -138,7 +149,7 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
               content: (
                 <TeamDetailInvite
                   teamId={selectedTeam?.id}
-                  onSkip={() => setActiveTab("overview")}
+                  onSkip={() => onSetTab("overview")}
                 />
               ),
             },
@@ -156,3 +167,4 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
 }
 
 export { TeamMainPanel };
+

@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { useUser } from "@/hooks/useUser";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { CreateTeamForm } from "../forms/create-team-form";
@@ -18,6 +17,7 @@ import type {
 import { ITeam } from "../types";
 import { TeamMainPanel } from "./team-main-panel";
 import { TeamSidebar } from "./team-sidebar";
+import { useClearFilters } from "@/hooks/use-params";
 
 type TeamSetupView = "overview" | "create" | "join";
 
@@ -29,6 +29,7 @@ function TeamSetupFlow() {
   const { mutate: createTeam, isPending: isCreatePending } = useCreateTeam();
   const { mutate: joinTeam, isPending: isJoinPending } = useJoinTeam();
   const [view, setView] = useState<TeamSetupView>("overview");
+  const clearParams = useClearFilters();
 
   useEffect(() => {
     setSelectedTeam(
@@ -97,6 +98,7 @@ function TeamSetupFlow() {
           onSelectView={setView}
           selectedTeam={selectedTeam}
           setSelectedTeam={(value) => {
+            void clearParams();
             setSelectedTeam(value);
             setView("overview");
           }}

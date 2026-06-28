@@ -24,3 +24,8 @@ export interface ApiError {
   message: string;
   error?: string;
 }
+
+export interface IPagination {
+  page: number;
+  limit: number;
+}

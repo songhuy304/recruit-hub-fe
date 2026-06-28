@@ -33,7 +33,7 @@ function InviteMemberForm({
       role: ETEAM_ROLE.MEMBER,
     } as InviteMemberFormValues,
     validators: {
-      onSubmit: inviteMemberSchema,
+      onSubmit: inviteMemberSchema(t),
     },
     onSubmit: ({ value }) => {
       onSubmit(value, form);

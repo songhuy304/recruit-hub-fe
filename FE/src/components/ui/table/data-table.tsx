@@ -12,19 +12,32 @@ import {
 } from '@/components/ui/table';
 import { getCommonPinningStyles } from '@/lib/data-table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utils';
 
 interface DataTableProps<TData> extends React.ComponentProps<'div'> {
   table: TanstackTable<TData>;
   actionBar?: React.ReactNode;
+  isLoading?: boolean;
 }
 
-export function DataTable<TData>({ table, actionBar, children }: DataTableProps<TData>) {
+export function DataTable<TData>({
+  table,
+  actionBar,
+  children,
+  isLoading = false
+}: DataTableProps<TData>) {
   return (
     <div className='flex flex-1 flex-col space-y-4'>
       {children}
-      <div className='relative flex flex-1'>
+      <div className='relative flex min-h-96 flex-1'>
         <div className='absolute inset-0 flex overflow-hidden rounded-lg border'>
-          <ScrollArea className='h-full w-full'>
+          {isLoading ? (
+            <div className='opacity-40 absolute bg-background inset-0 z-20 flex items-center justify-center pointer-events-none'>
+              <Spinner className='size-6' />
+            </div>
+          ) : null}
+          <ScrollArea className={cn('h-full w-full', isLoading && 'pointer-events-none opacity-50')}>
             <Table>
               <TableHeader className='bg-muted sticky top-0 z-10'>
                 {table.getHeaderGroups().map((headerGroup) => (

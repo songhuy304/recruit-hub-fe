@@ -1,7 +1,13 @@
-import { IResponse } from "@/types/api.type";
+import { IPaginatedResponse, IResponse } from "@/types/api.type";
 import { apiClient } from "@/lib/axios";
-import { ICreateTeamPayload, ITeam, ITeamMember, ITeamStatistics } from "../types";
+import {
+  ICreateTeamPayload,
+  ITeam,
+  ITeamMember,
+  ITeamStatistics,
+} from "../types";
 import { ITokenResponse } from "@/services/auth/auth.type";
+import { IGetMembers } from "../types/team-member";
 
 const PATH = {
   INFO: "/teams/info",
@@ -13,7 +19,7 @@ const PATH = {
   JOIN: (inviteCode: string) => `/teams/join/${inviteCode}`,
   INVITE: (teamId: number) => `/teams/${teamId}/invitations`,
   GET_STATISTICS: (teamId: number) => `/teams/${teamId}/statistics`,
-  GET_MEMBERS: (teamId: number) => `/teams/${teamId}/members`,
+  GET_MEMBERS: () => `/teams/members`,
 };
 
 export const teamService = {
@@ -36,8 +42,9 @@ export const teamService = {
   getStatistics: (teamId: number): Promise<IResponse<ITeamStatistics>> =>
     apiClient.get(PATH.GET_STATISTICS(teamId)),
   getMembers: (
-    teamId: number,
-    params: { limit: number; page: number; search?: string },
-  ): Promise<IResponse<ITeamMember[]>> =>
-    apiClient.get(PATH.GET_MEMBERS(teamId), { params }),
+    params: IGetMembers
+  ): Promise<IPaginatedResponse<ITeamMember>> =>
+    apiClient.get(PATH.GET_MEMBERS(), {
+      params,
+    }),
 };
