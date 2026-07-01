@@ -22,7 +22,9 @@
     "logout": "Đăng xuất",
     "sign-up": "Đăng ký",
     "or-continue-with": "Hoặc tiếp tục với",
-    "already-have-account": "Đã có tài khoản?"
+    "already-have-account": "Đã có tài khoản?",
+    "approve": "Phê duyệt",
+    "reject": "Từ chối"
   },
 
   "SignUp": {
@@ -42,6 +44,8 @@
   "Teams": {
     "join-team-success": "Đã gửi yêu cầu tham gia team. Vui lòng chờ chủ team phê duyệt.",
     "create-team-success": "Tạo nhóm thành công!",
+    "approve-join-request-success": "Phê duyệt yêu cầu tham gia nhóm",
+    "reject-join-request-success": "Từ chối yêu cầu tham gia nhóm",
     "JoinTeam": {
       "title": "Tham gia nhóm",
       "description": "Nhập mã mời để tham gia nhóm của bạn."

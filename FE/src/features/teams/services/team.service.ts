@@ -1,7 +1,9 @@
 import { IPaginatedResponse, IResponse } from "@/types/api.type";
 import { apiClient } from "@/lib/axios";
 import {
+  IApproveJoinRequestPayload,
   ICreateTeamPayload,
+  IRejectJoinRequestPayload,
   ITeam,
   ITeamMember,
   ITeamStatistics,
@@ -42,15 +44,24 @@ export const teamService = {
   ): Promise<IResponse<void>> => apiClient.post(PATH.INVITE(teamId), payload),
   getStatistics: (teamId: number): Promise<IResponse<ITeamStatistics>> =>
     apiClient.get(PATH.GET_STATISTICS(teamId)),
-  getMembers: (
-    params: IGetMembers
-  ): Promise<IPaginatedResponse<ITeamMember>> =>
+  getMembers: (params: IGetMembers): Promise<IPaginatedResponse<ITeamMember>> =>
     apiClient.get(PATH.GET_MEMBERS(), {
       params,
     }),
 
-  getJoinRequests: (params: IGetMembers): Promise<IPaginatedResponse<ITeamMember>> =>
+  getJoinRequests: (
+    params: IGetMembers,
+  ): Promise<IPaginatedResponse<ITeamMember>> =>
     apiClient.get(PATH.GET_JOIN_REQUESTS(), {
       params,
     }),
+
+  approveJoinRequest: (
+    payload: IApproveJoinRequestPayload,
+  ): Promise<IResponse<void>> =>
+    apiClient.post(`/teams/join-requests/approve`, payload),
+  rejectJoinRequest: (
+    payload: IRejectJoinRequestPayload,
+  ): Promise<IResponse<void>> =>
+    apiClient.post(`/teams/join-requests/reject`, payload),
 };

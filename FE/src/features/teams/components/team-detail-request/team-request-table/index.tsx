@@ -7,12 +7,14 @@ import { useGetTeamRequest } from '@/features/teams/hooks';
 import { useDataTable } from '@/hooks/use-data-table';
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs';
 import { columns } from './columns';
+import { useTranslations } from 'next-intl';
 
 interface TeamRequestTableProps {
   teamId: number;
 }
 
 export function TeamRequestTable({ teamId }: TeamRequestTableProps) {
+  const t = useTranslations();
   const [params] = useQueryStates({
     page: parseAsInteger.withDefault(1),
     perPage: parseAsInteger.withDefault(10),
@@ -28,17 +30,18 @@ export function TeamRequestTable({ teamId }: TeamRequestTableProps) {
 
   const requests = requestsResponse?.data ?? [];
   const pageCount = requestsResponse?.meta?.totalPages ?? 1;
+  const tableColumns = columns(teamId, t);
 
   const { table } = useDataTable({
     data: requests,
-    columns,
+    columns: tableColumns,
     pageCount,
     shallow: true,
     debounceMs: 500
   });
 
   if (isPending) {
-    return <DataTableSkeleton columnCount={columns.length} filterCount={1} rowCount={5} />;
+    return <DataTableSkeleton columnCount={tableColumns.length} filterCount={1} rowCount={5} />;
   }
 
   return (

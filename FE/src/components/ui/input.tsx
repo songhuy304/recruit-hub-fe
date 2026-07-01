@@ -44,7 +44,7 @@ function Input({
   return (
     <InputGroup>
       {leftIcon && (
-        <InputGroupAddon align="inline-start" className="pr-3">
+        <InputGroupAddon align="inline-start" className="pr-2">
           <InputGroupText>{leftIcon}</InputGroupText>
         </InputGroupAddon>
       )}

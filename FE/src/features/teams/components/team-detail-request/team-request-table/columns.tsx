@@ -4,11 +4,48 @@ import { Icons } from '@/components/icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DataTableColumnHeader } from '@/components/ui/table/data-table-column-header';
+import { useMutationJoinRequest } from '@/features/teams/hooks';
 import { ITeamMember } from '@/features/teams/types';
+import { TFunction } from '@/i18n/config';
 import { formatDate } from '@/lib/format';
 import { Column, ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
-export const columns: ColumnDef<ITeamMember>[] = [
+interface CellActionProps {
+  data: ITeamMember;
+  teamId: number;
+}
+
+function CellAction({ data, teamId }: CellActionProps) {
+  const t = useTranslations();
+  const { mutate, isPending } = useMutationJoinRequest();
+
+  const handleJoinRequest = (action: 'approve' | 'reject') => {
+    mutate({
+      action,
+      payload: {
+        teamId,
+        id: data.id
+      }
+    });
+  };
+
+  return (
+    <div className='flex gap-2 items-center justify-center'>
+      <Button variant='success' isLoading={isPending} onClick={() => handleJoinRequest('approve')}>
+        <Icons.checks className='size-4' />
+        {t('Common.approve')}
+      </Button>
+
+      <Button variant='destructive' isLoading={isPending} onClick={() => handleJoinRequest('reject')}>
+        <Icons.xCircle className='size-4' />
+        {t('Common.reject')}
+      </Button>
+    </div >
+  );
+}
+
+export const columns = (teamId: number, t: TFunction): ColumnDef<ITeamMember>[] => [
   {
     id: 'name',
     accessorKey: 'fullName',
@@ -51,23 +88,13 @@ export const columns: ColumnDef<ITeamMember>[] = [
   },
   {
     id: 'actions',
-    header: ({ column }: { column: Column<ITeamMember, unknown> }) => (
+    header: () => (
       <div className='text-center'>
         Actions
       </div>
     ),
     cell: ({ row }) => (
-      <div className='flex gap-2 items-center justify-center'>
-        <Button variant="success">
-          <Icons.checks className='size-4' />
-          Approve
-        </Button >
-
-        <Button variant="destructive">
-          <Icons.xCircle className='size-4' />
-          Reject
-        </Button>
-      </div >
+      <CellAction data={row.original} teamId={teamId} />
     )
   }
 ];

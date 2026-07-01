@@ -1,5 +1,3 @@
-import { STATIC_PROPS_ID } from "next/dist/shared/lib/constants";
-
 export const QUERY_KEY = {
   AUTH: {
     ME: ["auth", "me"],

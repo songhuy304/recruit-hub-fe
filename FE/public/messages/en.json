@@ -1,7 +1,7 @@
 {
   "Dashboard": {
     "title": "Dashboard",
-    "description": "Welcome to the dashboard! Here you can manage your team, view profiles, and access all RecruitHub features."
+    "description": "Welcome to the dashboard! Here you can manage your team, view profiles, and access all of RecruitHub's features."
   },
 
   "Common": {
@@ -18,41 +18,57 @@
     "update": "Update",
     "create": "Create",
     "ok": "OK",
-    "login": "Login",
-    "logout": "Logout",
+    "login": "Log in",
+    "logout": "Log out",
     "sign-up": "Sign up",
     "or-continue-with": "Or continue with",
-    "already-have-account": "Already have an account?"
+    "already-have-account": "Already have an account?",
+    "approve": "Approve",
+    "reject": "Reject"
   },
 
   "SignUp": {
     "title": "Sign up",
-    "description": "Create a RecruitHub account to start managing your team and candidates.",
+    "description": "Create a RecruitHub account to start managing your teams and candidates.",
     "already-have-account": "Already have an account?",
     "sign-up-success": "Sign up successful! Please check your email to verify your account."
   },
 
   "SignIn": {
-    "title": "Sign in",
-    "description": "Welcome back! Please sign in to your RecruitHub account.",
+    "title": "Log in",
+    "description": "Welcome back! Please log in to your RecruitHub account.",
     "forgot-password": "Forgot password?",
     "no-account": "Don't have an account?",
-    "sign-in-success": "Sign in successful! Welcome back."
+    "sign-in-success": "Login successful! Welcome back."
+  },
+  "Teams": {
+    "join-team-success": "Join request submitted. Please wait for the team owner's approval.",
+    "create-team-success": "Team created successfully!",
+    "approve-join-request-success": "Join request approved",
+    "reject-join-request-success": "Join request rejected",
+    "JoinTeam": {
+      "title": "Join team",
+      "description": "Enter the invite code to join your team."
+    },
+    "CreateTeam": {
+      "title": "Create team",
+      "description": "Create a new team to start managing candidates and collaborating with teammates."
+    }
   },
 
   "error": {
     "internal-sever": "Internal server error",
     "user": {
-      "forbidden": "You don't have permission to perform this action.",
+      "forbidden": "You do not have permission to perform this action.",
       "not-found": "User not found.",
       "invalid-credentials": "Invalid email or password.",
       "already-exists": "User already exists.",
-      "already-in-team": "User is already in the team."
+      "already-in-team": "User is already in a team."
     },
     "auth": {
       "token-invalid": "Invalid token.",
       "token-expired": "Token has expired.",
-      "token-missing": "Missing authentication token.",
+      "token-missing": "Authentication token missing.",
       "unauthorized": "Unauthorized."
     },
     "team": {
@@ -67,7 +83,6 @@
       "same-team": "You are already using this team."
     }
   },
-
   "validation": {
     "required": "{field} is required.",
     "invalid-email": "Invalid email address.",
@@ -79,7 +94,6 @@
     "invalid-slug": "Slug can only contain lowercase letters, numbers, and hyphens.",
     "invalid-emails": "One or more email addresses are invalid."
   },
-
   "field": {
     "email": {
       "label": "Email",
@@ -87,19 +101,19 @@
     },
     "email-or-username": {
       "label": "Email or Username",
-      "placeholder": "Enter your email or username"
+      "placeholder": "Enter email or username"
     },
     "username": {
       "label": "Username",
-      "placeholder": "Enter your username"
+      "placeholder": "Enter username"
     },
     "password": {
       "label": "Password",
-      "placeholder": "Enter your password"
+      "placeholder": "Enter password"
     },
     "confirm-password": {
       "label": "Confirm password",
-      "placeholder": "Confirm your password"
+      "placeholder": "Confirm password"
     },
     "full-name": {
       "label": "Full name",
@@ -119,30 +133,29 @@
     },
     "emails": {
       "label": "Email list",
-      "placeholder": "Enter emails, separated by commas or line breaks"
+      "placeholder": "Enter emails, separated by commas or new lines"
     }
   },
-
   "Invite": {
     "title": "Invite new members",
-    "sidebar-title": "Invite your team",
+    "sidebar-title": "Invite members to your team",
     "sidebar-description": "Add teammates to collaborate, share ideas, and get things done together.",
-    "form-title": "Invite team members",
+    "form-title": "Invite members to your team",
     "form-description": "Invite your team members to collaborate",
     "email-label": "Email addresses",
     "email-placeholder": "example@email.com, example2@email.com",
-    "email-helper": "You can paste multiple email addresses separated by line breaks",
+    "email-helper": "You can paste multiple email addresses, separated by new lines",
     "role-helper-member": "Members can view and collaborate on projects.",
-    "role-helper-admin": "Admins can manage members, settings, and invitations.",
+    "role-helper-admin": "Admins can manage members, settings, and invites.",
     "placeholder": "example@email.com, example2@email.com",
     "role": "Role",
     "admin": "Admin",
     "member": "Member",
-    "skip": "Skip for now",
+    "skip": "Skip",
     "send": "Send invites",
-    "emails-required": "Emails are required",
-    "invalid-emails": "Invalid email format in list",
-    "success": "Invitations sent successfully!",
-    "error": "Failed to send invitations!"
+    "emails-required": "Please enter email addresses",
+    "invalid-emails": "Invalid email format in the list",
+    "success": "Invites sent successfully!",
+    "error": "Failed to send invites!"
   }
 }
