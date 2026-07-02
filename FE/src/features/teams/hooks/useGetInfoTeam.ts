@@ -1,6 +1,6 @@
 import { QUERY_KEY } from "@/config/query-keys";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { selectAccessToken, setTeamInfo } from "@/store";
+import { selectAccessToken, setTeams } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { teamService } from "../services";
 import { useEffect } from "react";
@@ -15,12 +15,6 @@ const useGetInfoTeam = () => {
     enabled: !!token,
     retry: 1,
   });
-
-  useEffect(() => {
-    if (query.isSuccess && query.data) {
-      dispatch(setTeamInfo(query.data.data));
-    }
-  }, [query.isSuccess, query.data, dispatch]);
 
   return { ...query };
 };

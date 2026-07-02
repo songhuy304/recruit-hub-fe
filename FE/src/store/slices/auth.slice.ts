@@ -10,7 +10,7 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  teamInfo?: ITeam | null;
+  teams: ITeam[] | null;
 }
 
 const initialState: AuthState = {
@@ -19,7 +19,7 @@ const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   isLoading: false,
-  teamInfo: null,
+  teams: null,
 };
 
 export const authSlice = createSlice({
@@ -48,8 +48,8 @@ export const authSlice = createSlice({
       state.isLoading = action.payload;
     },
 
-    setTeamInfo: (state, action: PayloadAction<ITeam>) => {
-      state.teamInfo = action.payload;
+    setTeams: (state, action: PayloadAction<ITeam[] | null>) => {
+      state.teams = action.payload;
     },
   },
   initialState,
@@ -71,10 +71,10 @@ export const selectUser = (state: RootState) => {
   return state.auth.user;
 };
 
-export const selectTeamInfo = (state: RootState) => {
-  return state.auth.teamInfo;
+export const selectTeams = (state: RootState) => {
+  return state.auth.teams;
 };
 
-export const { setTokens, logout, setLoading, setUser, setTeamInfo } =
+export const { setTokens, logout, setLoading, setUser, setTeams } =
   authSlice.actions;
 export default authSlice.reducer;

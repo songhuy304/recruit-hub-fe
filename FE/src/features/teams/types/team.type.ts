@@ -1,3 +1,5 @@
+import { ETEAM_ROLE } from "@/enums";
+
 export enum ETEAM_TYPE {
   PERSONAL = "personal",
   ORGANIZATION = "organization",
@@ -10,6 +12,7 @@ export interface ITeam {
   slug: string;
   type: ETEAM_TYPE;
   logoUrl: string | null;
+  teamRole: ETEAM_ROLE;
 }
 
 export interface ICreateTeamPayload {
@@ -31,8 +34,7 @@ export interface ITeamMember {
   avatar: string;
   role: string;
   isVerified: boolean;
-  teamRole: string;
+  teamRole: ETEAM_ROLE;
   createdAt: string;
   updatedAt: string;
 }
-

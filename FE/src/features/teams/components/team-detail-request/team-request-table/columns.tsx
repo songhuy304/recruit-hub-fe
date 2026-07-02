@@ -32,14 +32,12 @@ function CellAction({ data, teamId }: CellActionProps) {
 
   return (
     <div className='flex gap-2 items-center justify-center'>
-      <Button variant='success' isLoading={isPending} onClick={() => handleJoinRequest('approve')}>
+      <Button variant='success' isLoading={isPending} size="icon" onClick={() => handleJoinRequest('approve')}>
         <Icons.checks className='size-4' />
-        {t('Common.approve')}
       </Button>
 
-      <Button variant='destructive' isLoading={isPending} onClick={() => handleJoinRequest('reject')}>
+      <Button variant='destructive' isLoading={isPending} size="icon" onClick={() => handleJoinRequest('reject')}>
         <Icons.xCircle className='size-4' />
-        {t('Common.reject')}
       </Button>
     </div >
   );
