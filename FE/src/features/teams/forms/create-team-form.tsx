@@ -9,6 +9,7 @@ import {
   createTeamSchema,
   type CreateTeamFormValues,
 } from "../schemas/team.schema";
+import { Icons } from "@/components/icons";
 
 interface CreateTeamFormProps {
   onCancel: () => void;
@@ -44,8 +45,10 @@ function CreateTeamForm({
       <form.Form className="p-0 max-w-lg">
         <div className="flex gap-5 items-center mb-4">
           <div>
-            <Typography variant={"h4"}>{t("Teams.CreateTeam.title")}</Typography>
-            <Typography variant={"paragraph-sm"}>
+            <Typography variant={"h4"}>
+              {t("Teams.CreateTeam.title")}
+            </Typography>
+            <Typography variant={"paragraph-sm"} color={"muted"}>
               {t("Teams.CreateTeam.description")}
             </Typography>
           </div>
@@ -63,12 +66,15 @@ function CreateTeamForm({
           <FormTextField
             name="name"
             label="Name"
+            leftIcon={
+              <Icons.userPlus className="size-4 text-muted-foreground" />
+            }
             placeholder="Enter your team name"
             listeners={{
               onChange: ({ value }) => {
                 form.setFieldValue(
                   "slug",
-                  generateSlug((value as string) ?? ""),
+                  generateSlug((value as string) ?? "")
                 );
               },
             }}
@@ -76,6 +82,7 @@ function CreateTeamForm({
           <FormTextField
             name="slug"
             label="Slug"
+            leftIcon={<Icons.link className="size-4 text-muted-foreground" />}
             placeholder="Enter team slug"
             disabled
           />
@@ -90,9 +97,8 @@ function CreateTeamForm({
           </Button>
         </div>
       </form.Form>
-    </form.AppForm >
+    </form.AppForm>
   );
 }
 
 export { CreateTeamForm };
-

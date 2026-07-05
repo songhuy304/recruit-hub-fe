@@ -22,61 +22,40 @@ import { useClearFilters } from "@/hooks/use-params";
 type TeamSetupView = "overview" | "create" | "join";
 
 function TeamSetupFlow() {
-  const t = useTranslations();
   const { user } = useUser();
   const { data: teams = [], isLoading, isPending } = useGetTeams();
   const [selectedTeam, setSelectedTeam] = useState<ITeam | null>(null);
-  const { mutate: createTeam, isPending: isCreatePending } = useCreateTeam();
-  const { mutate: joinTeam, isPending: isJoinPending } = useJoinTeam();
+  const { handleCreateTeam, isPending: isCreatePending } = useCreateTeam();
+  const { handleJoinTeam, isPending: isJoinPending } = useJoinTeam();
   const [view, setView] = useState<TeamSetupView>("overview");
   const clearParams = useClearFilters();
 
   useEffect(() => {
     setSelectedTeam(
-      teams.find((team) => team.id === user?.currentTeamId) ?? null,
+      teams.find((team) => team.id === user?.currentTeamId) ?? null
     );
   }, [teams, user?.currentTeamId]);
 
-  const handleCreateTeam = async (values: CreateTeamFormValues, form: any) => {
-    createTeam(
-      {
-        logoUrl: values.logoUrl || null,
-        name: values.name,
-        slug: values.slug,
-      },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-        onError: (error) => {
-          toast.error(t(error.message));
-        },
-      },
-    );
+  const onCreateTeam = async (values: CreateTeamFormValues, form: any) => {
+    handleCreateTeam(values, form);
   };
 
-  const handleJoinTeam = async (values: JoinTeamFormValues, form: any) => {
-    const replace = values.inviteCode.replace(/#/g, "");
-    joinTeam(replace, {
-      onSuccess: () => {
-        toast.success(t("Teams.join-team-success"));
-        form.reset();
-      }
-    })
+  const onJoinTeam = async (values: JoinTeamFormValues, form: any) => {
+    handleJoinTeam(values, form);
   };
 
   const viewConfig: Record<TeamSetupView, React.ReactNode> = {
     create: (
       <CreateTeamForm
         onCancel={() => setView("overview")}
-        onSubmit={handleCreateTeam}
+        onSubmit={onCreateTeam}
         isPending={isCreatePending}
       />
     ),
     join: (
       <JoinTeamForm
         onCancel={() => setView("overview")}
-        onSubmit={handleJoinTeam}
+        onSubmit={onJoinTeam}
         isPending={isJoinPending}
       />
     ),

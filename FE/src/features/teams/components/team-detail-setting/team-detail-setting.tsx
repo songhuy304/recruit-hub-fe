@@ -21,9 +21,7 @@ import { Typography } from "@/components/ui/typography";
 import { useUser } from "@/hooks/useUser";
 
 import { useDeleteTeam, useLeaveTeam } from "../../hooks";
-import {
-  type CreateTeamFormValues
-} from "../../schemas/team.schema";
+import { type CreateTeamFormValues } from "../../schemas/team.schema";
 import type { ITeam } from "../../types";
 
 import { SettingsCard } from "../settings-card";
@@ -52,8 +50,8 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
     },
   });
 
-
-  const { FormTextField, FormFileUploadField } = useFormFields<CreateTeamFormValues>();
+  const { FormTextField, FormFileUploadField } =
+    useFormFields<CreateTeamFormValues>();
 
   const checkActiveTeam = () => {
     if (user?.currentTeamId === team.id) {
@@ -106,7 +104,7 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
                 onChange: ({ value }) => {
                   form.setFieldValue(
                     "slug",
-                    generateSlug((value as string) ?? ""),
+                    generateSlug((value as string) ?? "")
                   );
                 },
               }}
@@ -114,7 +112,7 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
 
             <div className="flex flex-col gap-2">
               <FormTextField
-                disabled={!isOwner(team.id)}
+                disabled={true}
                 name="slug"
                 label="Team Slug"
                 placeholder="team-slug"
@@ -138,7 +136,9 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
             />
 
             <div className="flex justify-end pt-2">
-              <Button type="submit" disabled={!isOwner(team.id)}>Save Changes</Button>
+              <Button type="submit" disabled={!isOwner(team.id)}>
+                Save Changes
+              </Button>
             </div>
           </form.Form>
         </form.AppForm>
@@ -179,13 +179,18 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
         </div>
       </SettingsCard>
 
-      <AlertDialog open={isActiveTeamWarningOpen} onOpenChange={setIsActiveTeamWarningOpen}>
+      <AlertDialog
+        open={isActiveTeamWarningOpen}
+        onOpenChange={setIsActiveTeamWarningOpen}
+      >
         <AlertDialogContent className="max-w-[400px]">
           <AlertDialogHeader className="flex flex-col items-center text-center">
             <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full text-amber-600 dark:text-amber-500 mb-2">
               <Icons.warning className="size-6" />
             </div>
-            <AlertDialogTitle className="text-xl font-bold">Không thể tiếp tục</AlertDialogTitle>
+            <AlertDialogTitle className="text-xl font-bold">
+              Không thể tiếp tục
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-muted-foreground text-sm text-center">
               Vui lòng chuyển sang một team khác trước khi tiếp tục.
             </AlertDialogDescription>
@@ -204,4 +209,3 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
 }
 
 export { TeamDetailSetting };
-

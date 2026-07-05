@@ -36,7 +36,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 function Button({
@@ -88,24 +88,24 @@ function Button({
       className={cn(
         buttonVariants({ variant, size }),
         "relative inline-flex items-center justify-center gap-2",
-        className,
+        className
       )}
       disabled={disabled || isLoading}
       aria-busy={isLoading || undefined}
       {...props}
     >
-      <span className="inline-flex items-center gap-2">{children}</span>
+      {!isLoading && (
+        <span className="inline-flex items-center gap-2">{children}</span>
+      )}
 
       {isLoading && (
         <motion.span
           initial={{
             opacity: 0,
-            x: -7,
-            scale: 0.9,
+            scale: 0.8,
           }}
           animate={{
             opacity: 1,
-            x: 0,
             scale: 1,
           }}
           transition={{

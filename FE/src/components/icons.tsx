@@ -35,6 +35,7 @@ import {
   IconEdit,
   IconExternalLink,
   IconEyeOff,
+  IconFileDescriptionFilled,
   IconFile,
   IconFileText,
   IconFileTypePdf,
@@ -93,8 +94,10 @@ import {
   IconX,
   IconBrandGoogle,
   IconUserPlus,
-  IconEye
+  IconEye,
+  IconLinkFilled,
 } from "@tabler/icons-react";
+import { IconNoData } from "./ui/icons/empty.icon";
 
 export type Icon = React.ComponentType<IconProps>;
 
@@ -113,6 +116,7 @@ export const Icons = {
   dots: IconDots,
   ellipsis: IconDotsVertical,
   externalLink: IconExternalLink,
+  link: IconLinkFilled,
   help: IconHelpCircle,
   info: IconInfoCircle,
   spinner: IconLoader2,
@@ -169,6 +173,7 @@ export const Icons = {
   fileZip: IconFileZip,
   media: IconPhoto,
   music: IconMusic,
+  fileDescription: IconFileDescriptionFilled,
 
   // Actions
   add: IconPlus,
@@ -232,4 +237,6 @@ export const Icons = {
   calendar: IconCalendar,
   galleryVerticalEnd: IconStack2,
   moreHorizontal: IconDots,
+
+  empty: IconNoData,
 };

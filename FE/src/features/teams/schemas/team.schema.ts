@@ -8,14 +8,14 @@ export const signInSchema = (t: TFunction) =>
       1,
       t("validation.required", {
         field: t("field.email.label"),
-      }),
+      })
     ),
 
     password: z.string().min(
       1,
       t("validation.required", {
         field: t("field.password.label"),
-      }),
+      })
     ),
   });
 
@@ -28,8 +28,8 @@ export const createTeamSchema = (t: TFunction) =>
         20,
         t("validation.max-length", {
           field: t("field.team-name.label"),
-          max: 20,
-        }),
+          maxLength: 20,
+        })
       ),
     slug: z
       .string()
@@ -44,7 +44,7 @@ export const joinTeamSchema = (t: TFunction) =>
       .string()
       .min(
         1,
-        t("validation.required", { field: t("field.invite-code.label") }),
+        t("validation.required", { field: t("field.invite-code.label") })
       ),
   });
 
@@ -69,7 +69,7 @@ export const inviteMemberSchema = (t: TFunction) =>
         },
         {
           message: t("validation.invalid-emails"),
-        },
+        }
       ),
     role: z.enum([ETEAM_ROLE.ADMIN, ETEAM_ROLE.MEMBER]),
   });
