@@ -7,14 +7,18 @@ import {
   ITeam,
   ITeamMember,
   ITeamStatistics,
+  IUpdateTeamPayload,
 } from "../types";
 import { ITokenResponse } from "@/services/auth/auth.type";
-import { IGetMembers } from "../types/team-member";
+import { IGetMembers, IUpdateMember } from "../types/team-member";
 
 const PATH = {
   INFO: "/teams/info",
   LIST: "/teams",
   CREATE: "/teams/create-team",
+  UPDATE: (teamId: number) => `/teams/${teamId}`,
+  UPDATE_MEMBER: (teamId: number, userId: number) =>
+    `/teams/${teamId}/members/${userId}`,
   SWITCH: (teamId: number) => `/teams/switch/${teamId}`,
   DELETE: (teamId: number) => `/teams/${teamId}`,
   LEAVE: (teamId: number) => `/teams/leave/${teamId}`,
@@ -34,6 +38,17 @@ export const teamService = {
   getTeams: (): Promise<IResponse<ITeam[]>> => apiClient.get(PATH.LIST),
   createTeam: (teamData: ICreateTeamPayload): Promise<IResponse<void>> =>
     apiClient.post(PATH.CREATE, teamData),
+  updateTeam: (
+    teamData: IUpdateTeamPayload,
+    teamId: number
+  ): Promise<IResponse<void>> => apiClient.patch(PATH.UPDATE(teamId), teamData),
+
+  updateMember: (
+    memberData: IUpdateMember,
+    teamId: number,
+    userId: number
+  ): Promise<IResponse<void>> =>
+    apiClient.patch(PATH.UPDATE_MEMBER(teamId, userId), memberData),
   switchTeam: (teamId: number): Promise<IResponse<ITokenResponse>> =>
     apiClient.post(PATH.SWITCH(teamId)),
   deleteTeam: (teamId: number): Promise<IResponse<void>> =>
@@ -46,7 +61,7 @@ export const teamService = {
     apiClient.post(PATH.JOIN(inviteCode)),
   inviteMembers: (
     teamId: number,
-    payload: { emails: string[]; role: string },
+    payload: { emails: string[]; role: string }
   ): Promise<IResponse<void>> => apiClient.post(PATH.INVITE(teamId), payload),
   getStatistics: (teamId: number): Promise<IResponse<ITeamStatistics>> =>
     apiClient.get(PATH.GET_STATISTICS(teamId)),
@@ -56,18 +71,18 @@ export const teamService = {
     }),
 
   getJoinRequests: (
-    params: IGetMembers,
+    params: IGetMembers
   ): Promise<IPaginatedResponse<ITeamMember>> =>
     apiClient.get(PATH.GET_JOIN_REQUESTS(), {
       params,
     }),
 
   approveJoinRequest: (
-    payload: IApproveJoinRequestPayload,
+    payload: IApproveJoinRequestPayload
   ): Promise<IResponse<void>> =>
     apiClient.post(PATH.APPROVE_JOIN_REQUEST(), payload),
   rejectJoinRequest: (
-    payload: IRejectJoinRequestPayload,
+    payload: IRejectJoinRequestPayload
   ): Promise<IResponse<void>> =>
     apiClient.post(PATH.REJECT_JOIN_REQUEST(), payload),
 };

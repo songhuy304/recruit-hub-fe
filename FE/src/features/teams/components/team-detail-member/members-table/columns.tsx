@@ -11,34 +11,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { DataTableColumnHeader } from "@/components/ui/table/data-table-column-header";
+import { TEAM_ROLE_OPTIONS } from "@/constants/options";
 import { ETEAM_ROLE } from "@/enums";
-import { useRemoveMember } from "@/features/teams/hooks";
+import { useRemoveMember, useUpdateMember } from "@/features/teams/hooks";
 import { ITeamMember } from "@/features/teams/types";
 import { TFunction } from "@/i18n/config";
 import { formatDate } from "@/lib/format";
 import { Column, ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
-
-function getInitials(name: string) {
-  if (!name) return "?";
-
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .substring(0, 2)
-    .toUpperCase();
-}
-
-function TeamRoleBadge({ role }: { role: ETEAM_ROLE }) {
-  if (role === ETEAM_ROLE.OWNER) {
-    return <Badge variant="default">Owner</Badge>;
-  }
-
-  return <Badge variant="secondary">Member</Badge>;
-}
-
 export interface CellActionProps {
   data: ITeamMember;
   teamId: number;
@@ -89,6 +77,46 @@ export function CellAction({ data, teamId, t, user }: CellActionProps) {
   );
 }
 
+interface CellRoleProps {
+  value: ETEAM_ROLE;
+  teamId: number;
+  userId: number;
+  disabled?: boolean;
+}
+
+const CellRole = ({ value, teamId, userId, disabled }: CellRoleProps) => {
+  const { handleUpdateMember, isPending } = useUpdateMember();
+
+  const onValueChange = async (newRole: ETEAM_ROLE) => {
+    if (newRole === value) return;
+    handleUpdateMember(teamId, userId, newRole);
+  };
+
+  return (
+    <Select
+      disabled={isPending || disabled}
+      value={value}
+      onValueChange={onValueChange}
+    >
+      <SelectTrigger className="w-26">
+        <SelectValue placeholder="Chọn team" />
+      </SelectTrigger>
+
+      <SelectContent>
+        {TEAM_ROLE_OPTIONS.map((option) => (
+          <SelectItem
+            disabled={ETEAM_ROLE.OWNER === option.value}
+            key={option.value}
+            value={option.value}
+          >
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+};
+
 export const columns = (
   teamId: number,
   t: TFunction,
@@ -111,9 +139,7 @@ export const columns = (
                 src={row.original.avatar}
                 alt={row.original.fullName}
               />
-              <AvatarFallback>
-                {getInitials(row.original.fullName)}
-              </AvatarFallback>
+              <AvatarFallback>TN</AvatarFallback>
             </Avatar>
             <span className="truncate font-medium">
               {row.original.fullName}
@@ -155,9 +181,18 @@ export const columns = (
       header: ({ column }: { column: Column<ITeamMember, unknown> }) => (
         <DataTableColumnHeader column={column} title={t("Column.role.label")} />
       ),
-      cell: ({ cell }) => (
-        <TeamRoleBadge role={cell.getValue<ITeamMember["teamRole"]>()} />
-      ),
+      cell: ({ row }) => {
+        const currentUser = user?.id === row.original.id;
+
+        return (
+          <CellRole
+            teamId={teamId}
+            userId={row.original.id}
+            value={row.original.teamRole}
+            disabled={!isOwner || currentUser}
+          />
+        );
+      },
     },
     ...(isOwner
       ? [

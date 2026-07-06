@@ -7,9 +7,11 @@ import { generateSlug } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import {
   createTeamSchema,
+  UpdateTeamFormValues,
   type CreateTeamFormValues,
 } from "../schemas/team.schema";
 import { Icons } from "@/components/icons";
+import { useStore } from "@tanstack/react-form";
 
 interface CreateTeamFormProps {
   onCancel: () => void;
@@ -36,6 +38,11 @@ function CreateTeamForm({
       onSubmit(value, form);
     },
   });
+
+  const { isDirty, isValid } = useStore(form.store, (state) => ({
+    isDirty: state.isDirty,
+    isValid: state.isValid,
+  }));
 
   const { FormTextField, FormFileUploadField } =
     useFormFields<CreateTeamFormValues>();
@@ -90,10 +97,14 @@ function CreateTeamForm({
 
         <div className="flex items-center justify-end gap-4 mt-4">
           <Button type="button" variant="secondary" onClick={onCancel}>
-            Cancel
+            {t("Common.cancel")}
           </Button>
-          <Button type="submit" isLoading={isPending}>
-            Create team
+          <Button
+            type="submit"
+            isLoading={isPending}
+            disabled={!isDirty || !isValid}
+          >
+            {t("Common.submit")}
           </Button>
         </div>
       </form.Form>

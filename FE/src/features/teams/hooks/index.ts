@@ -11,3 +11,5 @@ export * from "./useGetMembers";
 export * from "./useGetTeamRequest";
 export * from "./useApproveRejected";
 export * from "./useRemoveMember";
+export * from "./useUpdateTeam";
+export * from "./useUpdateMember";

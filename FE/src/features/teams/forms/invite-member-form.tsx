@@ -48,7 +48,10 @@ function InviteMemberForm({
         <div className="flex flex-1 flex-col gap-6 p-6">
           <div>
             <Typography variant="h4">{t("Invite.form-title")}</Typography>
-            <Typography variant="paragraph-sm" className="text-muted-foreground">
+            <Typography
+              variant="paragraph-sm"
+              className="text-muted-foreground"
+            >
               {t("Invite.form-description")}
             </Typography>
           </div>
@@ -70,7 +73,10 @@ function InviteMemberForm({
             <FormSelectField
               name="role"
               label={
-                <FieldLabelWithIcon icon={Icons.shield} label={t("Invite.role")} />
+                <FieldLabelWithIcon
+                  icon={Icons.shield}
+                  label={t("Invite.role")}
+                />
               }
               options={TEAM_ROLE_OPTIONS}
               placeholder={t("Invite.member-placeholder")}
@@ -79,13 +85,9 @@ function InviteMemberForm({
         </div>
 
         <div className="flex items-center justify-end gap-3 border-t px-6 py-4">
-          <Button
-            type="submit"
-            isLoading={isPending}
-            className={cn("gap-2")}
-          >
+          <Button type="submit" isLoading={isPending} className={cn("gap-2")}>
             <Icons.send className="size-4" />
-            {t("Common.send")}
+            {t("Common.submit")}
           </Button>
         </div>
       </form.Form>

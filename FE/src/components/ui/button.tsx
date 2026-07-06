@@ -94,26 +94,25 @@ function Button({
       aria-busy={isLoading || undefined}
       {...props}
     >
-      {!isLoading && (
-        <span className="inline-flex items-center gap-2">{children}</span>
-      )}
+      <span
+        className={cn(
+          "inline-flex items-center gap-2 transition-opacity",
+          isLoading && "opacity-0"
+        )}
+      >
+        {children}
+      </span>
 
       {isLoading && (
-        <motion.span
-          initial={{
-            opacity: 0,
-            scale: 0.8,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          transition={{
-            duration: 0.5,
-          }}
-        >
-          <Spinner />
-        </motion.span>
+        <span className="absolute inset-0 flex items-center justify-center">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Spinner />
+          </motion.span>
+        </span>
       )}
     </button>
   );

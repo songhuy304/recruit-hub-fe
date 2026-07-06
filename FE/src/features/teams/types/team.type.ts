@@ -21,6 +21,12 @@ export interface ICreateTeamPayload {
   logoUrl: string | null;
 }
 
+export interface IUpdateTeamPayload {
+  name?: string;
+  slug?: string;
+  logoUrl?: string | null;
+}
+
 export interface ITeamStatistics {
   members: 0;
   invites: 0;

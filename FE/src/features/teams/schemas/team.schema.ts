@@ -23,6 +23,7 @@ export const createTeamSchema = (t: TFunction) =>
   z.object({
     name: z
       .string()
+      .trim()
       .min(1, t("validation.required", { field: t("field.team-name.label") }))
       .max(
         20,
@@ -74,7 +75,28 @@ export const inviteMemberSchema = (t: TFunction) =>
     role: z.enum([ETEAM_ROLE.ADMIN, ETEAM_ROLE.MEMBER]),
   });
 
+export const updateTeamSchema = (t: TFunction) =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, t("validation.required", { field: t("field.team-name.label") }))
+      .max(
+        20,
+        t("validation.max-length", {
+          field: t("field.team-name.label"),
+          maxLength: 20,
+        })
+      ),
+    slug: z
+      .string()
+      .min(1, t("validation.required", { field: t("field.slug.label") }))
+      .regex(/^[a-z0-9-]+$/, t("validation.invalid-slug")),
+    logoUrl: z.string(),
+  });
+
 export type CreateTeamFormValues = z.infer<ReturnType<typeof createTeamSchema>>;
+export type UpdateTeamFormValues = z.infer<ReturnType<typeof updateTeamSchema>>;
 export type JoinTeamFormValues = z.infer<ReturnType<typeof joinTeamSchema>>;
 export type InviteMemberFormValues = z.infer<
   ReturnType<typeof inviteMemberSchema>

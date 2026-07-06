@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { Icons } from "@/components/icons";
@@ -14,19 +14,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
-import { Typography } from "@/components/ui/typography";
 import { useUser } from "@/hooks/useUser";
 
-import { useDeleteTeam, useLeaveTeam } from "../../hooks";
-import { type CreateTeamFormValues } from "../../schemas/team.schema";
+import { useDeleteTeam, useLeaveTeam, useUpdateTeam } from "../../hooks";
 import type { ITeam } from "../../types";
 
+import { UpdateTeamForm } from "../../forms/update-team-form";
 import { SettingsCard } from "../settings-card";
 import { DangerActionRow } from "./danger-action-row";
-import { generateSlug } from "@/lib/utils";
 
 interface TeamDetailSettingProps {
   team: ITeam;
@@ -37,21 +33,8 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
   const { user, isOwner } = useUser();
   const { mutate: deleteTeam, isPending: isDeleting } = useDeleteTeam();
   const { mutate: leaveTeam, isPending: isLeaving } = useLeaveTeam();
+  const { handleUpdateTeam, isPending: isUpdating } = useUpdateTeam();
   const [isActiveTeamWarningOpen, setIsActiveTeamWarningOpen] = useState(false);
-
-  const form = useAppForm({
-    defaultValues: {
-      name: team.name,
-      slug: team.slug,
-      logoUrl: team.logoUrl ?? "",
-    } as CreateTeamFormValues,
-    onSubmit: () => {
-      toast.info("Team update will be available soon");
-    },
-  });
-
-  const { FormTextField, FormFileUploadField } =
-    useFormFields<CreateTeamFormValues>();
 
   const checkActiveTeam = () => {
     if (user?.currentTeamId === team.id) {
@@ -93,55 +76,12 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
         title="General Settings"
         description="Update your team's basic information and avatar."
       >
-        <form.AppForm>
-          <form.Form className="flex flex-col gap-5 p-0">
-            <FormTextField
-              disabled={!isOwner(team.id)}
-              name="name"
-              label="Team Name"
-              placeholder="Enter team name"
-              listeners={{
-                onChange: ({ value }) => {
-                  form.setFieldValue(
-                    "slug",
-                    generateSlug((value as string) ?? "")
-                  );
-                },
-              }}
-            />
-
-            <div className="flex flex-col gap-2">
-              <FormTextField
-                disabled={true}
-                name="slug"
-                label="Team Slug"
-                placeholder="team-slug"
-              />
-              <Typography
-                as="p"
-                variant="paragraph-xs"
-                className="text-muted-foreground"
-              >
-                This is your team&apos;s unique identifier in URLs.
-              </Typography>
-            </div>
-
-            <FormFileUploadField
-              disabled={!isOwner(team.id)}
-              name="logoUrl"
-              label="Logo"
-              className="m-h-24"
-              description="Recommended size 1:1, up to 10MB."
-              maxSize={10 * 1024 * 1024}
-            />
-
-            <div className="flex justify-end pt-2">
-              <Button type="submit" disabled={!isOwner(team.id)}>
-                Save Changes
-              </Button>
-            </div>
-          </form.Form>
-        </form.AppForm>
+        <UpdateTeamForm
+          team={team}
+          onSubmit={handleUpdateTeam}
+          isPending={isUpdating}
+          isOwner={isOwner(team.id)}
+        />
       </SettingsCard>
 
       <SettingsCard
@@ -183,7 +123,7 @@ function TeamDetailSetting({ team }: TeamDetailSettingProps) {
         open={isActiveTeamWarningOpen}
         onOpenChange={setIsActiveTeamWarningOpen}
       >
-        <AlertDialogContent className="max-w-[400px]">
+        <AlertDialogContent className="max-w-100">
           <AlertDialogHeader className="flex flex-col items-center text-center">
             <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full text-amber-600 dark:text-amber-500 mb-2">
               <Icons.warning className="size-6" />

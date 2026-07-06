@@ -25,13 +25,14 @@
     "already-have-account": "Already have an account?",
     "approve": "Approve",
     "reject": "Reject",
-    "continue": "Continue"
+    "continue": "Continue",
+    "save-changes": "Save changes"
   },
 
   "Column": {
     "actions": "Actions",
     "joined": {
-      "label": "Join Date",
+      "label": "Joined",
       "tooltip": "Date joined the team"
     },
     "user": "User",
