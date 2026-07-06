@@ -19,6 +19,7 @@ import { TeamDetailSetting } from "./team-detail-setting/team-detail-setting";
 import { TeamDetailRequest } from "./team-detail-request/team-detail-request";
 import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface TeamMainPanelProps {
   selectedTeam: ITeam | null;
@@ -47,17 +48,26 @@ function TeamMainPanel({ selectedTeam, user }: TeamMainPanelProps) {
   const dispatch = useAppDispatch();
   const { mutate: switchTeam, isPending } = useSwitchTeam();
   const { isOwner } = useUser();
-  const { data: teamStatistics, isPending: isTeamStatisticsPending } =
-    useGetTeamStatistics({
-      id: selectedTeam?.id || 0,
-      enabled: !!selectedTeam?.id && selectedTeam?.type !== ETEAM_TYPE.PERSONAL,
-    });
+  const {
+    data: teamStatistics,
+    isPending: isTeamStatisticsPending,
+    refetch: refetchTeamStatistics,
+  } = useGetTeamStatistics({
+    id: selectedTeam?.id || 0,
+    enabled: !!selectedTeam?.id && selectedTeam?.type !== ETEAM_TYPE.PERSONAL,
+  });
 
   const onSetTab = (tab: TeamMainPanelTab) => {
     void setParams({
       tab: tab,
     });
   };
+
+  useEffect(() => {
+    if (selectedTeam?.type !== ETEAM_TYPE.PERSONAL) {
+      refetchTeamStatistics();
+    }
+  }, [selectedTeam]);
 
   const handleSwitchTeam = (teamId: number) => {
     switchTeam(teamId, {

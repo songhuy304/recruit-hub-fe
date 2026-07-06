@@ -24,7 +24,32 @@
     "or-continue-with": "Hoặc tiếp tục với",
     "already-have-account": "Đã có tài khoản?",
     "approve": "Phê duyệt",
-    "reject": "Từ chối"
+    "reject": "Từ chối",
+    "continue": "Tiếp tục"
+  },
+
+  "Column": {
+    "actions": "Hành động",
+    "joined": {
+      "label": "Ngày tham gia",
+      "tooltip": "Ngày tham gia nhóm"
+    },
+    "user": "Người dùng",
+    "role": {
+      "label": "Vai trò",
+      "tooltip": "Vai trò của thành viên trong nhóm"
+    },
+    "email": {
+      "label": "Email",
+      "tooltip": "Địa chỉ email của thành viên"
+    }
+  },
+
+  "Modal": {
+    "confirm": {
+      "title": "Xác nhận hành động",
+      "description": "Bạn có chắc chắn muốn thực hiện hành động này không? Hành động này không thể hoàn tác."
+    }
   },
 
   "SignUp": {

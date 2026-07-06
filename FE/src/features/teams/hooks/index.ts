@@ -10,3 +10,4 @@ export * from "./useGetTeamStatistics";
 export * from "./useGetMembers";
 export * from "./useGetTeamRequest";
 export * from "./useApproveRejected";
+export * from "./useRemoveMember";

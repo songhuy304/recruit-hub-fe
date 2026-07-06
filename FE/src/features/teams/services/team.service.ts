@@ -23,6 +23,10 @@ const PATH = {
   GET_STATISTICS: (teamId: number) => `/teams/${teamId}/statistics`,
   GET_MEMBERS: () => `/teams/members`,
   GET_JOIN_REQUESTS: () => `/teams/join-requests`,
+  REMOVE_MEMBER: (teamId: number, userId: number) =>
+    `/teams/${teamId}/members/${userId}`,
+  APPROVE_JOIN_REQUEST: () => `/teams/join-requests/approve`,
+  REJECT_JOIN_REQUEST: () => `/teams/join-requests/reject`,
 };
 
 export const teamService = {
@@ -34,6 +38,8 @@ export const teamService = {
     apiClient.post(PATH.SWITCH(teamId)),
   deleteTeam: (teamId: number): Promise<IResponse<void>> =>
     apiClient.delete(PATH.DELETE(teamId)),
+  removeMember: (teamId: number, userId: number): Promise<IResponse<void>> =>
+    apiClient.delete(PATH.REMOVE_MEMBER(teamId, userId)),
   leaveTeam: (teamId: number): Promise<IResponse<void>> =>
     apiClient.post(PATH.LEAVE(teamId)),
   joinTeam: (inviteCode: string): Promise<IResponse<void>> =>
@@ -59,9 +65,9 @@ export const teamService = {
   approveJoinRequest: (
     payload: IApproveJoinRequestPayload,
   ): Promise<IResponse<void>> =>
-    apiClient.post(`/teams/join-requests/approve`, payload),
+    apiClient.post(PATH.APPROVE_JOIN_REQUEST(), payload),
   rejectJoinRequest: (
     payload: IRejectJoinRequestPayload,
   ): Promise<IResponse<void>> =>
-    apiClient.post(`/teams/join-requests/reject`, payload),
+    apiClient.post(PATH.REJECT_JOIN_REQUEST(), payload),
 };
