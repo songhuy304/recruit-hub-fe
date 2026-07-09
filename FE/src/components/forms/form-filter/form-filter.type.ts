@@ -1,0 +1,28 @@
+import { ComponentProps } from "react";
+import {
+  FormCheckboxField,
+  FormDatePickerField,
+  FormSelectField,
+  FormTextField,
+} from "../fields";
+
+type CheckboxProps = ComponentProps<typeof FormCheckboxField>;
+type TextFieldProps = ComponentProps<typeof FormTextField>;
+type SelectFieldProps = ComponentProps<typeof FormSelectField>;
+type DatePickerFieldProps = ComponentProps<typeof FormDatePickerField>;
+
+export interface FieldPropsMap {
+  text: TextFieldProps;
+  select: SelectFieldProps;
+  date: DatePickerFieldProps;
+  checkbox: CheckboxProps;
+}
+
+export type FilterFieldType = keyof FieldPropsMap;
+
+export type FilterFieldConfig<T extends Record<string, any> = any> = {
+  [K in FilterFieldType]: {
+    type: K;
+    name: keyof T & string;
+  } & FieldPropsMap[K];
+}[FilterFieldType];

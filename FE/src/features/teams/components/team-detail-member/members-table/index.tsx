@@ -1,14 +1,17 @@
-'use client';
+"use client";
 
-import { DataTable } from '@/components/ui/table/data-table';
-import { DataTableToolbar } from '@/components/ui/table/data-table-toolbar';
-import { useGetMembers } from '@/features/teams/hooks';
-import { useDataTable } from '@/hooks/use-data-table';
-import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs';
-import { columns } from './columns';
-import { DataTableSkeleton } from '@/components/ui/table/data-table-skeleton';
-import { useTranslations } from 'next-intl';
-import { useUser } from '@/hooks/useUser';
+import { FormFilter } from "@/components/forms/form-filter";
+import { Icons } from "@/components/icons";
+import { DataTable } from "@/components/ui/table/data-table";
+import { DataTableSkeleton } from "@/components/ui/table/data-table-skeleton";
+import { useGetMembers } from "@/features/teams/hooks";
+import { IGetMembers } from "@/features/teams/types";
+import { useDataTable } from "@/hooks/use-data-table";
+import { useFilterParams } from "@/hooks/use-filter-params";
+import { useUser } from "@/hooks/useUser";
+import { useTranslations } from "next-intl";
+import { parseAsInteger, parseAsString } from "nuqs";
+import { columns } from "./columns";
 
 interface TeamMembersTableProps {
   teamId: number;
@@ -16,18 +19,27 @@ interface TeamMembersTableProps {
 
 export function TeamMembersTable({ teamId }: TeamMembersTableProps) {
   const t = useTranslations();
-  const { user, isOwner } = useUser()
-  const [params] = useQueryStates({
-    page: parseAsInteger.withDefault(1),
-    perPage: parseAsInteger.withDefault(10),
-    name: parseAsString
+  const { user, isOwner } = useUser();
+  const { params, handleSubmit, handleReset } = useFilterParams<IGetMembers>({
+    parsers: {
+      page: parseAsInteger.withDefault(1),
+      perPage: parseAsInteger.withDefault(10),
+      search: parseAsString,
+    },
+    defaultFilters: {
+      search: undefined,
+    },
   });
 
-  const { data: membersResponse, isPending, isFetching } = useGetMembers({
+  const {
+    data: membersResponse,
+    isPending,
+    isFetching,
+  } = useGetMembers({
     teamId,
     page: params.page,
     limit: params.perPage,
-    ...(params.name && { search: params.name })
+    search: params.search,
   });
 
   const members = membersResponse?.data ?? [];
@@ -39,16 +51,35 @@ export function TeamMembersTable({ teamId }: TeamMembersTableProps) {
     columns: tableColumns,
     pageCount,
     shallow: true,
-    debounceMs: 500
   });
 
   if (isPending) {
-    return <DataTableSkeleton columnCount={columns.length} filterCount={1} rowCount={5} />;
+    return (
+      <DataTableSkeleton columnCount={columns.length} filterCount={1} rowCount={5} />
+    );
   }
 
   return (
-    <DataTable table={table} isLoading={isFetching}>
-      <DataTableToolbar table={table} />
-    </DataTable>
+    <>
+      <FormFilter<IGetMembers>
+        className="mb-4"
+        fields={[
+          {
+            type: "text",
+            name: "search",
+            placeholder: "Search by name or email",
+            label: "Keyword",
+            leftIcon: <Icons.search className="size-4" />,
+          },
+        ]}
+        onSubmit={(values) => {
+          handleSubmit(values);
+        }}
+        onReset={() => {
+          handleReset();
+        }}
+      />
+      <DataTable table={table} isLoading={isFetching} />
+    </>
   );
 }

@@ -64,10 +64,7 @@ export function CellAction({ data, teamId, t, user }: CellActionProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            onClick={() => setDeleteOpen(true)}
-            disabled={currentUser}
-          >
+          <DropdownMenuItem onClick={() => setDeleteOpen(true)} disabled={currentUser}>
             <Icons.trash className="mr-2 h-4 w-4 text-destructive" />
             {t("Common.delete")}
           </DropdownMenuItem>
@@ -93,11 +90,7 @@ const CellRole = ({ value, teamId, userId, disabled }: CellRoleProps) => {
   };
 
   return (
-    <Select
-      disabled={isPending || disabled}
-      value={value}
-      onValueChange={onValueChange}
-    >
+    <Select disabled={isPending || disabled} value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-26">
         <SelectValue placeholder="Chọn team" />
       </SelectTrigger>
@@ -135,28 +128,14 @@ export const columns = (
         return (
           <div className="flex items-center gap-3">
             <Avatar className="size-10">
-              <AvatarImage
-                src={row.original.avatar}
-                alt={row.original.fullName}
-              />
+              <AvatarImage src={row.original.avatar} alt={row.original.fullName} />
               <AvatarFallback>TN</AvatarFallback>
             </Avatar>
-            <span className="truncate font-medium">
-              {row.original.fullName}
-            </span>
+            <span className="truncate font-medium">{row.original.fullName}</span>
             {isCurrentUser && <Badge variant="secondary">You</Badge>}
           </div>
         );
       },
-      meta: {
-        label: "Member",
-        placeholder: "Search members...",
-        variant: "text" as const,
-        iconCustom: <Icons.search className="size-4" />,
-
-      },
-
-      enableColumnFilter: true,
     },
     {
       accessorKey: "email",
@@ -199,19 +178,14 @@ export const columns = (
     },
     ...(isOwner
       ? [
-        {
-          id: "actions",
-          header: () => <div className="">{t("Column.actions")}</div>,
-          cell: ({ row }: { row: any }) => (
-            <CellAction
-              data={row.original}
-              teamId={teamId}
-              t={t}
-              user={user}
-            />
-          ),
-        } satisfies ColumnDef<ITeamMember>,
-      ]
+          {
+            id: "actions",
+            header: () => <div className="">{t("Column.actions")}</div>,
+            cell: ({ row }: { row: any }) => (
+              <CellAction data={row.original} teamId={teamId} t={t} user={user} />
+            ),
+          } satisfies ColumnDef<ITeamMember>,
+        ]
       : []),
   ];
 };
