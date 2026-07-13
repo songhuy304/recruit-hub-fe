@@ -49,9 +49,15 @@ export function TagInputField({
 
         <TagInput
           id={field.name}
+          styleClasses={{
+            input: "border-none shadow-none",
+            inlineTagsContainer: "bg-transparent dark:bg-input/30 dark:hover:bg-input/50",
+          }}
+          size={"sm"}
+          animation={"fadeIn"}
           tags={value ?? []}
           placeholder={placeholder}
-          className={cn('p-5', className)}
+          className={cn(className)}
           activeTagIndex={activeTagIndex}
           setActiveTagIndex={setActiveTagIndex}
           setTags={(tags) => field.handleChange(tags)}

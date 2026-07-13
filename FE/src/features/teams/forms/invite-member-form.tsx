@@ -6,10 +6,7 @@ import { useAppForm, useFormFields } from "@/components/ui/tanstack-form";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import {
-  inviteMemberSchema,
-  type InviteMemberFormValues,
-} from "../schemas/team.schema";
+import { inviteMemberSchema, type InviteMemberFormValues } from "../schemas/team.schema";
 import { FieldLabelWithIcon } from "@/components/ui/field";
 import { TEAM_ROLE_OPTIONS } from "@/constants/options";
 import { ETEAM_ROLE } from "@/enums";
@@ -20,10 +17,7 @@ interface InviteMemberFormProps {
   isPending?: boolean;
 }
 
-function InviteMemberForm({
-  onSubmit,
-  isPending = false,
-}: InviteMemberFormProps) {
+function InviteMemberForm({ onSubmit, isPending = false }: InviteMemberFormProps) {
   const t = useTranslations();
 
   const form = useAppForm({
@@ -39,8 +33,7 @@ function InviteMemberForm({
     },
   });
 
-  const { FormTagInputField, FormSelectField } =
-    useFormFields<InviteMemberFormValues>();
+  const { FormTagInputField, FormSelectField } = useFormFields<InviteMemberFormValues>();
 
   return (
     <form.AppForm>
@@ -48,10 +41,7 @@ function InviteMemberForm({
         <div className="flex flex-1 flex-col gap-6 p-6">
           <div>
             <Typography variant="h4">{t("Invite.form-title")}</Typography>
-            <Typography
-              variant="paragraph-sm"
-              className="text-muted-foreground"
-            >
+            <Typography variant="paragraph-sm" className="text-muted-foreground">
               {t("Invite.form-description")}
             </Typography>
           </div>
@@ -60,10 +50,7 @@ function InviteMemberForm({
             <FormTagInputField
               name="emails"
               label={
-                <FieldLabelWithIcon
-                  icon={Icons.mail}
-                  label={t("Invite.email-label")}
-                />
+                <FieldLabelWithIcon icon={Icons.mail} label={t("Invite.email-label")} />
               }
               placeholder={t("Invite.email-placeholder")}
               description={t("Invite.email-helper")}
@@ -72,13 +59,10 @@ function InviteMemberForm({
             <FormSelectField
               name="role"
               label={
-                <FieldLabelWithIcon
-                  icon={Icons.shield}
-                  label={t("Invite.role")}
-                />
+                <FieldLabelWithIcon icon={Icons.shield} label={t("field.role.label")} />
               }
               options={TEAM_ROLE_OPTIONS}
-              placeholder={t("Invite.member-placeholder")}
+              placeholder={t("field.role.placeholder")}
             />
           </div>
         </div>

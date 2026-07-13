@@ -22,7 +22,7 @@ export function SettingsCard({
       className={cn(
         "gap-0 py-0",
         variant === "danger" && "border-destructive/40",
-        disabled && "pointer-events-none",
+        disabled && "pointer-events-none"
       )}
     >
       <CardContent className="flex flex-col gap-8 p-6 lg:flex-row lg:gap-12">

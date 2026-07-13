@@ -34,13 +34,13 @@ const TeamDetailInvite = ({ teamId, onSkip }: TeamDetailInviteProps) => {
       },
       {
         onSuccess: () => {
-          toast.success(t("Invite.success"));
+          toast.success(t("Invite.invite-member-success"));
           form.reset();
         },
         onError: (error) => {
-          toast.error(t(error.message || "Invite.error"));
+          toast.error(t(error.message || "Invite.invite-member-error"));
         },
-      },
+      }
     );
   };
 
@@ -59,8 +59,14 @@ const TeamDetailInvite = ({ teamId, onSkip }: TeamDetailInviteProps) => {
               />
             </div>
             <div className="text-center">
-              <Typography align="center" variant="h4">{t("Invite.sidebar-title")}</Typography>
-              <Typography align="center" variant="paragraph-sm" className="text-muted-foreground">
+              <Typography align="center" variant="h4">
+                {t("Invite.sidebar-title")}
+              </Typography>
+              <Typography
+                align="center"
+                variant="paragraph-sm"
+                className="text-muted-foreground"
+              >
                 {t("Invite.sidebar-description")}
               </Typography>
             </div>

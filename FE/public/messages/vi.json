@@ -165,6 +165,10 @@
     "emails": {
       "label": "Danh sách email",
       "placeholder": "Nhập email, cách nhau bằng dấu phẩy hoặc xuống dòng"
+    },
+    "role": {
+      "label": "Vai trò",
+      "placeholder": "Chọn vai trò"
     }
   },
   "Invite": {
@@ -187,7 +191,8 @@
     "emails-required": "Vui lòng nhập địa chỉ email",
     "invalid-emails": "Định dạng email không hợp lệ trong danh sách",
     "success": "Gửi lời mời thành công!",
-    "error": "Gửi lời mời thất bại!"
+    "error": "Gửi lời mời thất bại!",
+    "invite-member-success": "Gửi lời mời thành công!"
   },
   "Notifications": {
     "title": "Thông báo",

@@ -3,6 +3,7 @@ import { apiClient } from "@/lib/axios";
 import {
   IApproveJoinRequestPayload,
   ICreateTeamPayload,
+  IInviteMemberPayload,
   IRejectJoinRequestPayload,
   ITeam,
   ITeamMember,
@@ -17,18 +18,16 @@ const PATH = {
   LIST: "/teams",
   CREATE: "/teams/create-team",
   UPDATE: (teamId: number) => `/teams/${teamId}`,
-  UPDATE_MEMBER: (teamId: number, userId: number) =>
-    `/teams/${teamId}/members/${userId}`,
+  UPDATE_MEMBER: (teamId: number, userId: number) => `/teams/${teamId}/members/${userId}`,
   SWITCH: (teamId: number) => `/teams/switch/${teamId}`,
   DELETE: (teamId: number) => `/teams/${teamId}`,
   LEAVE: (teamId: number) => `/teams/leave/${teamId}`,
   JOIN: (inviteCode: string) => `/teams/join/${inviteCode}`,
-  INVITE: (teamId: number) => `/teams/${teamId}/invitations`,
+  INVITE: () => `/teams/invitations`,
   GET_STATISTICS: (teamId: number) => `/teams/${teamId}/statistics`,
   GET_MEMBERS: () => `/teams/members`,
   GET_JOIN_REQUESTS: () => `/teams/join-requests`,
-  REMOVE_MEMBER: (teamId: number, userId: number) =>
-    `/teams/${teamId}/members/${userId}`,
+  REMOVE_MEMBER: (teamId: number, userId: number) => `/teams/${teamId}/members/${userId}`,
   APPROVE_JOIN_REQUEST: () => `/teams/join-requests/approve`,
   REJECT_JOIN_REQUEST: () => `/teams/join-requests/reject`,
 };
@@ -38,10 +37,8 @@ export const teamService = {
   getTeams: (): Promise<IResponse<ITeam[]>> => apiClient.get(PATH.LIST),
   createTeam: (teamData: ICreateTeamPayload): Promise<IResponse<void>> =>
     apiClient.post(PATH.CREATE, teamData),
-  updateTeam: (
-    teamData: IUpdateTeamPayload,
-    teamId: number
-  ): Promise<IResponse<void>> => apiClient.patch(PATH.UPDATE(teamId), teamData),
+  updateTeam: (teamData: IUpdateTeamPayload, teamId: number): Promise<IResponse<void>> =>
+    apiClient.patch(PATH.UPDATE(teamId), teamData),
 
   updateMember: (
     memberData: IUpdateMember,
@@ -59,10 +56,8 @@ export const teamService = {
     apiClient.post(PATH.LEAVE(teamId)),
   joinTeam: (inviteCode: string): Promise<IResponse<void>> =>
     apiClient.post(PATH.JOIN(inviteCode)),
-  inviteMembers: (
-    teamId: number,
-    payload: { emails: string[]; role: string }
-  ): Promise<IResponse<void>> => apiClient.post(PATH.INVITE(teamId), payload),
+  inviteMembers: (payload: IInviteMemberPayload): Promise<IResponse<void>> =>
+    apiClient.post(PATH.INVITE(), payload),
   getStatistics: (teamId: number): Promise<IResponse<ITeamStatistics>> =>
     apiClient.get(PATH.GET_STATISTICS(teamId)),
   getMembers: (params: IGetMembers): Promise<IPaginatedResponse<ITeamMember>> =>
@@ -70,19 +65,13 @@ export const teamService = {
       params,
     }),
 
-  getJoinRequests: (
-    params: IGetMembers
-  ): Promise<IPaginatedResponse<ITeamMember>> =>
+  getJoinRequests: (params: IGetMembers): Promise<IPaginatedResponse<ITeamMember>> =>
     apiClient.get(PATH.GET_JOIN_REQUESTS(), {
       params,
     }),
 
-  approveJoinRequest: (
-    payload: IApproveJoinRequestPayload
-  ): Promise<IResponse<void>> =>
+  approveJoinRequest: (payload: IApproveJoinRequestPayload): Promise<IResponse<void>> =>
     apiClient.post(PATH.APPROVE_JOIN_REQUEST(), payload),
-  rejectJoinRequest: (
-    payload: IRejectJoinRequestPayload
-  ): Promise<IResponse<void>> =>
+  rejectJoinRequest: (payload: IRejectJoinRequestPayload): Promise<IResponse<void>> =>
     apiClient.post(PATH.REJECT_JOIN_REQUEST(), payload),
 };

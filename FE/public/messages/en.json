@@ -190,6 +190,10 @@
     "emails": {
       "label": "Email list",
       "placeholder": "Enter emails, separated by commas or new lines"
+    },
+    "role": {
+      "placeholder": "Select role",
+      "label": "Role"
     }
   },
   "Invite": {
@@ -212,7 +216,8 @@
     "emails-required": "Please enter email addresses",
     "invalid-emails": "Invalid email format in the list",
     "success": "Invites sent successfully!",
-    "error": "Failed to send invites!"
+    "error": "Failed to send invites!",
+    "invite-member-success": "Invite sent successfully!"
   },
   "Notifications": {
     "title": "Notifications",
