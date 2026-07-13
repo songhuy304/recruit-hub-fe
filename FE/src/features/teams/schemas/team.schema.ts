@@ -59,14 +59,17 @@ export function parseEmailList(value: string): string[] {
 export const inviteMemberSchema = (t: TFunction) =>
   z.object({
     emails: z
-      .string()
-      .min(1, t("validation.required", { field: t("field.emails.label") }))
+      .array(
+        z.object({
+          id: z.string(),
+          text: z.string(),
+        })
+      )
+      .min(1, t("Invite.emails-required"))
       .refine(
-        (val) => {
-          const emailList = parseEmailList(val);
-          if (emailList.length === 0) return false;
+        (tags) => {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailList.every((email) => emailRegex.test(email));
+          return tags.every((tag) => emailRegex.test(tag.text));
         },
         {
           message: t("validation.invalid-emails"),

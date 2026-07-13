@@ -41,6 +41,7 @@ import {
   FormSliderField,
   FormFileUploadField,
   FormDatePickerField,
+  FormTagInputField,
 } from "@/components/forms/fields";
 import { cn } from "@/lib/utils";
 import {
@@ -74,10 +75,7 @@ function Form({
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn(
-        "mx-auto flex w-full flex-col gap-2 p-2 md:p-5",
-        props.className
-      )}
+      className={cn("mx-auto flex w-full flex-col gap-2 p-2 md:p-5", props.className)}
       noValidate
       {...props}
     >
@@ -98,9 +96,7 @@ function SubmitButton({
   }) {
   const form = useFormContext();
   return (
-    <form.Subscribe
-      selector={(state) => [state.canSubmit, state.isSubmitting] as const}
-    >
+    <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting] as const}>
       {([canSubmit, isSubmitting]) => (
         <Button
           className={className}
@@ -127,13 +123,7 @@ function StepButton({
     handleMovement: () => void;
   }) {
   return (
-    <Button
-      size="sm"
-      variant="ghost"
-      type="button"
-      onClick={handleMovement}
-      {...props}
-    >
+    <Button size="sm" variant="ghost" type="button" onClick={handleMovement} {...props}>
       {label}
     </Button>
   );
@@ -217,24 +207,14 @@ function useFormFields<TValues extends Record<string, unknown>>() {
   type Typed<C> = WithTypedName<C, TValues>;
   return {
     FormTextField: FormTextField as unknown as Typed<typeof FormTextField>,
-    FormTextareaField: FormTextareaField as unknown as Typed<
-      typeof FormTextareaField
-    >,
-    FormSelectField: FormSelectField as unknown as Typed<
-      typeof FormSelectField
-    >,
-    FormCheckboxField: FormCheckboxField as unknown as Typed<
-      typeof FormCheckboxField
-    >,
-    FormSwitchField: FormSwitchField as unknown as Typed<
-      typeof FormSwitchField
-    >,
+    FormTextareaField: FormTextareaField as unknown as Typed<typeof FormTextareaField>,
+    FormSelectField: FormSelectField as unknown as Typed<typeof FormSelectField>,
+    FormCheckboxField: FormCheckboxField as unknown as Typed<typeof FormCheckboxField>,
+    FormSwitchField: FormSwitchField as unknown as Typed<typeof FormSwitchField>,
     FormRadioGroupField: FormRadioGroupField as unknown as Typed<
       typeof FormRadioGroupField
     >,
-    FormSliderField: FormSliderField as unknown as Typed<
-      typeof FormSliderField
-    >,
+    FormSliderField: FormSliderField as unknown as Typed<typeof FormSliderField>,
     FormFileUploadField: FormFileUploadField as unknown as Typed<
       typeof FormFileUploadField
     >,
@@ -242,6 +222,8 @@ function useFormFields<TValues extends Record<string, unknown>>() {
     FormDatePickerField: FormDatePickerField as unknown as Typed<
       typeof FormDatePickerField
     >,
+
+    FormTagInputField: FormTagInputField as unknown as Typed<typeof FormTagInputField>,
   };
 }
 

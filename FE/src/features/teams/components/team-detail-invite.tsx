@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { InviteMemberForm } from "../forms/invite-member-form";
 import { useInviteMembers } from "../hooks";
-import { parseEmailList, type InviteMemberFormValues } from "../schemas/team.schema";
+import { type InviteMemberFormValues } from "../schemas/team.schema";
 
 import Image from "next/image";
 import { Typography } from "@/components/ui/typography";
@@ -24,7 +24,7 @@ const TeamDetailInvite = ({ teamId, onSkip }: TeamDetailInviteProps) => {
       return;
     }
 
-    const emailList = parseEmailList(values.emails);
+    const emailList = values.emails.map((tag) => tag.text);
 
     inviteMembers(
       {

@@ -28,7 +28,7 @@ function InviteMemberForm({
 
   const form = useAppForm({
     defaultValues: {
-      emails: "",
+      emails: [],
       role: ETEAM_ROLE.MEMBER,
     } as InviteMemberFormValues,
     validators: {
@@ -39,7 +39,7 @@ function InviteMemberForm({
     },
   });
 
-  const { FormTextareaField, FormSelectField } =
+  const { FormTagInputField, FormSelectField } =
     useFormFields<InviteMemberFormValues>();
 
   return (
@@ -57,7 +57,7 @@ function InviteMemberForm({
           </div>
 
           <div className="flex flex-col gap-5">
-            <FormTextareaField
+            <FormTagInputField
               name="emails"
               label={
                 <FieldLabelWithIcon
@@ -67,7 +67,6 @@ function InviteMemberForm({
               }
               placeholder={t("Invite.email-placeholder")}
               description={t("Invite.email-helper")}
-              rows={4}
             />
 
             <FormSelectField
