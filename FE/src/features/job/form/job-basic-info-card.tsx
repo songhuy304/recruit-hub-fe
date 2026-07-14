@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFormFields } from "@/components/ui/tanstack-form";
-import type { JobFormValues } from "../schemas/job.schema";
 import {
   currencyOptions,
   employmentTypeOptions,
@@ -10,142 +9,155 @@ import {
   statusOptions,
   workLocationTypeOptions,
 } from "@/features/job/constants";
-1;
+import { CreateJobFormValues } from "../schemas";
+import { useTranslations } from "next-intl";
+import { Icons } from "@/components/icons";
+
 export function JobBasicInfoCard() {
+  const t = useTranslations();
   const {
     FormTextField,
     FormSelectField,
     FormSwitchField,
     FormDatePickerField,
     FormTagInputField,
-  } = useFormFields<JobFormValues>();
+    FormTagsField,
+  } = useFormFields<CreateJobFormValues>();
 
   return (
     <Card className="border-border/80 border shadow-sm">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Basic information</CardTitle>
+        <CardTitle className="text-xl font-semibold">
+          {t("Jobs.basic-info-title")}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
           <div className="col-span-1 md:col-span-4">
             <FormTextField
               name="title"
-              label="Job title"
+              label={t("field.job-title.label")}
               required
-              placeholder="e.g. Senior Frontend Engineer"
+              placeholder={t("field.job-title.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
               name="status"
-              label="Status"
+              label={t("field.status.label")}
               required
               options={statusOptions}
-              placeholder="Select status"
+              placeholder={t("field.status.placeholder")}
             />
           </div>
 
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
               name="employmentType"
-              label="Employment type"
+              label={t("field.employment-type.label")}
               required
               options={employmentTypeOptions}
-              placeholder="Select type"
+              placeholder={t("field.employment-type.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
               name="level"
-              label="Level"
+              label={t("field.level.label")}
               required
               options={levelOptions}
-              placeholder="Select level"
+              placeholder={t("field.level.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
               name="departments"
-              label="Department(s)"
+              label={t("field.departments.label")}
               required
-              options={[]}
-              placeholder="Select departments"
+              options={levelOptions}
+              placeholder={t("field.departments.placeholder")}
             />
-          </div>
-
-          <div className="col-span-1 space-y-1.5 md:col-span-2">
-            <span className="text-foreground/80 text-xs font-semibold">
-              Salary range <span className="text-muted-foreground font-normal"></span>
-            </span>
-            <div className="flex items-center gap-2">
-              <div className="flex-1">
-                <FormTextField name="salaryMin" placeholder="Min" type="number" />
-              </div>
-              <span className="text-muted-foreground text-sm font-light">—</span>
-              <div className="flex-1">
-                <FormTextField name="salaryMax" placeholder="Max" type="number" />
-              </div>
-            </div>
-          </div>
-          <div className="col-span-1 md:col-span-2">
-            <FormSelectField
-              name="currency"
-              label="Currency "
-              options={currencyOptions}
-              placeholder="Select currency"
-            />
-          </div>
-          <div className="col-span-1 flex items-end pb-1 md:col-span-2">
-            <FormSwitchField name="isNegotiable" label="Is negotiable?" />
           </div>
 
           <div className="col-span-1 md:col-span-2">
             <FormTextField
+              name="salaryMin"
+              leftIcon={<Icons.dollar />}
+              label={t("field.salary-min.label")}
+              placeholder={t("field.salary-min.placeholder")}
+              type="number"
+              min={0}
+            />
+          </div>
+          <div className="col-span-1 md:col-span-2">
+            <FormTextField
+              leftIcon={<Icons.dollar />}
+              name="salaryMax"
+              label={t("field.salary-max.label")}
+              placeholder={t("field.salary-max.placeholder")}
+              type="number"
+              min={0}
+            />
+          </div>
+          <div className="col-span-1 md:col-span-2">
+            <FormSelectField
+              name="currency"
+              label={t("field.currency.label")}
+              options={currencyOptions}
+              placeholder={t("field.currency.placeholder")}
+            />
+          </div>
+          {/* <div className="col-span-1 flex items-end pb-2 md:col-span-2">
+            <FormSwitchField name="isNegotiable" label={t("field.is-negotiable.label")} />
+          </div> */}
+
+          <div className="col-span-1 md:col-span-2">
+            <FormTextField
               name="location"
-              label="Location"
+              label={t("field.location.label")}
               required
-              placeholder="e.g. Ho Chi Minh City, Vietnam"
+              placeholder={t("field.location.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-4">
             <FormTextField
               name="officeAddress"
-              label="Office address"
+              label={t("field.office-address.label")}
               required
-              placeholder="e.g. 123 Nguyen Hue, District 1, Ho Chi Minh City"
+              placeholder={t("field.office-address.placeholder")}
             />
           </div>
 
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
               name="workLocationType"
-              label="Work location type"
+              label={t("field.work-location-type.label")}
               required
               options={workLocationTypeOptions}
-              placeholder="Select type"
+              placeholder={t("field.work-location-type.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-4">
-            <FormTagInputField
+            <FormTagsField
               name="skills"
-              label="Skills"
+              label={t("field.skills.label")}
               required
-              placeholder="Select skills (press Enter to add)"
+              placeholder={t("field.skills.placeholder")}
             />
           </div>
 
           <div className="col-span-1 md:col-span-3">
             <FormDatePickerField
-              name="opensAt"
-              label="Opens at "
-              placeholder="Select date"
+              name="openedAt"
+              label={t("field.opened-at.label")}
+              placeholder={t("field.opened-at.placeholder")}
             />
           </div>
           <div className="col-span-1 md:col-span-3">
             <FormDatePickerField
               name="expiresAt"
-              label="Expires at "
-              placeholder="Select date"
+              label={t("field.expires-at.label")}
+              placeholder={t("field.expires-at.placeholder")}
             />
           </div>
         </div>

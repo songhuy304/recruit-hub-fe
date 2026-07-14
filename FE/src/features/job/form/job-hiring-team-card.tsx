@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface HiringTeamMember {
   initials: string;
@@ -34,6 +35,7 @@ const hiringTeamMembers: HiringTeamMember[] = [
 ];
 
 function HiringTeamMemberRow({ member }: { member: HiringTeamMember }) {
+  const t = useTranslations();
   const isOwner = member.badge === 'owner';
 
   return (
@@ -59,17 +61,19 @@ function HiringTeamMemberRow({ member }: { member: HiringTeamMember }) {
             : 'border text-muted-foreground bg-muted hover:bg-muted'
         )}
       >
-        {isOwner ? 'Owner' : 'Member'}
+        {isOwner ? t('Jobs.hiring-team-owner') : t('Jobs.hiring-team-member')}
       </Badge>
     </div>
   );
 }
 
 export function JobHiringTeamCard() {
+  const t = useTranslations();
+
   return (
     <Card className='border-border/80 border shadow-sm'>
       <CardHeader className='pb-3'>
-        <CardTitle className='text-base font-semibold'>Hiring team</CardTitle>
+        <CardTitle className='text-base font-semibold'>{t('Jobs.hiring-team-title')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-4'>
         <div className='space-y-3.5'>
@@ -84,7 +88,7 @@ export function JobHiringTeamCard() {
           className='border-border hover:bg-accent mt-2 h-9 w-full gap-1.5 border-dashed text-xs'
         >
           <Icons.add className='text-muted-foreground h-3.5 w-3.5' />
-          Add team member
+          {t('Jobs.hiring-team-add')}
         </Button>
       </CardContent>
     </Card>

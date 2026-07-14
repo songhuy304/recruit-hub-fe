@@ -36,7 +36,7 @@ export function TagInputField({
   const isValid = useStore(field.store, (s) => s.meta.isValid);
 
   const [activeTagIndex, setActiveTagIndex] = React.useState<number | null>(null);
-
+  const hasError = isTouched && !isValid;
   return (
     <FormFieldSet>
       <FormField>
@@ -50,8 +50,16 @@ export function TagInputField({
         <TagInput
           id={field.name}
           styleClasses={{
-            input: "border-none shadow-none",
-            inlineTagsContainer: "bg-transparent dark:bg-input/30 dark:hover:bg-input/50",
+            input: "border-none shadow-none p-0",
+            inlineTagsContainer: cn(
+              "border rounded-md bg-transparent dark:bg-input/30 px-3",
+              hasError
+                ? "border-destructive focus-within:ring-1 focus-within:ring-destructive"
+                : "border-input"
+            ),
+            tag: {
+              body: "h-5 text-[10px] bg-muted",
+            },
           }}
           size={"sm"}
           animation={"fadeIn"}

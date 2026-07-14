@@ -25,7 +25,7 @@ export enum EJobStatus {
 }
 
 export enum EWorkLocationType {
-  ONSITE = "ONSITE",
+  AT_OFFICE = "AT_OFFICE",
   REMOTE = "REMOTE",
   HYBRID = "HYBRID",
 }

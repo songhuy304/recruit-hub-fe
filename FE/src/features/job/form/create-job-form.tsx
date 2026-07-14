@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { useAppForm } from "@/components/ui/tanstack-form";
-import type { JobFormValues } from "../schemas/job.schema";
 import { CreateJobHeader } from "@/features/job/components/create-job/create-job-header";
 import { JobBasicInfoCard } from "@/features/job/form/job-basic-info-card";
 import { JobDescriptionCard } from "@/features/job/form/job-description-card";
@@ -10,38 +9,19 @@ import { JobPublishOptionsCard } from "@/features/job/form/job-publish-options-c
 import { JobHiringTeamCard } from "@/features/job/form/job-hiring-team-card";
 import { JobPreviewCard } from "@/features/job/form/job-preview-card";
 import { JobSubmitAction } from "../types/mutation-job.type";
-import { EJobStatus, EWorkLocationType } from "../enums";
+import { EEmploymentType, EJobStatus, EWorkLocationType } from "../enums";
+import { useTranslations } from "next-intl";
+import { CreateJobFormValues, createJobSchema } from "../schemas";
 
 interface CreateJobFormProps {
-  onSubmit: (values: JobFormValues, action: JobSubmitAction) => void | Promise<void>;
+  onSubmit: (
+    values: CreateJobFormValues,
+    action: JobSubmitAction
+  ) => void | Promise<void>;
   isSubmitting?: boolean;
   submittingAction?: JobSubmitAction | null;
-  defaultValues?: Partial<JobFormValues>;
+  defaultValues?: Partial<CreateJobFormValues>;
 }
-
-const EMPTY_VALUES: JobFormValues = {
-  title: "",
-  departments: "",
-  location: "",
-  employmentType: null,
-  level: null,
-  status: EJobStatus.DRAFT,
-  salaryMin: undefined,
-  salaryMax: undefined,
-  salaryCurrency: "VND",
-  currency: "VND",
-  workLocationType: EWorkLocationType.REMOTE,
-  officeAddress: "",
-  skills: [],
-  isNegotiable: false,
-  opensAt: undefined,
-  expiresAt: undefined,
-  description: "",
-  requirements: "",
-  benefits: "",
-  published: false,
-  pinned: false,
-};
 
 function CreateJobForm({
   onSubmit,
@@ -49,15 +29,16 @@ function CreateJobForm({
   submittingAction = null,
   defaultValues,
 }: CreateJobFormProps) {
+  const t = useTranslations();
   const actionTypeRef = useRef<JobSubmitAction>("publish");
 
   const form = useAppForm({
-    defaultValues: {
-      ...EMPTY_VALUES,
-      ...defaultValues,
-    } as JobFormValues,
+    defaultValues: defaultValues,
+    validators: {
+      onChange: createJobSchema(t),
+    },
     onSubmit: async ({ value }) => {
-      await onSubmit(value, actionTypeRef.current);
+      await onSubmit(value as CreateJobFormValues, actionTypeRef.current);
     },
   });
 

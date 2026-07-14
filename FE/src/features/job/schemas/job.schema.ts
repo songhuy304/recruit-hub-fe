@@ -1,35 +1,134 @@
 import * as z from "zod";
 import { EEmploymentType, EJobLevel, EJobStatus, EWorkLocationType } from "../enums";
+import { TFunction } from "@/i18n/config";
 
-export const jobSchema = z.object({
-  title: z.string().min(2, "Job title must be at least 2 characters"),
-  departments: z.string().min(1, "Please select a department"),
-  location: z.string().min(2, "Location must be at least 2 characters"),
-  employmentType: z.enum(EEmploymentType).nullable(),
-  level: z.enum(EJobLevel).nullable(),
-  status: z.enum(EJobStatus),
-  salaryMin: z.coerce.number().optional(),
-  salaryMax: z.coerce.number().optional(),
-  salaryCurrency: z.string().default("VND"),
-  currency: z.string().optional().default("VND"),
-  workLocationType: z.enum(EWorkLocationType),
-  officeAddress: z.string().min(2, "Office address must be at least 2 characters"),
-  skills: z
-    .array(
-      z.object({
-        id: z.string(),
-        text: z.string(),
-      })
-    )
-    .min(1, "Please add at least one skill"),
-  isNegotiable: z.boolean().default(false),
-  opensAt: z.date().optional(),
-  expiresAt: z.date().optional(),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  requirements: z.string().min(10, "Requirements must be at least 10 characters"),
-  benefits: z.string().optional(),
-  published: z.boolean().default(false),
-  pinned: z.boolean().default(false),
-});
+export const createJobSchema = (t: TFunction) =>
+  z
+    .object({
+      title: z
+        .string(
+          t("validation.required", {
+            field: t("field.job-title.label"),
+          })
+        )
+        .trim()
+        .min(
+          1,
+          t("validation.required", {
+            field: t("field.job-title.label"),
+          })
+        )
+        .max(
+          255,
+          t("validation.max-length", {
+            field: t("field.job-title.label"),
+            maxLength: 255,
+          })
+        ),
 
-export type JobFormValues = z.infer<typeof jobSchema>;
+      status: z.enum(EJobStatus, {
+        message: t("validation.required", {
+          field: t("field.status.label"),
+        }),
+      }),
+
+      employmentType: z.enum(EEmploymentType, {
+        message: t("validation.required", {
+          field: t("field.employment-type.label"),
+        }),
+      }),
+
+      level: z.enum(EJobLevel, {
+        message: t("validation.required", {
+          field: t("field.level.label"),
+        }),
+      }),
+
+      departments: z.enum(EJobLevel, {
+        message: t("validation.required", {
+          field: t("field.level.label"),
+        }),
+      }),
+
+      location: z
+        .string(
+          t("validation.required", {
+            field: t("field.location.label"),
+          })
+        )
+        .min(
+          1,
+          t("validation.required", {
+            field: t("field.location.label"),
+          })
+        ),
+
+      officeAddress: z
+        .string(
+          t("validation.required", {
+            field: t("field.office-address.label"),
+          })
+        )
+        .trim()
+        .min(
+          1,
+          t("validation.required", {
+            field: t("field.office-address.label"),
+          })
+        ),
+
+      workLocationType: z.enum(EWorkLocationType, {
+        message: t("validation.required", {
+          field: t("field.work-location-type.label"),
+        }),
+      }),
+      salaryMin: z.number().optional(),
+      salaryMax: z.number().optional(),
+      currency: z.string().default("VND"),
+      isNegotiable: z.boolean().default(false),
+      skills: z
+        .array(
+          z.object({
+            id: z.string(),
+            text: z.string(),
+          })
+        )
+        .min(
+          1,
+          t("validation.required", {
+            field: t("field.skills.label"),
+          })
+        ),
+      openedAt: z.date().optional(),
+      expiresAt: z.date().optional(),
+      description: z.string().optional(),
+      requirements: z.string().optional(),
+      benefits: z.string().optional(),
+      published: z.boolean().default(false),
+      pinned: z.boolean().default(false),
+    })
+    .superRefine((data, ctx) => {
+      // salary
+      if (
+        data.salaryMin !== undefined &&
+        data.salaryMax !== undefined &&
+        data.salaryMax < data.salaryMin
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["salaryMax"],
+          message: t("validation.salary-max"),
+        });
+      }
+
+      // date
+      if (data.openedAt && data.expiresAt && data.expiresAt < data.openedAt) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["expiresAt"],
+          message: t("validation.expired-after-open"),
+        });
+      }
+    });
+
+export type CreateJobFormValues = z.infer<ReturnType<typeof createJobSchema>>;

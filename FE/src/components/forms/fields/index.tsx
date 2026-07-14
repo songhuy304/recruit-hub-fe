@@ -11,6 +11,7 @@ export { DatePickerField } from "./date-picker-field";
 export { DateRangePickerField } from "./date-range-picker-field";
 export { TagInputField } from "./input-tags-field";
 export { TextEditorField } from "./text-editor-field";
+export { TagsField } from "./tag-field";
 
 // Composed (standalone, for direct use in forms)
 export { FormTextField } from "./text-field";
@@ -25,3 +26,4 @@ export { FormDatePickerField } from "./date-picker-field";
 export { FormDateRangePickerField } from "./date-range-picker-field";
 export { FormTagInputField } from "./input-tags-field";
 export { FormTextEditorField } from "./text-editor-field";
+export { FormTagsField } from "./tag-field";

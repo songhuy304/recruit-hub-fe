@@ -8,25 +8,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useFormFields } from "@/components/ui/tanstack-form";
-import type { JobFormValues } from "../schemas/job.schema";
+import type { CreateJobFormValues } from "../schemas";
+import { useTranslations } from "next-intl";
 
 export function JobPublishOptionsCard() {
-  const { FormSwitchField } = useFormFields<JobFormValues>();
+  const t = useTranslations();
+  const { FormSwitchField } = useFormFields<CreateJobFormValues>();
 
   return (
     <Card className="border-border/80 border shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold">Publish options</CardTitle>
+        <CardTitle className="text-base font-semibold">{t('Jobs.publish-options-title')}</CardTitle>
         <CardDescription className="text-xs">
-          Control how this job will be visible to candidates.
+          {t('Jobs.publish-options-description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 pt-1">
         <div className="border-border/50 flex items-center justify-between border-b pb-4">
           <div className="space-y-0.5">
-            <h4 className="text-foreground/90 text-sm font-semibold">Published</h4>
+            <h4 className="text-foreground/90 text-sm font-semibold">{t('Jobs.published-title')}</h4>
             <p className="text-muted-foreground text-xs">
-              Show this job on the career page.
+              {t('Jobs.published-description')}
             </p>
           </div>
           <FormSwitchField name="published" label="" />
@@ -34,9 +36,9 @@ export function JobPublishOptionsCard() {
 
         <div className="flex items-center justify-between pt-1">
           <div className="space-y-0.5">
-            <h4 className="text-foreground/90 text-sm font-semibold">Pinned</h4>
+            <h4 className="text-foreground/90 text-sm font-semibold">{t('Jobs.pinned-title')}</h4>
             <p className="text-muted-foreground text-xs">
-              Highlight this job on top of the list.
+              {t('Jobs.pinned-description')}
             </p>
           </div>
           <FormSwitchField name="pinned" label="" />

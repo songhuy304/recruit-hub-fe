@@ -92,7 +92,6 @@
     }
   },
 
-
   "Teams": {
     "join-team-success": "Join request submitted. Please wait for the team owner's approval.",
     "create-team-success": "Team created successfully!",
@@ -147,7 +146,9 @@
     "password-mismatch": "Passwords do not match.",
     "username-format": "Username can only contain letters, numbers, and underscores.",
     "invalid-slug": "Slug can only contain lowercase letters, numbers, and hyphens.",
-    "invalid-emails": "One or more email addresses are invalid."
+    "invalid-emails": "One or more email addresses are invalid.",
+    "salary-max": "Salary max must be greater than or equal to salary min.",
+    "expired-after-open": "Expiry date must be after or equal to opening date."
   },
   "field": {
     "email": {
@@ -194,6 +195,83 @@
     "role": {
       "placeholder": "Select role",
       "label": "Role"
+    },
+    "job-title": {
+      "label": "Job Title",
+      "placeholder": "e.g. Senior Frontend Engineer"
+    },
+    "employment-type": {
+      "label": "Employment Type",
+      "placeholder": "Select employment type"
+    },
+    "level": {
+      "label": "Job Level",
+      "placeholder": "Select job level"
+    },
+    "status": {
+      "label": "Status",
+      "placeholder": "Select status"
+    },
+    "departments": {
+      "label": "Departments",
+      "placeholder": "Select departments"
+    },
+    "salary-min": {
+      "label": "Min salary",
+      "placeholder": "Min salary"
+    },
+    "salary-max": {
+      "label": "Max salary",
+      "placeholder": "Max salary"
+    },
+    "currency": {
+      "label": "Currency",
+      "placeholder": "Select currency"
+    },
+    "location": {
+      "label": "Location",
+      "placeholder": "e.g. Ho Chi Minh City, Vietnam"
+    },
+    "office-address": {
+      "label": "Office Address",
+      "placeholder": "e.g. 123 Nguyen Hue, District 1, Ho Chi Minh City"
+    },
+    "work-location-type": {
+      "label": "Work Location Type",
+      "placeholder": "Select work location type"
+    },
+    "skills": {
+      "label": "Skills",
+      "placeholder": "Type a skill and press Enter"
+    },
+    "opened-at": {
+      "label": "Opening Date",
+      "placeholder": "Select date"
+    },
+    "expires-at": {
+      "label": "Expiration Date",
+      "placeholder": "Select date"
+    },
+    "description": {
+      "label": "Job Description",
+      "placeholder": "Describe the role, responsibilities, and what the candidate will be doing..."
+    },
+    "requirements": {
+      "label": "Requirements",
+      "placeholder": "Describe the required qualifications and skills..."
+    },
+    "benefits": {
+      "label": "Benefits",
+      "placeholder": "Describe the benefits offered to candidates..."
+    },
+    "is-negotiable": {
+      "label": "Negotiable"
+    },
+    "published": {
+      "label": "Published"
+    },
+    "pinned": {
+      "label": "Pinned"
     }
   },
   "Invite": {
@@ -218,6 +296,27 @@
     "success": "Invites sent successfully!",
     "error": "Failed to send invites!",
     "invite-member-success": "Invite sent successfully!"
+  },
+  "Jobs": {
+    "basic-info-title": "Basic information",
+    "salary-range": "Salary range",
+    "description-title": "Job description",
+    "hiring-team-title": "Hiring team",
+    "hiring-team-owner": "Owner",
+    "hiring-team-member": "Member",
+    "hiring-team-add": "Add team member",
+    "preview-title": "Job post preview",
+    "preview-description": "Fill in the details to see a preview of your job post.",
+    "publish-options-title": "Publish options",
+    "publish-options-description": "Control how this job will be visible to candidates.",
+    "published-title": "Published",
+    "published-description": "Show this job on the career page.",
+    "pinned-title": "Pinned",
+    "pinned-description": "Highlight this job on top of the list.",
+    "create-title": "Create Job",
+    "create-description": "Post a new job opening and attract top talent.",
+    "save-draft": "Save draft",
+    "publish-job": "Publish job"
   },
   "Notifications": {
     "title": "Notifications",

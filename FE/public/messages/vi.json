@@ -83,6 +83,28 @@
     }
   },
 
+  "Jobs": {
+    "basic-info-title": "Thông tin cơ bản",
+    "salary-range": "Khoảng lương",
+    "description-title": "Mô tả công việc",
+    "hiring-team-title": "Nhóm tuyển dụng",
+    "hiring-team-owner": "Chủ sở hữu",
+    "hiring-team-member": "Thành viên",
+    "hiring-team-add": "Thêm thành viên",
+    "preview-title": "Xem trước tin tuyển dụng",
+    "preview-description": "Điền thông tin để xem trước tin tuyển dụng của bạn.",
+    "publish-options-title": "Tùy chọn đăng tuyển",
+    "publish-options-description": "Kiểm soát cách hiển thị công việc này với ứng viên.",
+    "published-title": "Đã đăng tuyển",
+    "published-description": "Hiển thị công việc này trên trang tuyển dụng.",
+    "pinned-title": "Đã ghim",
+    "pinned-description": "Ghim công việc này lên đầu danh sách.",
+    "create-title": "Tạo công việc",
+    "create-description": "Đăng tin tuyển dụng mới và thu hút nhân tài hàng đầu.",
+    "save-draft": "Lưu nháp",
+    "publish-job": "Đăng tuyển"
+  },
+
   "error": {
     "internal-sever": "Lỗi hệ thống",
     "internal-server": "Lỗi hệ thống",
@@ -122,7 +144,9 @@
     "password-mismatch": "Mật khẩu không khớp.",
     "username-format": "Tên người dùng chỉ chứa chữ cái, số và dấu gạch dưới.",
     "invalid-slug": "Slug chỉ được chứa chữ cái thường, số và dấu gạch ngang.",
-    "invalid-emails": "Một hoặc nhiều địa chỉ email không hợp lệ."
+    "invalid-emails": "Một hoặc nhiều địa chỉ email không hợp lệ.",
+    "salary-max": "Mức lương tối đa phải lớn hơn hoặc bằng mức lương tối thiểu.",
+    "expired-after-open": "Ngày hết hạn phải sau hoặc bằng ngày mở tuyển."
   },
   "field": {
     "email": {
@@ -169,6 +193,83 @@
     "role": {
       "label": "Vai trò",
       "placeholder": "Chọn vai trò"
+    },
+    "job-title": {
+      "label": "Tiêu đề công việc",
+      "placeholder": "VD: Senior Frontend Engineer"
+    },
+    "employment-type": {
+      "label": "Loại hình làm việc",
+      "placeholder": "Chọn loại hình làm việc"
+    },
+    "level": {
+      "label": "Cấp bậc",
+      "placeholder": "Chọn cấp bậc"
+    },
+    "status": {
+      "label": "Trạng thái",
+      "placeholder": "Chọn trạng thái"
+    },
+    "departments": {
+      "label": "Phòng ban",
+      "placeholder": "Chọn phòng ban"
+    },
+    "salary-min": {
+      "label": "Min",
+      "placeholder": "Nhập mức lương tối thiểu"
+    },
+    "salary-max": {
+      "label": "Max",
+      "placeholder": "Nhập mức lương tối đa"
+    },
+    "currency": {
+      "label": "Đơn vị tiền tệ",
+      "placeholder": "Chọn đơn vị tiền tệ"
+    },
+    "location": {
+      "label": "Địa điểm",
+      "placeholder": "VD: Hồ Chí Minh, Việt Nam"
+    },
+    "office-address": {
+      "label": "Địa chỉ văn phòng",
+      "placeholder": "VD: 123 Nguyễn Huệ, Quận 1, TP.HCM"
+    },
+    "work-location-type": {
+      "label": "Hình thức làm việc",
+      "placeholder": "Chọn hình thức làm việc"
+    },
+    "skills": {
+      "label": "Kỹ năng",
+      "placeholder": "Nhập kỹ năng rồi nhấn Enter"
+    },
+    "opened-at": {
+      "label": "Ngày mở tuyển",
+      "placeholder": "Chọn ngày mở tuyển"
+    },
+    "expires-at": {
+      "label": "Ngày hết hạn",
+      "placeholder": "Chọn ngày hết hạn"
+    },
+    "description": {
+      "label": "Mô tả công việc",
+      "placeholder": "Mô tả vai trò, trách nhiệm và công việc của ứng viên..."
+    },
+    "requirements": {
+      "label": "Yêu cầu công việc",
+      "placeholder": "Mô tả các yêu cầu và kỹ năng cần có..."
+    },
+    "benefits": {
+      "label": "Quyền lợi",
+      "placeholder": "Mô tả quyền lợi dành cho ứng viên..."
+    },
+    "is-negotiable": {
+      "label": "Có thể thương lượng"
+    },
+    "published": {
+      "label": "Đăng tuyển"
+    },
+    "pinned": {
+      "label": "Ghim tin tuyển dụng"
     }
   },
   "Invite": {

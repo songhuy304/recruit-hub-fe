@@ -1,85 +1,76 @@
 import { Option } from "@/components/forms/fields/select-field";
-import {
-  EmploymentType,
-  JobLevel,
-  JobStatus,
-  WorkLocationType,
-} from "@/features/job/types";
+import { EEmploymentType, EJobLevel, EJobStatus, EWorkLocationType } from "../enums";
 
 export const employmentTypeOptions: Option[] = [
   {
-    value: EmploymentType.FULL_TIME,
+    value: EEmploymentType.FULL_TIME,
     label: "Full-time",
   },
   {
-    value: EmploymentType.PART_TIME,
+    value: EEmploymentType.PART_TIME,
     label: "Part-time",
   },
   {
-    value: EmploymentType.CONTRACT,
+    value: EEmploymentType.CONTRACT,
     label: "Contract",
   },
   {
-    value: EmploymentType.INTERN,
+    value: EEmploymentType.INTERN,
     label: "Intern",
   },
   {
-    value: EmploymentType.FREELANCE,
+    value: EEmploymentType.FREELANCE,
     label: "Freelance",
   },
 ];
 
 export const levelOptions: Option[] = [
   {
-    value: JobLevel.INTERN,
+    value: EJobLevel.INTERN,
     label: "Intern",
   },
   {
-    value: JobLevel.FRESHER,
+    value: EJobLevel.FRESHER,
     label: "Fresher",
   },
   {
-    value: JobLevel.JUNIOR,
+    value: EJobLevel.JUNIOR,
     label: "Junior",
   },
   {
-    value: JobLevel.MIDDLE,
+    value: EJobLevel.MIDDLE,
     label: "Middle",
   },
   {
-    value: JobLevel.SENIOR,
+    value: EJobLevel.SENIOR,
     label: "Senior",
   },
   {
-    value: JobLevel.LEAD,
+    value: EJobLevel.LEAD,
     label: "Lead",
   },
 ];
 
 export const jobStatusConfig: Record<
-  JobStatus,
+  EJobStatus,
   {
     label: string;
     color: string;
   }
 > = {
-  [JobStatus.DRAFT]: {
+  [EJobStatus.DRAFT]: {
     label: "Draft",
     color: "bg-gray-400",
   },
-  [JobStatus.OPEN]: {
+  [EJobStatus.OPEN]: {
     label: "Open",
     color: "bg-green-500",
   },
-  [JobStatus.ON_HOLD]: {
-    label: "On Hold",
-    color: "bg-yellow-500",
-  },
-  [JobStatus.CLOSED]: {
+  [EJobStatus.CLOSED]: {
     label: "Closed",
     color: "bg-red-500",
   },
-  [JobStatus.ARCHIVED]: {
+  [EJobStatus.ARCHIVED]: {
     label: "Archived",
     color: "bg-slate-500",
   },
@@ -87,15 +78,15 @@ export const jobStatusConfig: Record<
 
 export const workLocationTypeOptions: Option[] = [
   {
-    value: WorkLocationType.AT_OFFICE,
+    value: EWorkLocationType.AT_OFFICE,
     label: "At Office",
   },
   {
-    value: WorkLocationType.REMOTE,
+    value: EWorkLocationType.REMOTE,
     label: "Remote",
   },
   {
-    value: WorkLocationType.HYBRID,
+    value: EWorkLocationType.HYBRID,
     label: "Hybrid",
   },
 ];
@@ -108,9 +99,5 @@ export const currencyOptions: Option[] = [
   {
     value: "USD",
     label: "USD",
-  },
-  {
-    value: "EUR",
-    label: "EUR",
   },
 ];

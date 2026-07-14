@@ -100,6 +100,7 @@ import {
   IconUserPlus,
   IconEye,
   IconLinkFilled,
+  IconCurrencyDollar,
 } from "@tabler/icons-react";
 import { IconNoData } from "./ui/icons/empty.icon";
 
@@ -167,6 +168,7 @@ export const Icons = {
   video: IconVideo,
   send: IconSend,
   paperclip: IconPaperclip,
+  dollar: IconCurrencyDollar,
 
   // Files
   page: IconFile,

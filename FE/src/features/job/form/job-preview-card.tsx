@@ -1,7 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
+import { useTranslations } from 'next-intl';
 
 export function JobPreviewCard() {
+  const t = useTranslations();
+
   return (
     <Card className='border-border/60 bg-muted/5 border border-dashed shadow-none'>
       <CardContent className='flex min-h-[220px] flex-col items-center justify-center space-y-4 p-8 text-center'>
@@ -9,9 +12,9 @@ export function JobPreviewCard() {
           <Icons.post className='text-muted-foreground/70 h-8 w-8' />
         </div>
         <div className='max-w-[200px] space-y-1.5'>
-          <h4 className='text-foreground/80 text-sm font-medium'>Job post preview</h4>
+          <h4 className='text-foreground/80 text-sm font-medium'>{t('Jobs.preview-title')}</h4>
           <p className='text-muted-foreground text-xs leading-normal'>
-            Fill in the details to see a preview of your job post.
+            {t('Jobs.preview-description')}
           </p>
         </div>
       </CardContent>

@@ -2,40 +2,42 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFormFields } from "@/components/ui/tanstack-form";
-import { JobFormValues } from "../schemas";
+import { CreateJobFormValues } from "../schemas";
+import { useTranslations } from "next-intl";
 
 export function JobDescriptionCard() {
-  const { FormTextEditorField } = useFormFields<JobFormValues>();
+  const t = useTranslations();
+  const { FormTextEditorField } = useFormFields<CreateJobFormValues>();
 
   return (
     <Card className="border-border/80 border shadow-sm">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Job description</CardTitle>
+        <CardTitle className="text-xl font-semibold">{t('Jobs.description-title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-1">
           <FormTextEditorField
             name="description"
-            label="Description"
+            label={t('field.description.label')}
             required
-            placeholder="Describe the role, responsibilities, and what the candidate will be doing..."
+            placeholder={t('field.description.placeholder')}
           />
         </div>
 
         <div className="space-y-1">
           <FormTextEditorField
             name="requirements"
-            label="Requirements"
+            label={t('field.requirements.label')}
             required
-            placeholder="List the must-have skills, experience, and qualifications..."
+            placeholder={t('field.requirements.placeholder')}
           />
         </div>
 
         <div className="space-y-1">
           <FormTextEditorField
             name="benefits"
-            label="Benefits "
-            placeholder="List the benefits, perks, and why candidates will love working with you..."
+            label={t('field.benefits.label')}
+            placeholder={t('field.benefits.placeholder')}
           />
         </div>
       </CardContent>
