@@ -49,7 +49,6 @@ export function TextEditor({
     },
   });
 
-  // Sync khi value thay đổi từ bên ngoài
   useEffect(() => {
     if (!editor) return;
 

@@ -2,16 +2,15 @@
 
 import { useRef } from "react";
 import { useAppForm } from "@/components/ui/tanstack-form";
-import type { JobFormValues } from "../../schemas/job.schema";
-import type { JobSubmitAction } from "./types";
-import { CreateJobFormHeader } from "@/features/job/components/form/create-job-form-header";
-import { JobBasicInfoCard } from "@/features/job/components/form/job-basic-info-card";
-import { JobDescriptionCard } from "@/features/job/components/form/job-description-card";
-import { JobPublishOptionsCard } from "@/features/job/components/form/job-publish-options-card";
-import { JobHiringTeamCard } from "@/features/job/components/form/job-hiring-team-card";
-import { JobPreviewCard } from "@/features/job/components/form/job-preview-card";
-
-export type { JobSubmitAction };
+import type { JobFormValues } from "../schemas/job.schema";
+import { CreateJobHeader } from "@/features/job/components/create-job/create-job-header";
+import { JobBasicInfoCard } from "@/features/job/form/job-basic-info-card";
+import { JobDescriptionCard } from "@/features/job/form/job-description-card";
+import { JobPublishOptionsCard } from "@/features/job/form/job-publish-options-card";
+import { JobHiringTeamCard } from "@/features/job/form/job-hiring-team-card";
+import { JobPreviewCard } from "@/features/job/form/job-preview-card";
+import { JobSubmitAction } from "../types/mutation-job.type";
+import { EJobStatus, EWorkLocationType } from "../enums";
 
 interface CreateJobFormProps {
   onSubmit: (values: JobFormValues, action: JobSubmitAction) => void | Promise<void>;
@@ -24,14 +23,14 @@ const EMPTY_VALUES: JobFormValues = {
   title: "",
   departments: "",
   location: "",
-  employmentType: "",
-  level: "",
-  status: "DRAFT",
+  employmentType: null,
+  level: null,
+  status: EJobStatus.DRAFT,
   salaryMin: undefined,
   salaryMax: undefined,
   salaryCurrency: "VND",
   currency: "VND",
-  workLocationType: "",
+  workLocationType: EWorkLocationType.REMOTE,
   officeAddress: "",
   skills: [],
   isNegotiable: false,
@@ -44,7 +43,7 @@ const EMPTY_VALUES: JobFormValues = {
   pinned: false,
 };
 
-export default function CreateJobForm({
+function CreateJobForm({
   onSubmit,
   isSubmitting = false,
   submittingAction = null,
@@ -70,7 +69,7 @@ export default function CreateJobForm({
 
   return (
     <div className="space-y-6">
-      <CreateJobFormHeader
+      <CreateJobHeader
         onSaveDraft={() => triggerSubmit("draft")}
         onPublish={() => triggerSubmit("publish")}
         isSubmitting={isSubmitting}
@@ -94,3 +93,5 @@ export default function CreateJobForm({
     </div>
   );
 }
+
+export { CreateJobForm };

@@ -1,26 +1,20 @@
-import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import type { JobSubmitAction } from "./types";
+import { Button } from "@/components/ui/button";
+import { JobSubmitAction } from "../../types";
 
-interface CreateJobFormHeaderProps {
+interface CreateJobHeaderProps {
   onSaveDraft: () => void;
   onPublish: () => void;
   isSubmitting?: boolean;
   submittingAction?: JobSubmitAction | null;
 }
 
-export function CreateJobFormHeader({
+export function CreateJobHeader({
   onSaveDraft,
   onPublish,
   isSubmitting = false,
   submittingAction = null,
-}: CreateJobFormHeaderProps) {
+}: CreateJobHeaderProps) {
   return (
     <div className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-center sm:justify-between">
       <div>

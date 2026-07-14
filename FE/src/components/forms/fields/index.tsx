@@ -8,7 +8,9 @@ export { RadioGroupField } from "./radio-group-field";
 export { SliderField } from "./slider-field";
 export { FileUploadField } from "./file-upload-field";
 export { DatePickerField } from "./date-picker-field";
+export { DateRangePickerField } from "./date-range-picker-field";
 export { TagInputField } from "./input-tags-field";
+export { TextEditorField } from "./text-editor-field";
 
 // Composed (standalone, for direct use in forms)
 export { FormTextField } from "./text-field";
@@ -20,4 +22,6 @@ export { FormRadioGroupField } from "./radio-group-field";
 export { FormSliderField } from "./slider-field";
 export { FormFileUploadField } from "./file-upload-field";
 export { FormDatePickerField } from "./date-picker-field";
+export { FormDateRangePickerField } from "./date-range-picker-field";
 export { FormTagInputField } from "./input-tags-field";
+export { FormTextEditorField } from "./text-editor-field";

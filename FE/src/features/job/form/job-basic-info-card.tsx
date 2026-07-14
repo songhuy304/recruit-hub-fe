@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFormFields } from "@/components/ui/tanstack-form";
-import type { JobFormValues } from "../../schemas/job.schema";
+import type { JobFormValues } from "../schemas/job.schema";
 import {
   currencyOptions,
   employmentTypeOptions,

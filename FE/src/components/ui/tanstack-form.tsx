@@ -42,6 +42,8 @@ import {
   FormFileUploadField,
   FormDatePickerField,
   FormTagInputField,
+  FormTextEditorField,
+  FormDateRangePickerField,
 } from "@/components/forms/fields";
 import { cn } from "@/lib/utils";
 import {
@@ -223,7 +225,14 @@ function useFormFields<TValues extends Record<string, unknown>>() {
       typeof FormDatePickerField
     >,
 
+    FormDateRangePickerField: FormDateRangePickerField as unknown as Typed<
+      typeof FormDateRangePickerField
+    >,
+
     FormTagInputField: FormTagInputField as unknown as Typed<typeof FormTagInputField>,
+    FormTextEditorField: FormTextEditorField as unknown as Typed<
+      typeof FormTextEditorField
+    >,
   };
 }
 
