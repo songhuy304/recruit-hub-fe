@@ -82,8 +82,8 @@ export const createJobSchema = (t: TFunction) =>
           field: t("field.work-location-type.label"),
         }),
       }),
-      salaryMin: z.number().optional(),
-      salaryMax: z.number().optional(),
+      salaryMin: z.number().optional().or(z.literal("")),
+      salaryMax: z.number().optional().or(z.literal("")),
       currency: z.enum(ECurrency, {
         message: t("validation.required", {
           field: t("field.currency.label"),
@@ -109,10 +109,10 @@ export const createJobSchema = (t: TFunction) =>
       pinned: z.boolean().default(false),
     })
     .superRefine((data, ctx) => {
-      // salary
+      // salary check
       if (
-        data.salaryMin !== undefined &&
-        data.salaryMax !== undefined &&
+        data.salaryMin != null &&
+        data.salaryMax != null &&
         data.salaryMax < data.salaryMin
       ) {
         ctx.addIssue({
@@ -122,7 +122,7 @@ export const createJobSchema = (t: TFunction) =>
         });
       }
 
-      // date
+      // date check
       if (data.openedAt && data.expiresAt && data.expiresAt < data.openedAt) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

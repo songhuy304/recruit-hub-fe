@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { CreateJobFormValues } from "../schemas";
 import { jobService } from "../services";
 import { ICreateJobEntity, JobSubmitAction } from "../types";
-import { ECurrency, EEmploymentType, EWorkLocationType } from "../enums";
+import { ECurrency, EEmploymentType, EJobStatus, EWorkLocationType } from "../enums";
 import { mutationJobMapper } from "../mappers";
 
 const useCreateJob = () => {
@@ -28,6 +28,7 @@ const useCreateJob = () => {
     () => ({
       workLocationType: EWorkLocationType.AT_OFFICE,
       currency: ECurrency.USD,
+      status: EJobStatus.DRAFT,
       employmentType: EEmploymentType.FULL_TIME,
       openedAt: new Date(),
     }),

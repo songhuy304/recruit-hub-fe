@@ -22,6 +22,7 @@ function CreateJobForm({ onSubmit, defaultValues }: CreateJobFormProps) {
       onChange: createJobSchema(t),
     },
     onSubmit: async ({ value }) => {
+      console.log(value);
       await onSubmit(value as CreateJobFormValues, form);
     },
   });

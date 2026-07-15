@@ -3,11 +3,15 @@ import get from "lodash/get";
 import { CreateJobFormValues } from "../schemas";
 import { ICreateJobEntity, JobSubmitAction } from "../types";
 import { EJobStatus } from "../enums";
+import { toNumber } from "lodash";
 
 export const mutationJobMapper = {
   toEntity: (values: CreateJobFormValues, action: JobSubmitAction): ICreateJobEntity => {
-    const opensAt = get(values, "opensAt") as Date | null | undefined;
+    const opensAt = get(values, "openedAt");
     const expiresAt = get(values, "expiresAt");
+
+    const salaryMin = get(values, "salaryMin", null);
+    const salaryMax = get(values, "salaryMax", null);
 
     return {
       title: get(values, "title"),
@@ -20,8 +24,8 @@ export const mutationJobMapper = {
       level: get(values, "level", null),
       status: get(values, "status", action === "publish" ? EJobStatus.OPEN : null),
 
-      salaryMin: get(values, "salaryMin", null),
-      salaryMax: get(values, "salaryMax", null),
+      salaryMin: salaryMax ? toNumber(salaryMin) : null,
+      salaryMax: salaryMax ? toNumber(salaryMax) : null,
       currency: get(values, "currency", "VND"),
       isNegotiable: get(values, "isNegotiable", false),
 

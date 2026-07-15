@@ -21,28 +21,28 @@ export function CreateJobHeader({
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t('Jobs.create-title')}</h1>
-        <p className="text-muted-foreground text-sm">
-          {t('Jobs.create-description')}
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">{t("Jobs.create-title")}</h1>
+        <p className="text-muted-foreground text-sm">{t("Jobs.create-description")}</p>
       </div>
       <div className="flex items-center gap-3">
         <Button
-          type="button"
+          type="submit"
+          form="job-form"
           variant="outline"
           onClick={onSaveDraft}
           disabled={isSubmitting}
-          isLoading={isSubmitting && submittingAction === "draft"}
+          isLoading={isSubmitting && submittingAction === "save"}
         >
-          {t('Jobs.save-draft')}
+          {t("Jobs.save-draft")}
         </Button>
         <Button
-          type="button"
+          type="submit"
+          form="job-form"
           onClick={onPublish}
           disabled={isSubmitting}
           isLoading={isSubmitting && submittingAction === "publish"}
         >
-          {t('Jobs.publish-job')}
+          {t("Jobs.publish-job")}
         </Button>
         <Button type="button" variant="outline" size="icon" className="h-9 w-9">
           <Icons.ellipsis className="h-4 w-4" />

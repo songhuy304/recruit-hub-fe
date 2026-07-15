@@ -117,7 +117,7 @@ export function JobBasicInfoCard() {
               min={0}
             />
           </div>
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1">
             <FormSelectField
               name="currency"
               label={t("field.currency.label")}
@@ -125,9 +125,9 @@ export function JobBasicInfoCard() {
               placeholder={t("field.currency.placeholder")}
             />
           </div>
-          {/* <div className="col-span-1 flex items-end pb-2 md:col-span-2">
+          <div className="col-span-1 flex items-start pt-7.5">
             <FormSwitchField name="isNegotiable" label={t("field.is-negotiable.label")} />
-          </div> */}
+          </div>
 
           <div className="col-span-1 md:col-span-2">
             <FormSelectField
