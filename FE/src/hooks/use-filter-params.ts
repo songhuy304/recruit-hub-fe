@@ -1,27 +1,35 @@
 import { createQueryParams, toQueryParams } from "@/lib/searchparams";
-import { useQueryStates, UseQueryStatesKeysMap } from "nuqs";
+import {
+  inferParserType,
+  useQueryStates,
+  type Nullable,
+  type UseQueryStatesKeysMap,
+  type Values,
+} from "nuqs";
 
-interface UseFilterParamsOptions<T> {
-  parsers: UseQueryStatesKeysMap;
-  defaultFilters?: Partial<T>;
+interface UseFilterParamsOptions<TParsers extends UseQueryStatesKeysMap> {
+  parsers: TParsers;
+  defaultFilters?: Partial<inferParserType<TParsers>>;
 }
 
-export function useFilterParams<T extends Record<string, any>>({
+export function useFilterParams<TParsers extends UseQueryStatesKeysMap>({
   parsers,
   defaultFilters,
-}: UseFilterParamsOptions<T>) {
+}: UseFilterParamsOptions<TParsers>) {
+  type TValues = inferParserType<TParsers>;
+
   const [params, setParams] = useQueryStates(parsers);
 
   const defaultValues = {
     ...defaultFilters,
     ...params,
-  } as T;
+  } as TValues;
 
-  const handleSubmit = (values: T) => {
-    setParams({
+  const handleSubmit = (values: TValues) => {
+    void setParams({
       ...createQueryParams(values),
       page: 1,
-    });
+    } as Partial<Nullable<Values<TParsers>>>);
   };
 
   const handleReset = () => {
@@ -33,12 +41,11 @@ export function useFilterParams<T extends Record<string, any>>({
       {} as Record<string, null>
     );
 
-    setParams({
+    void setParams({
       ...cleared,
       ...toQueryParams(defaultFilters ?? {}),
       page: 1,
-      perPage: 10,
-    });
+    } as Partial<Nullable<Values<TParsers>>>);
   };
 
   return { params, defaultValues, setParams, handleSubmit, handleReset };

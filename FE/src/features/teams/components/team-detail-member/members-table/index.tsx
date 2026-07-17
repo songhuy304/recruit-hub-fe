@@ -20,7 +20,7 @@ interface TeamMembersTableProps {
 export function TeamMembersTable({ teamId }: TeamMembersTableProps) {
   const t = useTranslations();
   const { user, isOwner } = useUser();
-  const { params, handleSubmit, handleReset } = useFilterParams<IGetMembers>({
+  const { params, handleSubmit, handleReset } = useFilterParams({
     parsers: {
       page: parseAsInteger.withDefault(1),
       perPage: parseAsInteger.withDefault(10),

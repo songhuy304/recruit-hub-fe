@@ -8,15 +8,14 @@ import { JOB_PATHS } from "@/config/paths.config";
 import { JobCard } from "@/features/job/components/job-card";
 import { useGetJobs } from "@/features/job/hooks";
 import { IJob } from "@/features/job/types";
-import { useFilterParams } from "@/hooks/use-filter-params";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-
-type JobFilterParams = ReturnType<typeof useFilterParams>["params"];
+import type { SetValues } from "nuqs";
+import { JobSearchParams, jobSearchParsers } from "../job-search-params";
 
 interface JobListContentProps {
-  params: JobFilterParams;
-  setParams: ReturnType<typeof useFilterParams>["setParams"];
+  params: JobSearchParams;
+  setParams: SetValues<typeof jobSearchParsers>;
 }
 
 export function JobListContent({ params, setParams }: JobListContentProps) {
@@ -28,7 +27,7 @@ export function JobListContent({ params, setParams }: JobListContentProps) {
     isFetching,
   } = useGetJobs({
     page: params.page,
-    limit: params.perPage,
+    limit: params.limit,
   });
 
   const jobs = jobsResponse?.data ?? [];

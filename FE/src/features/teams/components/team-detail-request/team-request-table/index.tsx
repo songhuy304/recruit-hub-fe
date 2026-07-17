@@ -18,7 +18,7 @@ interface TeamRequestTableProps {
 
 export function TeamRequestTable({ teamId }: TeamRequestTableProps) {
   const t = useTranslations();
-  const { params, handleSubmit, handleReset } = useFilterParams<IFormFilterJoinRequest>({
+  const { params, handleSubmit, handleReset } = useFilterParams({
     parsers: {
       page: parseAsInteger.withDefault(1),
       perPage: parseAsInteger.withDefault(10),

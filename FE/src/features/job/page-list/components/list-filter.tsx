@@ -1,14 +1,13 @@
 import { FormFilter } from "@/components/forms/form-filter";
-import { useFilterParams } from "@/hooks/use-filter-params";
-import { IGetJobs, IJobFilterFormValues } from "../../types";
 import { Icons } from "@/components/icons";
 import { employmentTypeOptions, levelOptions } from "../../constants";
 import { useGetLocation } from "@/hooks/options";
 import { Card, CardContent } from "@/components/ui/card";
+import { JobSearchParams } from "../job-search-params";
 
 interface JobListFilterProps {
-  params: IJobFilterFormValues;
-  handleSubmit: (values: IJobFilterFormValues) => void;
+  params: JobSearchParams;
+  handleSubmit: (values: JobSearchParams) => void;
   handleReset: () => void;
 }
 
@@ -18,7 +17,7 @@ const JobListFilter = ({ params, handleSubmit, handleReset }: JobListFilterProps
   return (
     <Card>
       <CardContent>
-        <FormFilter<IJobFilterFormValues>
+        <FormFilter<JobSearchParams>
           defaultValues={params}
           fields={[
             {
@@ -49,6 +48,11 @@ const JobListFilter = ({ params, handleSubmit, handleReset }: JobListFilterProps
               placeholder: "Select location",
               options: options,
             },
+            {
+              type: "dateRange",
+              name: "createdAt",
+              placeholder: "Select created date",
+            }
           ]}
           onSubmit={handleSubmit}
           onReset={handleReset}

@@ -95,6 +95,7 @@ const FormFilter = <T extends Record<string, any>>(props: FormFilterProps<T>) =>
         return (
           <FormDateRangePickerField
             listeners={{
+              onChangeDebounceMs: 600,
               onChange: triggerSubmit,
             }}
             key={name}

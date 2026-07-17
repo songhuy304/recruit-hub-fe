@@ -1,9 +1,46 @@
 import { createParser } from 'nuqs/server';
 import { z } from 'zod';
+import dayjs from 'dayjs';
+import type { DateRange } from 'react-day-picker';
 
 import { dataTableConfig } from '@/config/data-table';
 
 import type { ExtendedColumnFilter, ExtendedColumnSort } from '@/types/data-table';
+
+/**
+ * Serializes a `DateRange` into a URL param as comma-separated unix seconds
+ * (e.g. `1212412540,1231231240`) and parses it back into `Date` objects.
+ * Either bound may be absent (e.g. `1212412540,` or `,1231231240`).
+ */
+export const parseAsDateRange = createParser<DateRange>({
+  parse: (query) => {
+    const [fromRaw, toRaw] = query.split(',');
+
+    const parseBound = (raw?: string): Date | undefined => {
+      if (!raw) return undefined;
+      const unix = Number(raw);
+      if (!Number.isFinite(unix)) return undefined;
+      const date = dayjs.unix(unix);
+      return date.isValid() ? date.toDate() : undefined;
+    };
+
+    const from = parseBound(fromRaw);
+    const to = parseBound(toRaw);
+
+    if (!from && !to) return null;
+
+    return { from, to };
+  },
+  serialize: (range) => {
+    const from = range?.from ? dayjs(range.from).unix() : '';
+    const to = range?.to ? dayjs(range.to).unix() : '';
+
+    if (from === '' && to === '') return '';
+
+    return `${from},${to}`;
+  },
+  eq: (a, b) => a.from?.getTime() === b.from?.getTime() && a.to?.getTime() === b.to?.getTime()
+});
 
 const sortingItemSchema = z.object({
   id: z.string(),
