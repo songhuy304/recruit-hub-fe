@@ -128,6 +128,7 @@ export function TabsTrigger({
   className,
   indicatorClassName,
   icon: Icon,
+  disabled,
   meta,
 }: {
   value: string;
@@ -135,6 +136,7 @@ export function TabsTrigger({
   className?: string;
   indicatorClassName?: string;
   icon?: ComponentType<{ className?: string }>;
+  disabled?: boolean;
   meta?: {
     count?: number;
     isLoading?: boolean;
@@ -150,6 +152,7 @@ export function TabsTrigger({
         type="button"
         role="tab"
         aria-selected={active}
+        disabled={disabled}
         onClick={() => setValue(value)}
         className={cn(
           "cursor-pointer relative inline-flex min-h-10 items-center justify-center px-3 py-2 text-sm font-medium transition-colors outline-none",
@@ -161,8 +164,8 @@ export function TabsTrigger({
         {children}
 
         {meta?.count !== undefined && (
-          <Badge variant="secondary" className="rounded-full text-xs size-5 ml-2">
-            {meta?.isLoading ? <Spinner /> : meta?.count}
+          <Badge variant="secondary" className="rounded-full text-xs p-0 size-5 ml-2">
+            {meta?.isLoading ? <Spinner className="size-4" /> : meta?.count}
           </Badge>
         )}
 
@@ -194,6 +197,7 @@ export function TabsTrigger({
       <button
         type="button"
         role="tab"
+        disabled={disabled}
         aria-selected={active}
         onClick={() => setValue(value)}
         className={cn(

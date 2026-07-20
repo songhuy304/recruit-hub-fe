@@ -1,7 +1,7 @@
 import get from "lodash/get";
 
 import { CreateJobFormValues } from "../schemas";
-import { ICreateJobEntity, JobSubmitAction } from "../types";
+import { ICreateJobEntity, IJob, JobSubmitAction } from "../types";
 import { toNumber } from "lodash";
 
 export const mutationJobMapper = {
@@ -42,6 +42,41 @@ export const mutationJobMapper = {
       skills: get(values, "skills", []),
 
       workLocationType: get(values, "workLocationType"),
+    };
+  },
+
+  toFormValues: (job: IJob): CreateJobFormValues => {
+    return {
+      title: job.title,
+
+      status: job.status,
+      employmentType: job.employmentType,
+      level: job.level,
+
+      departments: String(job.department.id),
+      location: job.location,
+
+      workLocationType: job.workLocationType,
+      currency: job.currency,
+
+      isNegotiable: job.isNegotiable,
+
+      skills: job.skills ?? [],
+
+      description: job.description,
+      requirements: job.requirements ?? "",
+      benefits: job.benefits ?? "",
+
+      published: job.isPublished,
+      pinned: job.isPinned,
+
+      officeAddress: job.officeAddress ?? "",
+
+      salaryMin: job.salaryMin ?? undefined,
+      salaryMax: job.salaryMax ?? undefined,
+
+      openedAt: job.openedAt ? new Date(job.openedAt) : undefined,
+      expiresAt: job.expiresAt ? new Date(job.expiresAt) : undefined,
     };
   },
 };

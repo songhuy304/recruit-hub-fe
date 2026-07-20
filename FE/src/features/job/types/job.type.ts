@@ -1,10 +1,20 @@
 import { IPagination } from "@/types/api.type";
-import { EEmploymentType, EJobLevel, EJobStatus } from "../enums";
+import {
+  ECurrency,
+  EEmploymentType,
+  EJobLevel,
+  EJobStatus,
+  EWorkLocationType,
+} from "../enums";
+import { ITeamMember } from "@/features/teams/types";
+import { IDepartment } from "@/services/common/types";
 
-export interface IJobHiringTeamMember {
-  id: string;
+export interface Team {
+  id: number;
   name: string;
-  avatarUrl?: string | null;
+  slug: string;
+  logoUrl: string;
+  members: ITeamMember[];
 }
 
 export interface IJob {
@@ -14,6 +24,7 @@ export interface IJob {
   requirements: string;
   benefits: string;
   employmentType: EEmploymentType;
+  workLocationType: EWorkLocationType;
   level: EJobLevel;
   status: EJobStatus;
   salaryMin: number;
@@ -23,12 +34,16 @@ export interface IJob {
   isPublished: boolean;
   isPinned: boolean;
   location: string;
-  department: string;
+  department: IDepartment;
   createdAt: string;
   updatedAt: string;
   viewCount?: number;
   applicantCount?: number;
-  hiringTeam?: IJobHiringTeamMember[];
+  currency: ECurrency;
+  isNegotiable: boolean;
+  skills: string[];
+  officeAddress: string;
+  team?: Team;
 }
 
 export interface IDateRangeFilter {
@@ -50,4 +65,13 @@ export interface IJobQueryParams extends IPagination {
   createdAt?: IDateRangeFilter;
   sort?: IJobSortFilter;
   location?: string[];
+}
+
+export interface IJobSummaryQueryParams {
+  q?: string;
+  location?: string[];
+  department?: string[];
+  jobType?: EEmploymentType[];
+  level?: EJobLevel[];
+  createdAt?: IDateRangeFilter;
 }

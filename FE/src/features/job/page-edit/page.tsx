@@ -6,8 +6,9 @@ import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { CreateJobHeader } from "@/features/job/components";
 import { JobSubmitAction } from "@/features/job/types";
-import { useCreateJob } from "@/features/job/hooks";
+import { useCreateJob, useEditJob, useGetJobDetails } from "@/features/job/hooks";
 import { CreateJobFormValues } from "@/features/job/schemas";
+import { mutationJobMapper } from "@/features/job/mappers";
 
 interface EditJobPageProps {
   id: string;
@@ -15,15 +16,23 @@ interface EditJobPageProps {
 
 export default function EditJobPage({ id }: EditJobPageProps) {
   const t = useTranslations();
-  const { isPending, createInitValues, handleCreateJob } = useCreateJob();
+  const { isPending: isGetJobDetailsPending, data } = useGetJobDetails({
+    id: parseInt(id),
+  });
+  const { handleEditJob, isPending: isEditJobPending } = useEditJob(parseInt(id));
+
   const submitActionRef = useRef<JobSubmitAction>("publish");
 
   const handleSubmit = async (values: CreateJobFormValues) => {
-    await handleCreateJob(values, submitActionRef.current);
+    await handleEditJob(values, submitActionRef.current);
   };
 
+  const defaultValues = data?.data
+    ? mutationJobMapper.toFormValues(data?.data)
+    : undefined;
+
   return (
-    <PageContainer>
+    <PageContainer isLoading={isGetJobDetailsPending}>
       <div className="flex-1 space-y-4">
         <CreateJobHeader
           onSaveDraft={() => {
@@ -33,11 +42,11 @@ export default function EditJobPage({ id }: EditJobPageProps) {
           onPublish={() => {
             submitActionRef.current = "publish";
           }}
-          isSubmitting={isPending}
-          submittingAction={isPending ? submitActionRef.current : null}
+          isSubmitting={isEditJobPending}
+          submittingAction={isEditJobPending ? submitActionRef.current : null}
         />
 
-        <CreateJobForm onSubmit={handleSubmit} defaultValues={createInitValues} />
+        <CreateJobForm onSubmit={handleSubmit} defaultValues={defaultValues} />
       </div>
     </PageContainer>
   );

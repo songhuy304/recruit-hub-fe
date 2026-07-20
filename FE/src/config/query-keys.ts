@@ -36,5 +36,6 @@ export const QUERY_KEY = {
     ROOT: "job",
     INFO: ["job", "info"],
     LIST: ["job", "list"],
+    DETAIL: (id: number) => ["job", "detail", id],
   },
 } as const;

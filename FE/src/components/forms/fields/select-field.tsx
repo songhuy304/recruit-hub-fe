@@ -16,6 +16,7 @@ import {
   FormFieldError,
   createFormField,
 } from "@/components/ui/form-context";
+import { cn } from "@/lib/utils";
 
 export type Option = { value: string; label: React.ReactNode };
 
@@ -25,6 +26,7 @@ interface SelectFieldProps {
   required?: boolean;
   options: Option[];
   placeholder?: string;
+  className?: string;
 }
 
 export function SelectField({
@@ -33,6 +35,7 @@ export function SelectField({
   required,
   options,
   placeholder = "Select an option",
+  className,
 }: SelectFieldProps) {
   const field = useFieldContext();
   const isTouched = useStore(field.store, (s) => s.meta.isTouched);
@@ -40,7 +43,7 @@ export function SelectField({
   const value = useStore(field.store, (s) => s.value) as string;
 
   return (
-    <FormFieldSet className="min-w-52">
+    <FormFieldSet className={cn("min-w-52", className)}>
       <FormField>
         {label && (
           <FieldLabel htmlFor={field.name}>

@@ -2,19 +2,18 @@
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { Can } from "@/components/ui/can";
+import { Heading } from "@/components/ui/heading";
 import { JOB_PATHS } from "@/config/paths.config";
-import { useGetJobStatistics } from "@/features/job/hooks/use-get-job-statistics";
+import { ETEAM_ROLE } from "@/enums";
+import { useUser } from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { EJobStatus } from "../../enums";
 import { jobStatusConfig } from "../../constants";
-import { useUser } from "@/hooks/useUser";
-import { Can } from "@/components/ui/can";
-import { ETEAM_ROLE } from "@/enums";
-import { useFilterParams } from "@/hooks/use-filter-params";
-import { jobSearchParsers } from "@/features/job/page-list/job-search-params";
-import { Heading } from "@/components/ui/heading";
+import { EJobStatus } from "../../enums";
+import { useGetJobSummary } from "@/features/job/hooks";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 function JobStatItem({
   label,
@@ -40,7 +39,7 @@ function JobStatItem({
       {isLoading ? (
         <span className="bg-muted h-7 w-9 animate-pulse rounded" />
       ) : (
-        <span className="text-xl font-semibold tabular-nums">{value}</span>
+        <NumberTicker value={value} className="tabular-nums" />
       )}
     </div>
   );
@@ -49,15 +48,17 @@ function JobStatItem({
 export function JobListHeader({ className }: { className?: string }) {
   const t = useTranslations("Jobs");
 
-  const { total, open, onHold, closed, isPending } = useGetJobStatistics();
+  const { data: summary, isPending } = useGetJobSummary({});
   const { hasCurrentTeamRole } = useUser();
 
+  const data = summary?.data;
+
   const stats = [
-    { label: t("stats.total"), value: total, status: undefined },
-    { label: t("stats.open"), value: open, status: EJobStatus.OPEN },
-    { label: t("stats.archived"), value: onHold, status: EJobStatus.ARCHIVED },
-    { label: t("stats.draft"), value: closed, status: EJobStatus.DRAFT },
-    { label: t("stats.closed"), value: closed, status: EJobStatus.CLOSED },
+    { label: t("stats.total"), value: data?.total, status: undefined },
+    { label: t("stats.open"), value: data?.open, status: EJobStatus.OPEN },
+    { label: t("stats.archived"), value: data?.achieved, status: EJobStatus.ARCHIVED },
+    { label: t("stats.draft"), value: data?.draft, status: EJobStatus.DRAFT },
+    { label: t("stats.closed"), value: data?.closed, status: EJobStatus.CLOSED },
   ] as const;
 
   return (
@@ -72,7 +73,7 @@ export function JobListHeader({ className }: { className?: string }) {
               key={stat.label}
               status={stat.status}
               label={stat.label}
-              value={stat.value}
+              value={stat.value ?? 0}
               isLoading={isPending}
             />
           ))}

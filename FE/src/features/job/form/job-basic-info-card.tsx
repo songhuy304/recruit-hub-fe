@@ -124,6 +124,7 @@ export function JobBasicInfoCard() {
               name="currency"
               label={t("field.currency.label")}
               options={currencyOptions}
+              className="min-w-8"
               placeholder={t("field.currency.placeholder")}
             />
           </div>

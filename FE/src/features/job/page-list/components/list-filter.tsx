@@ -1,12 +1,13 @@
 import { FormFilter } from "@/components/forms/form-filter";
 import { Icons } from "@/components/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useGetLocation } from "@/hooks/options";
+import { useGetDepartment, useGetLocation } from "@/hooks/options";
 import { employmentTypeOptions, levelOptions } from "../../constants";
 import { JobSearchParams, jobSearchParsers } from "../job-search-params";
 import { EJobStatus } from "@/features/job/enums";
 import { SetValues } from "nuqs";
 import { useTranslations } from "next-intl";
+import { useGetJobSummary } from "@/features/job/hooks";
 
 interface JobListFilterProps {
   params: JobSearchParams;
@@ -23,6 +24,15 @@ const JobListFilter = ({
 }: JobListFilterProps) => {
   const t = useTranslations();
   const { options } = useGetLocation();
+  const { options: departmentOptions } = useGetDepartment();
+  const { data, isPending, isFetching } = useGetJobSummary({
+    jobType: params.jobType ?? undefined,
+    level: params.level ?? undefined,
+    department: params.department ?? undefined,
+    location: params.location ?? undefined,
+  });
+
+  const sum = data?.data;
 
   return (
     <div className="space-y-4">
@@ -58,6 +68,13 @@ const JobListFilter = ({
             options: options,
           },
           {
+            type: "multiSelect",
+            multiple: true,
+            name: "department",
+            placeholder: t("field.departments.placeholder"),
+            options: departmentOptions,
+          },
+          {
             type: "dateRange",
             name: "createdAt",
             placeholder: t("field.createdDate.placeholder"),
@@ -73,12 +90,42 @@ const JobListFilter = ({
         onValueChange={(value) => setParams({ status: value as EJobStatus })}
       >
         <TabsList className="w-full">
-          <TabsTrigger value={EJobStatus.OPEN}>{t("Jobs.stats.open")}</TabsTrigger>
-          <TabsTrigger value={EJobStatus.ARCHIVED}>
+          <TabsTrigger
+            meta={{
+              count: sum?.open ?? 0,
+              isLoading: isPending || isFetching,
+            }}
+            value={EJobStatus.OPEN}
+          >
+            {t("Jobs.stats.open")}
+          </TabsTrigger>
+          <TabsTrigger
+            value={EJobStatus.ARCHIVED}
+            meta={{
+              count: sum?.achieved ?? 0,
+              isLoading: isPending || isFetching,
+            }}
+          >
             {t("Jobs.stats.archived")}
           </TabsTrigger>
-          <TabsTrigger value={EJobStatus.DRAFT}>{t("Jobs.stats.draft")}</TabsTrigger>
-          <TabsTrigger value={EJobStatus.CLOSED}>{t("Jobs.stats.closed")}</TabsTrigger>
+          <TabsTrigger
+            value={EJobStatus.DRAFT}
+            meta={{
+              count: sum?.draft ?? 0,
+              isLoading: isPending || isFetching,
+            }}
+          >
+            {t("Jobs.stats.draft")}
+          </TabsTrigger>
+          <TabsTrigger
+            value={EJobStatus.CLOSED}
+            meta={{
+              count: sum?.closed ?? 0,
+              isLoading: isPending || isFetching,
+            }}
+          >
+            {t("Jobs.stats.closed")}
+          </TabsTrigger>
         </TabsList>
       </Tabs>
     </div>

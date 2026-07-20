@@ -233,7 +233,7 @@
     },
     "location": {
       "label": "Location",
-      "placeholder": "e.g. Ho Chi Minh City, Vietnam"
+      "placeholder": "Select location"
     },
     "office-address": {
       "label": "Office Address",

@@ -21,7 +21,6 @@ interface JobListContentProps {
 }
 
 export function JobListContent({ params, setParams }: JobListContentProps) {
-  const router = useRouter();
   const { data: locations = [] } = useGetLocation();
 
   const {
@@ -53,10 +52,6 @@ export function JobListContent({ params, setParams }: JobListContentProps) {
     void setParams({ limit, page: 1 });
   };
 
-  const handleEdit = (job: IJob) => {
-    router.push(`/jobs/edit/${job.id}`);
-  };
-
   return (
     <div className="space-y-10">
       <JobList
@@ -64,7 +59,6 @@ export function JobListContent({ params, setParams }: JobListContentProps) {
         jobs={jobs}
         locations={locations}
         isFetching={isFetching}
-        onEdit={handleEdit}
       />
 
       <PagePagination

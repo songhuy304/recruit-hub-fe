@@ -14,7 +14,7 @@ export const typographyVariants = cva("", {
       h2: "text-4xl leading-tight font-medium tracking-tight",
       h3: "text-3xl leading-tight font-medium tracking-tight",
       h4: "text-2xl leading-snug font-medium tracking-tight",
-      h5: "text-xl leading-snug font-medium",
+      h5: "md:text-lg lg:text-xl leading-snug font-medium",
       h6: "text-lg leading-normal font-medium",
 
       "label-xl": "text-xl font-medium tracking-tight",
@@ -75,9 +75,7 @@ export const typographyVariants = cva("", {
   },
 });
 
-type TypographyVariant = NonNullable<
-  VariantProps<typeof typographyVariants>["variant"]
->;
+type TypographyVariant = NonNullable<VariantProps<typeof typographyVariants>["variant"]>;
 
 const defaultElement: Record<TypographyVariant, React.ElementType> = {
   h1: "h1",
@@ -147,7 +145,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       children,
       ...props
     },
-    ref,
+    ref
   ) => {
     const Component = as ?? defaultElement[variant ?? "paragraph-md"] ?? "p";
     const [isCopied, setIsCopied] = React.useState(false);
@@ -156,10 +154,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       <Component
         ref={copy ? undefined : ref}
         data-slot="typography"
-        className={cn(
-          typographyVariants({ variant, color, align, truncate }),
-          className,
-        )}
+        className={cn(typographyVariants({ variant, color, align, truncate }), className)}
         {...props}
       >
         {children}
@@ -170,8 +165,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       return content;
     }
 
-    const copyValue =
-      typeof copy === "string" ? copy : getTextFromChildren(children);
+    const copyValue = typeof copy === "string" ? copy : getTextFromChildren(children);
 
     const handleCopy = async () => {
       if (!copyValue) {
@@ -209,7 +203,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         </button>
       </span>
     );
-  },
+  }
 );
 
 Typography.displayName = "Typography";

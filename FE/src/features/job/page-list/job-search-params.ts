@@ -23,6 +23,7 @@ export const jobSearchParsers = {
   sortBy: parseAsString,
   sortOrder: parseAsStringEnum(["ASC", "DESC"] as const),
   createdAt: parseAsDateRange,
+  department: parseAsArrayOf(parseAsString),
 };
 
 export type JobSearchParams = inferParserType<typeof jobSearchParsers>;

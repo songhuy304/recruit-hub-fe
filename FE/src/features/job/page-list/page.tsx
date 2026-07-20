@@ -11,6 +11,10 @@ export function ListJobPage() {
     parsers: jobSearchParsers,
   });
 
+  const onReset = () => {
+    handleReset();
+  };
+
   return (
     <div className="space-y-6">
       <JobListHeader />
