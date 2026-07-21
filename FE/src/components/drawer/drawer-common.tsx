@@ -16,26 +16,18 @@ import { cn } from "@/lib/utils";
 interface CommonDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
-
   children: React.ReactNode;
-
   cancelText?: string;
   confirmText?: string;
-
   onConfirm?: () => void;
-
   loading?: boolean;
   hideFooter?: boolean;
   confirmDisabled?: boolean;
-
   direction?: "left" | "right" | "top" | "bottom";
-
-  cancelButtonProps: ButtonProps;
-  okButtonProps: ButtonProps;
-
+  cancelButtonProps?: ButtonProps;
+  okButtonProps?: ButtonProps;
   className?: {
     container?: string;
     content?: string;
@@ -68,9 +60,10 @@ export function CommonDrawer({
     <Drawer open={open} onOpenChange={onOpenChange} direction={drawerDirection}>
       <DrawerContent className={className?.container}>
         <DrawerHeader className={className?.header}>
-          <DrawerTitle>{title}</DrawerTitle>
-
-          {description && <DrawerDescription>{description}</DrawerDescription>}
+          <DrawerTitle className={cn(!title && "sr-only")}>{title}</DrawerTitle>
+          <DrawerDescription className={cn(!description && "sr-only")}>
+            {description}
+          </DrawerDescription>
         </DrawerHeader>
 
         <div className={cn("flex-1 overflow-auto px-4")}>{children}</div>

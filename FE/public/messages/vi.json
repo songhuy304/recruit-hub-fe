@@ -122,11 +122,17 @@
     "publish-job": "Đăng tuyển",
     "create-success": "Job created successfully!",
     "update-success": "Job updated successfully!",
+    "detail": {
+      "job-id": "JOB-{id}",
+      "posted": "Mở {date}",
+      "expires": "Hết hạn {date}",
+      "unpublished": "Chưa đăng"
+    },
     "card": {
       "updated": "Cập nhật {time}",
       "views": "{count} lượt xem",
       "applicants": "{count} ứng viên",
-      "expires-in": "Hết hạn sau {days} ngày",
+      "expires-in": "Hết hạn {days}",
       "pin": "Ghim công việc",
       "unpin": "Bỏ ghim",
       "actions": "Thao tác",

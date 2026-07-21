@@ -5,11 +5,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ETEAM_ROLE } from "@/enums";
 import { JobCard } from "@/features/job/components";
 import { useDeleteJob, usePinnedJob } from "@/features/job/hooks";
+import { JobDetailDrawer } from "@/features/job/page-detail/job-detail-drawer";
 import { IJob } from "@/features/job/types";
 import { useUser } from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
 import { ILocation } from "@/services/common/types";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+interface ModalState {
+  open: boolean;
+  jobId: number | null;
+}
 
 interface JobListProps {
   jobs: IJob[];
@@ -34,6 +41,10 @@ export function JobList({
   const { isCurrentTeamOwner, hasCurrentTeamRole } = useUser();
   const { handleTogglePinned, isPending: isTogglingPinned } = usePinnedJob();
   const { handleDeleteJob, isPending: isDeletingJob } = useDeleteJob();
+  const [detailState, setDetailState] = useState<ModalState>({
+    open: false,
+    jobId: null,
+  });
 
   const handleEdit = (job: IJob) => {
     router.push(`/jobs/edit/${job.id}`);
@@ -52,6 +63,10 @@ export function JobList({
   const canEdit = hasCurrentTeamRole([ETEAM_ROLE.ADMIN, ETEAM_ROLE.OWNER])
     ? handleEdit
     : undefined;
+
+  const onDetail = (job: IJob) => {
+    setDetailState({ open: true, jobId: job.id });
+  };
 
   if (loading) {
     return (
@@ -87,24 +102,33 @@ export function JobList({
   }
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3",
-        isFetching && "opacity-60",
-        className
-      )}
-    >
-      {jobs.map((job) => (
-        <JobCard
-          loading={isTogglingPinned || isDeletingJob}
-          key={job.id}
-          job={job}
-          locations={locations}
-          onEdit={canEdit}
-          onPinToggle={onPinToggle}
-          onDelete={canDelete}
-        />
-      ))}
-    </div>
+    <>
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3",
+          isFetching && "opacity-60",
+          className
+        )}
+      >
+        {jobs.map((job) => (
+          <JobCard
+            loading={isTogglingPinned || isDeletingJob}
+            key={job.id}
+            job={job}
+            locations={locations}
+            onEdit={canEdit}
+            onPinToggle={onPinToggle}
+            onDelete={canDelete}
+            onDetail={onDetail}
+          />
+        ))}
+      </div>
+
+      <JobDetailDrawer
+        open={detailState.open}
+        onOpenChange={(open) => setDetailState({ open, jobId: detailState.jobId })}
+        jobId={detailState.jobId}
+      />
+    </>
   );
 }

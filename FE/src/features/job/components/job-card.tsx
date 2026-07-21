@@ -28,45 +28,19 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { JobCardAvatarGroup } from "./job-card-avatar-group";
 import { JobCardStatusBadge } from "./job-card-status-badge";
+import { MetaItem } from "@/features/job/components/meta-item";
+import { getEmploymentTypeLabel, getNameLocation } from "@/features/job/utils";
 
 interface JobCardProps {
   job: IJob;
   className?: string;
   onPinToggle?: (job: IJob) => void;
   onEdit?: (job: IJob) => void;
-  onArchive?: (job: IJob) => void;
+  onDetail?: (job: IJob) => void;
   onCopy?: (job: IJob) => void;
   onDelete?: (job: IJob) => void;
   locations?: ILocation[];
   loading?: boolean;
-}
-
-function getEmploymentTypeLabel(employmentType: IJob["employmentType"]): string {
-  const label = employmentTypeOptions.find(
-    (option) => option.value === employmentType
-  )?.label;
-
-  return typeof label === "string" ? label : employmentType;
-}
-
-function getNameLocation(location: IJob["location"], locations: ILocation[]): string {
-  const locationObj = locations.find((loc) => loc.code === location);
-  return locationObj ? locationObj.englishName : "-";
-}
-
-function MetaItem({
-  icon: Icon,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  children: React.ReactNode;
-}) {
-  return (
-    <span className="inline-flex items-center gap-1">
-      <Icon className="h-3.5 w-3.5 shrink-0" />
-      {children}
-    </span>
-  );
 }
 
 export function JobCard({
@@ -75,7 +49,7 @@ export function JobCard({
   onPinToggle,
   onEdit,
   onDelete,
-  onArchive,
+  onDetail,
   onCopy,
   loading,
   locations = [],
@@ -150,13 +124,11 @@ export function JobCard({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="space-y-2 px-4">
+      <CardContent className="space-y-2 px-4" onClick={() => onDetail?.(job)}>
         <div className="min-w-0">
-          <Link href={`/jobs/edit/${job.id}`}>
-            <Typography variant="h5" className="line-clamp-1 font-semibold">
-              {job.title}
-            </Typography>
-          </Link>
+          <Typography variant="h5" className="line-clamp-1 font-semibold">
+            {job.title}
+          </Typography>
           <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm">
             <MetaItem icon={Icons.briefcase}>
               {/* {getDepartmentLabel(job.departments)} */}
@@ -172,29 +144,6 @@ export function JobCard({
             </MetaItem>
           </div>
         </div>
-
-        {hasStats ? (
-          <div className="text-muted-foreground flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-            {job.viewCount != null ? (
-              <span className="inline-flex items-center gap-1.5">
-                <Icons.eye className="h-4 w-4" />
-                {t("card.views", { count: job.viewCount })}
-              </span>
-            ) : null}
-            {job.applicantCount != null ? (
-              <span className="inline-flex items-center gap-1.5">
-                <Icons.teams className="h-4 w-4" />
-                {t("card.applicants", { count: job.applicantCount })}
-              </span>
-            ) : null}
-            {expiresInDays ? (
-              <span className="inline-flex items-center gap-1.5">
-                <Icons.calendar className="h-4 w-4" />
-                {expiresInDays}d
-              </span>
-            ) : null}
-          </div>
-        ) : null}
       </CardContent>
 
       <CardFooter className="justify-between px-4 pt-0 mt-auto">

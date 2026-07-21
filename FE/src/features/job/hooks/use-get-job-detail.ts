@@ -4,13 +4,14 @@ import { jobService } from "../services";
 
 export interface UseGetJobDetailsParams {
   id: number;
+  enabled?: boolean;
 }
 
-const useGetJobDetails = ({ id }: UseGetJobDetailsParams) => {
+const useGetJobDetails = ({ id, enabled }: UseGetJobDetailsParams) => {
   const query = useQuery({
     queryKey: [...QUERY_KEY.JOB.DETAIL(id)],
     queryFn: () => jobService.getJobDetail(id),
-    enabled: !!id,
+    enabled: !!id && enabled !== false,
   });
 
   return {

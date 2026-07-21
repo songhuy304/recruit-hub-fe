@@ -346,11 +346,17 @@
     "publish-job": "Publish job",
     "create-success": "Job created successfully!",
     "update-success": "Job updated successfully!",
+    "detail": {
+      "job-id": "JOB-{id}",
+      "posted": "Open {date}",
+      "expires": "Expires {date}",
+      "unpublished": "Unpublished"
+    },
     "card": {
       "updated": "Updated {time}",
       "views": "{count} views",
-      "applicants": "{count} applicants",
-      "expires-in": "Expires in {days} days",
+      "applicants": "{count} candidates",
+      "expires-in": "Expires {days}",
       "pin": "Pin job",
       "unpin": "Unpin job",
       "actions": "Job actions",
