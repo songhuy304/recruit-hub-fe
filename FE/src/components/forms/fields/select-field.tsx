@@ -43,7 +43,7 @@ export function SelectField({
   const value = useStore(field.store, (s) => s.value) as string;
 
   return (
-    <FormFieldSet className={cn("min-w-52", className)}>
+    <FormFieldSet className={cn("min-w-48", className)}>
       <FormField>
         {label && (
           <FieldLabel htmlFor={field.name}>

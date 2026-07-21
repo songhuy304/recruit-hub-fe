@@ -139,7 +139,11 @@ export const columns = (
     },
     {
       accessorKey: "email",
-      header: t("Column.email.label"),
+      id: "email",
+      enableSorting: true,
+      header: ({ column }: { column: Column<ITeamMember, unknown> }) => (
+        <DataTableColumnHeader column={column} title={t("Column.email.label")} />
+      ),
       cell: ({ cell }) => (
         <span className="text-muted-foreground text-sm font-medium">
           {cell.getValue<ITeamMember["email"]>()}

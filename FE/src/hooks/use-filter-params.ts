@@ -31,11 +31,12 @@ export function useFilterParams<TParsers extends UseQueryStatesKeysMap>({
       page: 1,
     } as Partial<Nullable<Values<TParsers>>>);
   };
-
-  const handleReset = () => {
+  const handleReset = (exclude: (keyof TParsers)[] = []) => {
     const cleared = Object.keys(parsers).reduce(
       (acc, key) => {
-        acc[key] = null;
+        if (!exclude.includes(key as keyof TParsers)) {
+          acc[key] = null;
+        }
         return acc;
       },
       {} as Record<string, null>

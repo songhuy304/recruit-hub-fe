@@ -11,11 +11,13 @@ import { useUser } from "@/hooks/useUser";
 import { useTranslations } from "next-intl";
 import { inferParserType, parseAsInteger, parseAsString } from "nuqs";
 import { columns } from "./columns";
+import { getSortingStateParser } from "@/lib/parsers";
 
 const membersSearchParsers = {
   page: parseAsInteger.withDefault(1),
   limit: parseAsInteger.withDefault(10),
   search: parseAsString,
+  sort: getSortingStateParser(),
 };
 
 type MembersSearchParams = inferParserType<typeof membersSearchParsers>;
@@ -40,6 +42,7 @@ export function TeamMembersTable({ teamId }: TeamMembersTableProps) {
     page: params.page,
     limit: params.limit,
     search: params.search ?? undefined,
+    sort: params.sort ? JSON.stringify(params.sort) : undefined,
   });
 
   const members = membersResponse?.data ?? [];
@@ -51,6 +54,9 @@ export function TeamMembersTable({ teamId }: TeamMembersTableProps) {
     columns: tableColumns,
     pageCount,
     shallow: true,
+    initialState: {
+      columnPinning: { right: ["actions"] },
+    },
   });
 
   if (isPending) {

@@ -6,7 +6,7 @@ import {
   type inferParserType,
 } from "nuqs";
 import { EJobStatus, EEmploymentType, EJobLevel } from "@/features/job/enums";
-import { parseAsDateRange } from "@/lib/parsers";
+import { getSortingStateParser, parseAsDateRange } from "@/lib/parsers";
 
 export const jobSearchParsers = {
   page: parseAsInteger.withDefault(1),
@@ -20,8 +20,7 @@ export const jobSearchParsers = {
   status: parseAsStringEnum<EJobStatus>(Object.values(EJobStatus)).withDefault(
     EJobStatus.OPEN
   ),
-  sortBy: parseAsString,
-  sortOrder: parseAsStringEnum(["ASC", "DESC"] as const),
+  sort: getSortingStateParser(),
   createdAt: parseAsDateRange,
   department: parseAsArrayOf(parseAsString),
 };

@@ -1,13 +1,13 @@
 import { FormFilter } from "@/components/forms/form-filter";
 import { Icons } from "@/components/icons";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { EJobStatus } from "@/features/job/enums";
+import { useGetJobSummary } from "@/features/job/hooks";
 import { useGetDepartment, useGetLocation } from "@/hooks/options";
+import { useTranslations } from "next-intl";
+import { SetValues } from "nuqs";
 import { employmentTypeOptions, levelOptions } from "../../constants";
 import { JobSearchParams, jobSearchParsers } from "../job-search-params";
-import { EJobStatus } from "@/features/job/enums";
-import { SetValues } from "nuqs";
-import { useTranslations } from "next-intl";
-import { useGetJobSummary } from "@/features/job/hooks";
 
 interface JobListFilterProps {
   params: JobSearchParams;
@@ -74,11 +74,11 @@ const JobListFilter = ({
             placeholder: t("field.departments.placeholder"),
             options: departmentOptions,
           },
-          {
-            type: "dateRange",
-            name: "createdAt",
-            placeholder: t("field.createdDate.placeholder"),
-          },
+          // {
+          //   type: "dateRange",
+          //   name: "createdAt",
+          //   placeholder: t("field.createdDate.placeholder"),
+          // },
         ]}
         onSubmit={handleSubmit}
         onReset={handleReset}

@@ -1,12 +1,10 @@
 import { QUERY_KEY } from "@/config/query-keys";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { teamService } from "../services";
+import { IGetMembers } from "@/features/teams/types";
 
-export interface UseGetTeamRequestParams {
+export interface UseGetTeamRequestParams extends IGetMembers {
   teamId: number;
-  page: number;
-  limit: number;
-  search?: string;
   enabled?: boolean;
 }
 

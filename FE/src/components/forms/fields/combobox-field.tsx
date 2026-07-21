@@ -109,7 +109,7 @@ export function ComboboxField({
   };
 
   return (
-    <FormFieldSet className="min-w-52">
+    <FormFieldSet className="min-w-48">
       <FormField>
         {label && (
           <FieldLabel htmlFor={field.name}>

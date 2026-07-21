@@ -10,11 +10,13 @@ import { useFilterParams } from "@/hooks/use-filter-params";
 import { useTranslations } from "next-intl";
 import { inferParserType, parseAsInteger, parseAsString } from "nuqs";
 import { columns } from "./columns";
+import { getSortingStateParser } from "@/lib/parsers";
 
 const requestSearchParsers = {
   page: parseAsInteger.withDefault(1),
   limit: parseAsInteger.withDefault(10),
   search: parseAsString,
+  sort: getSortingStateParser(),
 };
 
 type RequestSearchParams = inferParserType<typeof requestSearchParsers>;
@@ -38,6 +40,7 @@ export function TeamRequestTable({ teamId }: TeamRequestTableProps) {
     page: params.page,
     limit: params.limit,
     search: params.search ?? undefined,
+    sort: params.sort ? JSON.stringify(params.sort) : undefined,
   });
 
   const requests = requestsResponse?.data ?? [];

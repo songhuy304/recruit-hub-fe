@@ -1,19 +1,11 @@
 "use client";
 
-import { Icons } from "@/components/icons";
 import { PagePagination } from "@/components/pagination";
-import { Empty } from "@/components/ui/empty";
-import { JOB_PATHS } from "@/config/paths.config";
-import { JobCard } from "@/features/job/components/job-card";
 import { useGetJobs } from "@/features/job/hooks";
-import { IJob } from "@/features/job/types";
+import { JobList } from "@/features/job/page-list/components/list-jobs";
 import { useGetLocation } from "@/hooks/options";
-import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import type { SetValues } from "nuqs";
 import { JobSearchParams, jobSearchParsers } from "../job-search-params";
-import { Skeleton } from "@/components/ui/skeleton";
-import { JobList } from "@/features/job/page-list/components/list-jobs";
 
 interface JobListContentProps {
   params: JobSearchParams;

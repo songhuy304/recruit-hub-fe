@@ -12,7 +12,7 @@ export function ListJobPage() {
   });
 
   const onReset = () => {
-    handleReset();
+    handleReset(["status"]);
   };
 
   return (
@@ -21,7 +21,7 @@ export function ListJobPage() {
       <JobListFilter
         params={params}
         handleSubmit={handleSubmit}
-        handleReset={handleReset}
+        handleReset={onReset}
         setParams={setParams}
       />
       <JobListContent params={params} setParams={setParams} />
