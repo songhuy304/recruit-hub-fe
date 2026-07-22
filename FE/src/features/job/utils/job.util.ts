@@ -8,18 +8,16 @@ import { IJob } from "@/features/job/types";
 import { ILocation } from "@/services/common/types";
 
 function formatCurrencyAmount(amount: number, currency: ECurrency): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency,
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(amount);
 }
 
 export function formatJobSalaryRange(
-  job: Pick<IJob, 'salaryMin' | 'salaryMax' | 'currency' | 'isNegotiable'>
+  job: Pick<IJob, "salaryMin" | "salaryMax" | "currency" | "isNegotiable">
 ): string | null {
-  if (job.isNegotiable) return null;
-
   const { salaryMin, salaryMax, currency } = job;
 
   if (salaryMin != null && salaryMax != null) {
@@ -45,7 +43,9 @@ export function getEmploymentTypeLabel(employmentType: IJob["employmentType"]): 
   return typeof label === "string" ? label : employmentType;
 }
 
-export function getWorkLocationTypeLabel(workLocationType: IJob["workLocationType"]): string {
+export function getWorkLocationTypeLabel(
+  workLocationType: IJob["workLocationType"]
+): string {
   const label = workLocationTypeOptions.find(
     (option) => option.value === workLocationType
   )?.label;
@@ -54,9 +54,7 @@ export function getWorkLocationTypeLabel(workLocationType: IJob["workLocationTyp
 }
 
 export function getJobLevelLabel(level: IJob["level"]): string {
-  const label = levelOptions.find(
-    (option) => option.value === level
-  )?.label;
+  const label = levelOptions.find((option) => option.value === level)?.label;
 
   return typeof label === "string" ? label : level;
 }

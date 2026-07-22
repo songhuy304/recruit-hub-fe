@@ -33,15 +33,21 @@ const JobDetailHeader = ({ jobDetail }: JobDetailHeaderProps) => {
 
   if (!jobDetail) return null;
 
-  const salaryText = jobDetail.isNegotiable
-    ? t("field.is-negotiable.label")
-    : jobDetail.salaryMin != null || jobDetail.salaryMax != null
-      ? formatJobSalaryRange(jobDetail)
-      : EMPTY_VALUE;
+  const isNegotiable = () => {
+    return (
+      <div>
+        <Icons.dollar className="size-4 mr-1 inline-block" />
+        {t("field.is-negotiable.label")}
+      </div>
+    );
+  };
 
-  const daysOpen = jobDetail.openedAt
-    ? formatJobDaysOpen(jobDetail.openedAt)
-    : EMPTY_VALUE;
+  const salaryText =
+    jobDetail.salaryMin != null || jobDetail.salaryMax != null
+      ? formatJobSalaryRange(jobDetail)
+      : isNegotiable();
+
+  const daysOpen = jobDetail.openedAt ? formatDate(jobDetail.openedAt) : EMPTY_VALUE;
 
   const expiresInDays = jobDetail.expiresAt
     ? formatDate(jobDetail.expiresAt)
@@ -88,7 +94,12 @@ const JobDetailHeader = ({ jobDetail }: JobDetailHeaderProps) => {
           {updatedAt === "--" ? "--" : t("Jobs.card.updated", { time: updatedAt })}
         </MetaItem>
 
-        <Icons.pin className={cn("size-3", jobDetail.isPinned && "text-primary")} />
+        <Icons.pin
+          className={cn(
+            "size-4 text-muted-foreground ml-auto",
+            jobDetail.isPinned && "text-primary"
+          )}
+        />
       </div>
 
       <Typography variant="h4" className="font-semibold tracking-tight">
@@ -141,7 +152,11 @@ const JobDetailHeader = ({ jobDetail }: JobDetailHeaderProps) => {
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <Badge variant="secondary" className="text-green-500 px-3 py-1">
-          <span className="text-green-500">{salaryText}</span>
+          {jobDetail.isNegotiable ? (
+            isNegotiable()
+          ) : (
+            <span className="text-green-500">{salaryText}</span>
+          )}
         </Badge>
 
         <MetaItem icon={Icons.teams}>
@@ -151,11 +166,7 @@ const JobDetailHeader = ({ jobDetail }: JobDetailHeaderProps) => {
         </MetaItem>
 
         <MetaItem icon={Icons.clock}>
-          {daysOpen === EMPTY_VALUE
-            ? EMPTY_VALUE
-            : t("Jobs.detail.posted", {
-                date: daysOpen,
-              })}
+          {daysOpen === EMPTY_VALUE ? EMPTY_VALUE : daysOpen}
         </MetaItem>
 
         <MetaItem icon={Icons.calendar}>

@@ -73,8 +73,8 @@ export const mutationJobMapper = {
 
       officeAddress: job.officeAddress ?? "",
 
-      salaryMin: job.salaryMin ?? undefined,
-      salaryMax: job.salaryMax ?? undefined,
+      salaryMin: Number(job.salaryMin) ?? undefined,
+      salaryMax: Number(job.salaryMax) ?? undefined,
 
       openedAt: job.openedAt ? new Date(job.openedAt) : undefined,
       expiresAt: job.expiresAt ? new Date(job.expiresAt) : undefined,
