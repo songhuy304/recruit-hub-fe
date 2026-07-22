@@ -15,6 +15,7 @@ export interface EditorProps {
   onChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  editable?: boolean;
 }
 
 export function TextEditor({
@@ -22,6 +23,7 @@ export function TextEditor({
   onChange,
   placeholder = "Start typing...",
   disabled,
+  editable = true,
 }: EditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -62,6 +64,17 @@ export function TextEditor({
   }, [editor, value]);
 
   if (!editor) return null;
+
+  if (!editable) {
+    return (
+      <div
+        className="tiptap"
+        dangerouslySetInnerHTML={{
+          __html: value || "",
+        }}
+      />
+    );
+  }
 
   return (
     <RichTextEditor editor={editor}>

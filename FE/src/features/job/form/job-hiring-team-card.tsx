@@ -78,18 +78,6 @@ export function JobHiringTeamCard() {
       </CardHeader>
 
       <CardContent className="space-y-5">
-        <div className="space-y-2">
-          <FieldLabel>
-            {t("Jobs.hiring-team-job-owner")}
-            <span className="text-red-500">*</span>
-          </FieldLabel>
-          {currentMember ? (
-            <div className="border-border/60 rounded-md border px-3 py-2.5">
-              <MemberOptionRow member={currentMember} showYouBadge />
-            </div>
-          ) : null}
-        </div>
-
         <FormComboboxField
           name="assigneeId"
           label={t("Jobs.hiring-team-assign-to")}
@@ -97,9 +85,7 @@ export function JobHiringTeamCard() {
           options={assigneeOptions}
           placeholder={t("Jobs.hiring-team-assign-to-placeholder")}
           searchPlaceholder={t("Jobs.hiring-team-assign-to-placeholder")}
-          emptyText={
-            isPending ? t("Common.loading") : t("Jobs.hiring-team-no-members")
-          }
+          emptyText={isPending ? t("Common.loading") : t("Jobs.hiring-team-no-members")}
         />
 
         <div className="bg-muted/50 text-muted-foreground flex gap-2 rounded-md px-3 py-2.5 text-xs leading-relaxed">

@@ -2,6 +2,7 @@ import { CommonDrawer } from "@/components/drawer/drawer-common";
 import { Spinner } from "@/components/ui/spinner";
 import { useGetJobDetails } from "@/features/job/hooks";
 import { JobDetailHeader } from "@/features/job/page-detail/job-detail-header";
+import { JobDetailTab } from "@/features/job/page-detail/job-detail-tab";
 
 interface JobDetailDrawerProps {
   open: boolean;
@@ -32,6 +33,7 @@ const JobDetailDrawer = ({ open, onOpenChange, jobId }: JobDetailDrawerProps) =>
       ) : (
         <div>
           <JobDetailHeader jobDetail={jobDetail?.data} />
+          <JobDetailTab jobDetail={jobDetail?.data} />
         </div>
       )}
     </CommonDrawer>

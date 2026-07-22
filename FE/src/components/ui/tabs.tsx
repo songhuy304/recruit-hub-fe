@@ -162,7 +162,6 @@ export function TabsTrigger({
       >
         {Icon ? <Icon className="relative z-10 size-4 mr-2" /> : null}
         {children}
-
         {meta?.count !== undefined && (
           <Badge variant="secondary" className="rounded-full text-xs p-0 size-5 ml-2">
             {meta?.isLoading ? <Spinner className="size-4" /> : meta?.count}

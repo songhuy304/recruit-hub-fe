@@ -29,7 +29,11 @@
     "save-changes": "Lưu thay đổi",
     "reset": "Đặt lại",
     "search": "Tìm kiếm",
-    "copy": "Sao chép"
+    "copy": "Sao chép",
+    "candidates": "Candidates",
+    "activity": "Activity",
+    "interviews": "Interviews",
+    "overview": "Overview"
   },
 
   "Column": {

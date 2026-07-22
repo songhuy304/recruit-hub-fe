@@ -29,7 +29,11 @@
     "save-changes": "Save changes",
     "reset": "Reset",
     "search": "Search",
-    "copy": "Copy"
+    "copy": "Copy",
+    "candidates": "Candidates",
+    "activity": "Activity",
+    "interviews": "Interviews",
+    "overview": "Overview"
   },
 
   "Column": {
