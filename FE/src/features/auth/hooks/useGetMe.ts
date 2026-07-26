@@ -1,16 +1,19 @@
 import { QUERY_KEY } from "@/config/query-keys";
-import { useAppSelector } from "@/hooks/useRedux";
+import { tokenStorage } from "@/lib/auth";
 import { userService } from "@/services";
-import { selectAccessToken } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 
-const useGetMe = () => {
-  const token = useAppSelector(selectAccessToken);
+interface UseGetMeOptions {
+  enabled?: boolean;
+}
+
+const useGetMe = (options?: UseGetMeOptions) => {
+  const accessToken = tokenStorage.getAccess();
 
   return useQuery({
     queryKey: [QUERY_KEY.USER.ROOT],
     queryFn: () => userService.getMe(),
-    enabled: !!token,
+    enabled: !!accessToken && options?.enabled,
     retry: 0,
   });
 };
