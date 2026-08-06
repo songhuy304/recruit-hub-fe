@@ -362,7 +362,9 @@
       "job-id": "JOB-{id}",
       "posted": "Open {date}",
       "expires": "Expires {date}",
-      "unpublished": "Unpublished"
+      "unpublished": "Unpublished",
+      "job-information": "Job information",
+      "reports-to": "Reports to"
     },
     "card": {
       "updated": "Updated {time}",

@@ -12,6 +12,7 @@ import {
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
 
 interface CommonDrawerProps {
   open: boolean;
@@ -58,37 +59,47 @@ export function CommonDrawer({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange} direction={drawerDirection}>
-      <DrawerContent className={className?.container}>
-        <DrawerHeader className={className?.header}>
-          <DrawerTitle className={cn(!title && "sr-only")}>{title}</DrawerTitle>
-          <DrawerDescription className={cn(!description && "sr-only")}>
-            {description}
-          </DrawerDescription>
-        </DrawerHeader>
+      {loading ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        <DrawerContent className={className?.container}>
+          <DrawerHeader className={className?.header}>
+            <DrawerTitle className={cn(!title && "sr-only")}>{title}</DrawerTitle>
+            <DrawerDescription className={cn(!description && "sr-only")}>
+              {description}
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <div className={cn("flex-1 overflow-auto px-4")}>{children}</div>
+          <div className={cn("flex-1 overflow-auto px-4")}>{children}</div>
 
-        {!hideFooter && (
-          <DrawerFooter className={className?.footer}>
-            <DrawerClose asChild>
-              <Button variant="outline" disabled={loading} {...cancelButtonProps}>
-                {cancelText}
-              </Button>
-            </DrawerClose>
+          {!hideFooter && (
+            <DrawerFooter className={className?.footer}>
+              <DrawerClose asChild>
+                <Button
+                  variant="outline"
+                  disabled={cancelButtonProps?.disabled}
+                  {...cancelButtonProps}
+                >
+                  {cancelText}
+                </Button>
+              </DrawerClose>
 
-            {onConfirm && (
-              <Button
-                {...okButtonProps}
-                onClick={onConfirm}
-                isLoading={loading}
-                disabled={confirmDisabled}
-              >
-                {confirmText}
-              </Button>
-            )}
-          </DrawerFooter>
-        )}
-      </DrawerContent>
+              {onConfirm && (
+                <Button
+                  {...okButtonProps}
+                  onClick={onConfirm}
+                  isLoading={loading}
+                  disabled={confirmDisabled}
+                >
+                  {confirmText}
+                </Button>
+              )}
+            </DrawerFooter>
+          )}
+        </DrawerContent>
+      )}
     </Drawer>
   );
 }

@@ -138,7 +138,9 @@
       "job-id": "JOB-{id}",
       "posted": "Mở {date}",
       "expires": "Hết hạn {date}",
-      "unpublished": "Chưa đăng"
+      "unpublished": "Chưa đăng",
+      "job-information": "Thông tin công việc",
+      "reports-to": "Báo cáo cho"
     },
     "card": {
       "updated": "Cập nhật {time}",

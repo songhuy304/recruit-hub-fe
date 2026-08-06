@@ -1,8 +1,8 @@
 import { CommonDrawer } from "@/components/drawer/drawer-common";
-import { Spinner } from "@/components/ui/spinner";
 import { useGetJobDetails } from "@/features/job/hooks";
 import { JobDetailHeader } from "@/features/job/page-detail/job-detail-header";
 import { JobDetailTab } from "@/features/job/page-detail/job-detail-tab";
+import { JobDetailTitle } from "@/features/job/page-detail/job-detail-title";
 
 interface JobDetailDrawerProps {
   open: boolean;
@@ -12,8 +12,8 @@ interface JobDetailDrawerProps {
 
 const JobDetailDrawer = ({ open, onOpenChange, jobId }: JobDetailDrawerProps) => {
   const { data: jobDetail, isLoading } = useGetJobDetails({
-    id: jobId ?? 0,
-    enabled: open && !!jobId,
+    id: jobId ?? undefined,
+    enabled: open && !!jobId && jobId > 0,
   });
 
   return (
@@ -24,18 +24,14 @@ const JobDetailDrawer = ({ open, onOpenChange, jobId }: JobDetailDrawerProps) =>
       }}
       direction="right"
       open={open}
+      loading={isLoading}
+      title={<JobDetailTitle jobDetail={jobDetail?.data} />}
       onOpenChange={onOpenChange}
     >
-      {isLoading ? (
-        <div className="flex h-full w-full items-center justify-center">
-          <Spinner />
-        </div>
-      ) : (
-        <div>
-          <JobDetailHeader jobDetail={jobDetail?.data} />
-          <JobDetailTab jobDetail={jobDetail?.data} />
-        </div>
-      )}
+      <div>
+        <JobDetailHeader jobDetail={jobDetail?.data} />
+        <JobDetailTab jobDetail={jobDetail?.data} />
+      </div>
     </CommonDrawer>
   );
 };

@@ -32,3 +32,5 @@ export function generateSlug(value: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+export const EMPTY_VALUE = "--";
