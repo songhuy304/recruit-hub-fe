@@ -13,7 +13,7 @@ const useGetMe = (options?: UseGetMeOptions) => {
   return useQuery({
     queryKey: [QUERY_KEY.USER.ROOT],
     queryFn: () => userService.getMe(),
-    enabled: !!token,
+    enabled: !!accessToken && options?.enabled,
     retry: 3,
   });
 };
