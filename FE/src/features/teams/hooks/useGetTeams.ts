@@ -1,12 +1,13 @@
 import { QUERY_KEY } from "@/config/query-keys";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { selectAccessToken, setTeams } from "@/store";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { tokenStorage } from "@/lib/auth";
+import { setTeams } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { teamService } from "../services";
 
 const useGetTeams = () => {
-  const token = useAppSelector(selectAccessToken);
+  const token = tokenStorage.getAccess();
   const dispatch = useAppDispatch();
 
   const query = useQuery({
