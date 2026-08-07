@@ -6,6 +6,10 @@ export const DEFAULT_THEME = 'vercel';
 
 export const THEMES = [
   {
+    name: 'Neutral',
+    value: 'neutral'
+  },
+  {
     name: 'Claude',
     value: 'claude'
   },
